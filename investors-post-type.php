@@ -314,4 +314,38 @@ remove_meta_box( 'postcustom', 'cpm_investor', 'normal' );
 }
 add_action( 'do_meta_boxes', 'cpm_investor_remove_custom_fields_meta_box' );
 
+//to load the single page
+function load_investor_template($template) {
+    if (is_singular('cpm_investor')) {
+        $plugin_path = plugin_dir_path(__FILE__);
+        $template_name = 'single-cpm_investor.php';
+        $template = $plugin_path . $template_name;
+    }
+    return $template;
+}
+add_filter('template_include', 'load_investor_template');
+//enqueue styles for single page
+function my_custom_plugin_enqueue_styles() {
+    if (is_singular('cpm_investor')) {
+        wp_enqueue_style('single-investor-style', plugin_dir_url(__FILE__) . 'single-cpm_investor.css', array(), '1.0.0', 'all');
+    }
+}
+add_action('wp_enqueue_scripts', 'my_custom_plugin_enqueue_styles');
+
+
+//to register the sidebar in widgets for single page
+
+function cpm_investor_register_sidebar() {
+    register_sidebar(array(
+        'name'          => __('Investor Sidebar', 'textdomain'),
+        'id'            => 'investor-sidebar',
+        'description'   => __('Widgets in this area will be shown on the single investor pages.', 'textdomain'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ));
+}
+add_action('widgets_init', 'cpm_investor_register_sidebar');
+
 ?>
