@@ -138,6 +138,8 @@ function cpm_investor_submission_form() {
         'hide_empty' => false,
     ));
     ?>
+<!-- Form title -->
+<h2 class="form-title">Investor Submission Form</h2>
 <!-- frontend form -->
 <div class="cpm-form-container">
     <form action="" method="post" enctype="multipart/form-data">
@@ -266,7 +268,7 @@ add_action( 'add_meta_boxes', 'cpm_investor_add_meta_box' );
  // Save the 'founded in' year and 'investor type' as post meta admin side 
 
 function cpm_investor_meta_box_callback( $post ) {
-    $value = get_post_meta( $post->ID, 'cpm_investor_founded', true );
+    $founded_value = get_post_meta( $post->ID, 'cpm_investor_founded', true );
     $type_value = get_post_meta($post->ID, 'cpm_investor_type', true);
     $thumbnail_id = get_post_thumbnail_id($post->ID);
     $investing_status_value = get_post_meta($post->ID, 'cpm_investing_status', true);
