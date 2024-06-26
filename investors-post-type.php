@@ -21,7 +21,8 @@ function cpm_investor_enqueue_scripts() {
     wp_enqueue_script('select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), null, true);
     
     // Enqueue custom script for initializing Select2
-    wp_enqueue_script('cpm-initializer', plugins_url('cpm-initializer.js', __FILE__), array('jquery', 'select2-js'), null, true);
+    wp_enqueue_script('cpm-initializer', plugin_dir_url(__FILE__) . 'cpm-initializer.js', array('jquery', 'select2'), null, true);
+    wp_enqueue_style('cpm-styles', plugin_dir_url(__FILE__) . 'cpm-styles.css');
     if (is_admin()) {
         global $post;
         if ($post && $post->post_type == 'cpm_investor') {
@@ -166,6 +167,7 @@ function cpm_investor_handle_form_submission() {
             update_post_meta($post_id, 'cpm_investor_founded', $investor_founded);
             update_post_meta($post_id, 'cpm_investor_type', $investor_type);
             update_post_meta($post_id, 'cpm_investor_country', $investor_country);
+
         }
         // Handle the logo upload and set it as the featured image
         if (!empty($_FILES['investor_logo']['name'])) {
