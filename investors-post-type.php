@@ -23,6 +23,7 @@ function cpm_investor_enqueue_scripts() {
     // Enqueue custom script for initializing Select2
     wp_enqueue_script('cpm-initializer', plugin_dir_url(__FILE__) . 'cpm-initializer.js', array('jquery', 'select2'), null, true);
     wp_enqueue_style('cpm-styles', plugin_dir_url(__FILE__) . 'cpm-styles.css');
+    
     if (is_admin()) {
         global $post;
         if ($post && $post->post_type == 'cpm_investor') {
@@ -97,36 +98,39 @@ add_action( 'init', 'cpm_investor_register_post_type', 0 );
 function cpm_investor_submission_form() {
     ob_start();
     ?>
-<form action="" method="post" enctype="multipart/form-data">
-    <label for="investor_name">Name of Investor:</label>
-    <input type="text" id="investor_name" name="investor_name" required><br /><br />
+<!-- frontend form -->
+<div class="cpm-form-container">
+    <form action="" method="post" enctype="multipart/form-data">
+        <label for="investor_name">Name of Investor:</label>
+        <input type="text" id="investor_name" name="investor_name" required>
 
-    <label for="investor_description">Short Description:</label>
-    <textarea id="investor_description" name="investor_description" rows="4" cols="50" required></textarea><br><br>
+        <label for="investor_description">Short Description:</label>
+        <textarea id="investor_description" name="investor_description" rows="4" cols="50" required></textarea>
 
-    <label for="investor_founded">Founded in:</label>
-    <input type="date" id="investor_founded" name="investor_founded" required><br /><br />
+        <label for="investor_founded">Founded in:</label>
+        <input type="date" id="investor_founded" name="investor_founded" required>
 
-    <label for="investor_type">Investor Type:</label>
-    <select id="investor_type" name="investor_type[]" multiple="multiple" required>
-        <option value="VC">VC</option>
-        <option value="Accelerator">Accelerator</option>
-    </select><br><br>
+        <label for="investor_type">Investor Type:</label>
+        <select id="investor_type" name="investor_type[]" multiple="multiple" class="cpm-select2" required>
+            <option value="VC">VC</option>
+            <option value="Accelerator">Accelerator</option>
+        </select>
 
-    <label for="investor_logo">Logo:</label>
-    <input type="file" id="investor_logo" name="investor_logo" accept="image/*" required><br><br>
+        <label for="investor_logo">Logo:</label>
+        <input type="file" id="investor_logo" name="investor_logo" accept="image/*" required>
 
-    <label for="investing_status">Investing Status:</label>
-    <select id="investing_status" name="investing_status" required>
-        <option value="Actively Investing">Actively Investing</option>
-        <option value="Relaxed Investing">Relaxed Investing</option>
-    </select><br><br>
+        <label for="investing_status">Investing Status:</label>
+        <select id="investing_status" name="investing_status" required>
+            <option value="Actively Investing">Actively Investing</option>
+            <option value="Relaxed Investing">Relaxed Investing</option>
+        </select>
 
-    <label for="investor_country">Country:</label>
-    <select id="investor_country" name="investor_country" class="cpm-select2"></select><br><br>
+        <label for="investor_country">Country:</label>
+        <select id="investor_country" name="investor_country" class="cpm-select2" required></select>
 
-    <input type="submit" name="submit_investor" value="Submit">
-</form>
+        <input type="submit" name="submit_investor" value="Submit">
+    </form>
+</div>
 <?php
     return ob_get_clean();
 }
@@ -223,33 +227,44 @@ function cpm_investor_meta_box_callback( $post ) {
     if (!is_array($type_value)) {
         $type_value = array();
     }
+    
+    wp_nonce_field('cpm_investor_save_meta_box_data', 'cpm_investor_meta_box_nonce');
+
     ?>
-<label for="cpm_investor_founded">Founded in:</label>
-<input type="date" id="cpm_investor_founded" name="cpm_investor_founded"
-    value="<?php echo esc_attr( $value ); ?>"><br /><br />
+<div class="cpm-meta-box-container">
+    <label for="cpm_investor_founded">Founded in:</label>
+    <input type="date" id="cpm_investor_founded" name="cpm_investor_founded"
+        value="<?php echo esc_attr($founded_value); ?>">
 
-<label for="cpm_investor_type">Investor Type:</label>
-<select id="cpm_investor_type" name="cpm_investor_type[]" multiple="multiple">
-    <option value="VC" <?php echo in_array('VC', $type_value) ? 'selected' : ''; ?>>VC</option>
-    <option value="Accelerator" <?php echo in_array('Accelerator', $type_value) ? 'selected' : ''; ?>>Accelerator
-    </option>
-</select>
+    <label for="cpm_investor_type">Investor Type:</label>
+    <select id="cpm_investor_type" name="cpm_investor_type[]" multiple="multiple" class="cpm-select2">
+        <option value="VC" <?php echo in_array('VC', $type_value) ? 'selected' : ''; ?>>VC</option>
+        <option value="Accelerator" <?php echo in_array('Accelerator', $type_value) ? 'selected' : ''; ?>>Accelerator
+        </option>
+    </select>
 
-<label for="cpm_investing_status">Investing Status:</label>
-<select id="cpm_investing_status" name="cpm_investing_status">
-    <option value="Actively Investing" <?php selected($investing_status_value, 'Actively Investing'); ?>>Actively
-        Investing</option>
-    <option value="Relaxed Investing" <?php selected($investing_status_value, 'Relaxed Investing'); ?>>Relaxed Investing
-    </option>
-</select><br><br>
+    <label for="cpm_investor_logo">Logo:</label>
+    <input type="file" id="cpm_investor_logo" name="cpm_investor_logo" accept="image/*">
+    <?php if ($thumbnail_id): ?>
+    <img src="<?php echo wp_get_attachment_url($thumbnail_id); ?>" alt="Logo"
+        style="max-width: 100px; max-height: 100px;">
+    <?php endif; ?>
 
-<label for="cpm_investor_country">Country:</label>
-<select id="cpm_investor_country" name="cpm_investor_country" class="cpm-select2">
-    <!-- Options will be populated by JavaScript -->
-</select><br><br>
+    <label for="cpm_investing_status">Investing Status:</label>
+    <select id="cpm_investing_status" name="cpm_investing_status">
+        <option value="Actively Investing" <?php selected($investing_status_value, 'Actively Investing'); ?>>Actively
+            Investing</option>
+        <option value="Relaxed Investing" <?php selected($investing_status_value, 'Relaxed Investing'); ?>>Relaxed
+            Investing</option>
+    </select>
 
+    <label for="cpm_investor_country">Country:</label>
+    <select id="cpm_investor_country" name="cpm_investor_country" class="cpm-select2">
+        <!-- Options will be populated by JavaScript -->
+    </select>
+</div>
 <?php
-} 
+}
 
 // Save the 'founded in' year from the post edit screen
 function cpm_investor_save_meta_box_data( $post_id ) {
