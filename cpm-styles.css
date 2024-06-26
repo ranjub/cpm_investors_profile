@@ -1,0 +1,46 @@
+/* General form styling */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+/* Label styling */
+form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* Input field styling */
+form input[type="text"],
+form input[type="date"],
+form input[type="file"],
+form textarea,
+form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* Button styling */
+form input[type="submit"] {
+  background-color: #0073aa;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+form input[type="submit"]:hover {
+  background-color: #005a87;
+}
