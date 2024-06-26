@@ -14,6 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Enqueue Select2 for both front-end and admin
 function cpm_investor_enqueue_scripts() {
     wp_enqueue_script('jquery');
+    // Enqueue jQuery UI CSS
+    wp_enqueue_style('jquery-ui-css', 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
+    // Enqueue jQuery UI JS
+    wp_enqueue_script('jquery-ui-js', 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', array('jquery'), null, true);
     // Enqueue Select2 CSS
     wp_enqueue_style('select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
     
@@ -94,9 +98,45 @@ function cpm_investor_register_post_type() {
 // Hook into the 'init' action
 add_action( 'init', 'cpm_investor_register_post_type', 0 );
 
+// Register the Investment Type taxonomy
+function cpm_investor_register_taxonomy() {
+    $labels = array(
+        'name'              => _x('Investment Types', 'taxonomy general name', 'cpm_investor'),
+        'singular_name'     => _x('Investment Type', 'taxonomy singular name', 'cpm_investor'),
+        'search_items'      => __('Search Investment Types', 'cpm_investor'),
+        'all_items'         => __('All Investment Types', 'cpm_investor'),
+        'parent_item'       => __('Parent Investment Type', 'cpm_investor'),
+        'parent_item_colon' => __('Parent Investment Type:', 'cpm_investor'),
+        'edit_item'         => __('Edit Investment Type', 'cpm_investor'),
+        'update_item'       => __('Update Investment Type', 'cpm_investor'),
+        'add_new_item'      => __('Add New Investment Type', 'cpm_investor'),
+        'new_item_name'     => __('New Investment Type Name', 'cpm_investor'),
+        'menu_name'         => __('Investment Type', 'cpm_investor'),
+    );
+
+    $args = array(
+        'hierarchical'      => false,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'update_count_callback' => '_update_post_term_count',
+        'query_var'         => true,
+        'rewrite'           => array('slug' => 'investment-type'),
+    );
+
+    register_taxonomy('investment_type', 'cpm_investor', $args);
+}
+add_action('init', 'cpm_investor_register_taxonomy');
+
+
 // Shortcode to display the form
 function cpm_investor_submission_form() {
     ob_start();
+
+    $terms = get_terms(array(
+        'taxonomy' => 'investment_type',
+        'hide_empty' => false,
+    ));
     ?>
 <!-- frontend form -->
 <div class="cpm-form-container">
@@ -108,7 +148,8 @@ function cpm_investor_submission_form() {
         <textarea id="investor_description" name="investor_description" rows="4" cols="50" required></textarea>
 
         <label for="investor_founded">Founded in:</label>
-        <input type="date" id="investor_founded" name="investor_founded" required>
+        <input type="text" id="investor_founded" name="investor_founded" required>
+
 
         <label for="investor_type">Investor Type:</label>
         <select id="investor_type" name="investor_type[]" multiple="multiple" class="cpm-select2" required>
@@ -128,6 +169,15 @@ function cpm_investor_submission_form() {
         <label for="investor_country">Country:</label>
         <select id="investor_country" name="investor_country" class="cpm-select2" required></select>
 
+        <label for="investment_type">Investment Type:</label>
+        <select id="investment_type" name="investment_type[]" multiple="multiple" class="cpm-select2">
+            <?php
+            foreach ($terms as $term) {
+                echo '<option value="' . esc_attr($term->term_id) . '">' . esc_html($term->name) . '</option>';
+            }
+            ?>
+        </select>
+
         <input type="submit" name="submit_investor" value="Submit">
     </form>
 </div>
@@ -142,10 +192,10 @@ function cpm_investor_handle_form_submission() {
         $investor_name = sanitize_text_field( $_POST['investor_name'] );
         $investor_description = sanitize_textarea_field( $_POST['investor_description'] );
         $investor_founded = sanitize_text_field( $_POST['investor_founded'] );
-        $investor_type = array_map('sanitize_text_field', $_POST['investor_type']);
-        $investing_status = sanitize_text_field($_POST['investing_status']);
-        $investor_country = sanitize_text_field($_POST['investor_country']);
-
+        $investor_type = array_map( 'sanitize_text_field', $_POST['investor_type'] );
+        $investing_status = sanitize_text_field( $_POST['investing_status'] );
+        $investor_country = sanitize_text_field( $_POST['investor_country'] );
+        
         // Create a new post of type 'cpm_investor'
         $new_post = array(
             'post_title'   => $investor_name,
@@ -153,53 +203,50 @@ function cpm_investor_handle_form_submission() {
             'post_status'  => 'draft',
             'post_type'    => 'cpm_investor'
         );
-        if ( array_key_exists( 'cpm_investor_type', $_POST ) ) {
-            $investor_type = array_map( 'sanitize_text_field', $_POST['cpm_investor_type'] );
-            update_post_meta(
-                $post_id,
-                'cpm_investor_type',
-                $investor_type
-            );
-        }
- 
 
         // Insert the post into the database
         $post_id = wp_insert_post( $new_post );
 
         // Save the 'founded in' year as post meta
-        if (!is_wp_error($post_id)) {
-            update_post_meta($post_id, 'cpm_investor_founded', $investor_founded);
-            update_post_meta($post_id, 'cpm_investor_type', $investor_type);
-            update_post_meta($post_id, 'cpm_investor_country', $investor_country);
+        if ( ! is_wp_error( $post_id ) ) {
+            update_post_meta( $post_id, 'cpm_investor_founded', $investor_founded );
+            update_post_meta( $post_id, 'cpm_investor_type', $investor_type );
+            update_post_meta( $post_id, 'cpm_investor_country', $investor_country );
+            update_post_meta( $post_id, 'cpm_investing_status', $investing_status );
 
+            // Handle the investment type taxonomy terms
+            if ( isset( $_POST['investment_type'] ) ) {
+                $investment_types = array_map( 'intval', $_POST['investment_type'] );
+                wp_set_object_terms( $post_id, $investment_types, 'investment_type' );
+            }
         }
-        // Handle the logo upload and set it as the featured image
-        if (!empty($_FILES['investor_logo']['name'])) {
-            $file = $_FILES['investor_logo'];
-            $upload = wp_handle_upload($file, array('test_form' => false));
 
-            if (!isset($upload['error']) && isset($upload['file'])) {
-                $filetype = wp_check_filetype(basename($upload['file']), null);
+        // Handle the logo upload and set it as the featured image
+        if ( ! empty( $_FILES['investor_logo']['name'] ) ) {
+            $file = $_FILES['investor_logo'];
+            $upload = wp_handle_upload( $file, array( 'test_form' => false ) );
+
+            if ( ! isset( $upload['error'] ) && isset( $upload['file'] ) ) {
+                $filetype = wp_check_filetype( basename( $upload['file'] ), null );
                 $wp_upload_dir = wp_upload_dir();
 
                 $attachment = array(
-                    'guid' => $wp_upload_dir['url'] . '/' . basename($upload['file']),
+                    'guid'           => $wp_upload_dir['url'] . '/' . basename( $upload['file'] ),
                     'post_mime_type' => $filetype['type'],
-                    'post_title' => preg_replace('/\.[^.]+$/', '', basename($upload['file'])),
-                    'post_content' => '',
-                    'post_status' => 'inherit'
+                    'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $upload['file'] ) ),
+                    'post_content'   => '',
+                    'post_status'    => 'inherit'
                 );
 
-                $attach_id = wp_insert_attachment($attachment, $upload['file'], $post_id);
-                require_once(ABSPATH . 'wp-admin/includes/image.php');
-                $attach_data = wp_generate_attachment_metadata($attach_id, $upload['file']);
-                wp_update_attachment_metadata($attach_id, $attach_data);
-                set_post_thumbnail($post_id, $attach_id);
+                $attach_id = wp_insert_attachment( $attachment, $upload['file'], $post_id );
+                require_once( ABSPATH . 'wp-admin/includes/image.php' );
+                $attach_data = wp_generate_attachment_metadata( $attach_id, $upload['file'] );
+                wp_update_attachment_metadata( $attach_id, $attach_data );
+                set_post_thumbnail( $post_id, $attach_id );
             }
         }
     }
 }
-
 add_action( 'init', 'cpm_investor_handle_form_submission' );
 
 // Display the 'founded in' year in the post edit screen
@@ -233,8 +280,9 @@ function cpm_investor_meta_box_callback( $post ) {
     ?>
 <div class="cpm-meta-box-container">
     <label for="cpm_investor_founded">Founded in:</label>
-    <input type="date" id="cpm_investor_founded" name="cpm_investor_founded"
+    <input type="text" id="cpm_investor_founded" name="cpm_investor_founded"
         value="<?php echo esc_attr($founded_value); ?>">
+
 
     <label for="cpm_investor_type">Investor Type:</label>
     <select id="cpm_investor_type" name="cpm_investor_type[]" multiple="multiple" class="cpm-select2">
@@ -267,6 +315,24 @@ function cpm_investor_meta_box_callback( $post ) {
 
 // Save the 'founded in' year from the post edit screen
 function cpm_investor_save_meta_box_data( $post_id ) {
+
+    if (!isset($_POST['cpm_investor_meta_box_nonce'])) {
+        return;
+    }
+
+    if (!wp_verify_nonce($_POST['cpm_investor_meta_box_nonce'], 'cpm_investor_save_meta_box_data')) {
+        return;
+    }
+
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    if (isset($_POST['post_type']) && 'cpm_investor' == $_POST['post_type']) {
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
+    }
+
 if ( array_key_exists( 'cpm_investor_founded', $_POST ) ) {
 update_post_meta(
 $post_id,
@@ -297,6 +363,11 @@ if (array_key_exists('cpm_investor_country', $_POST)) {
         'cpm_investor_country',
         sanitize_text_field($_POST['cpm_investor_country'])
     );
+}
+
+if (isset($_POST['cpm_investment_type'])) {
+    $investment_types = array_map('intval', $_POST['cpm_investment_type']);
+    wp_set_object_terms($post_id, $investment_types, 'investment_type');
 }
 // Handle the logo upload and set it as the featured image
 if (!empty($_FILES['cpm_investor_logo']['name'])) {

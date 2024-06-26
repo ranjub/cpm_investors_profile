@@ -3,6 +3,21 @@ jQuery(document).ready(function ($) {
     placeholder: "Select Investor Type",
     allowClear: true,
   });
+
+  // Initialize jQuery UI Datepicker with year view only
+  $("#cpm_investor_founded, #investor_founded")
+    .datepicker({
+      changeYear: true,
+      showButtonPanel: true,
+      dateFormat: "yy",
+      onClose: function (dateText, inst) {
+        $(this).datepicker("setDate", new Date(inst.selectedYear, 1));
+      },
+    })
+    .focus(function () {
+      $(".ui-datepicker-month").hide();
+      $(".ui-datepicker-calendar").hide();
+    });
 });
 
 //for drop down list of countries
@@ -235,6 +250,15 @@ jQuery(document).ready(function ($) {
   $("#cpm_investor_country").select2({
     placeholder: "Select a country",
     allowClear: true,
+  });
+  $("#investment_type").select2({
+    tags: true,
+    placeholder: "Select Investment Type",
+  });
+
+  $("#cpm_investment_type").select2({
+    tags: true,
+    placeholder: "Select Investment Type",
   });
 
   // Populate country select field in the frontend form
