@@ -327,12 +327,12 @@ function load_investor_template($template) {
 }
 add_filter('template_include', 'load_investor_template');
 //enqueue styles for single page
-function my_custom_plugin_enqueue_styles() {
+function cpm_investor_enqueue_styles() {
     if (is_singular('cpm_investor')) {
         wp_enqueue_style('single-investor-style', plugin_dir_url(__FILE__) . 'single-cpm_investor.css', array(), '1.0.0', 'all');
     }
 }
-add_action('wp_enqueue_scripts', 'my_custom_plugin_enqueue_styles');
+add_action('wp_enqueue_scripts', 'cpm_investor_enqueue_styles');
 
 
 //to register the sidebar in widgets for single page
