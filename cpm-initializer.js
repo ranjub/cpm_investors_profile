@@ -4,10 +4,11 @@ jQuery(document).ready(function ($) {
     allowClear: true,
   });
 });
-jQuery(document).ready(function ($) {
-  $(".cpm-select2").select2();
 
-  const countries = [
+//for drop down list of countries
+jQuery(document).ready(function ($) {
+  // List of countries
+  var countries = [
     "Afghanistan",
     "Albania",
     "Algeria",
@@ -46,8 +47,10 @@ jQuery(document).ready(function ($) {
     "China",
     "Colombia",
     "Comoros",
-    "Congo",
+    "Congo, Democratic Republic of the",
+    "Congo, Republic of the",
     "Costa Rica",
+    "Cote d'Ivoire",
     "Croatia",
     "Cuba",
     "Cyprus",
@@ -205,11 +208,42 @@ jQuery(document).ready(function ($) {
     "Zimbabwe",
   ];
 
-  countries.forEach(function (country) {
-    $("#cpm_investor_country").append(new Option(country, country));
+  function populateCountrySelect(selector) {
+    var $select = $(selector);
+    countries.forEach(function (country) {
+      var option = new Option(country, country);
+      $select.append(option);
+    });
+  }
+
+  // Apply select2 to the necessary fields with appropriate placeholders
+  $("#investor_type").select2({
+    placeholder: "Select Investor Type",
+    allowClear: true,
   });
 
-  // Preselect country in admin
+  $("#cpm_investor_type").select2({
+    placeholder: "Select Investor Type",
+    allowClear: true,
+  });
+
+  $("#investor_country").select2({
+    placeholder: "Select a country",
+    allowClear: true,
+  });
+
+  $("#cpm_investor_country").select2({
+    placeholder: "Select a country",
+    allowClear: true,
+  });
+
+  // Populate country select field in the frontend form
+  populateCountrySelect("#investor_country");
+
+  // Populate country select field in the backend form
+  populateCountrySelect("#cpm_investor_country");
+
+  // Set the selected value in the backend form
   if (typeof cpm_investor_country !== "undefined") {
     $("#cpm_investor_country").val(cpm_investor_country).trigger("change");
   }

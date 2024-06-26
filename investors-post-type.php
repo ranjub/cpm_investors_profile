@@ -244,7 +244,6 @@ function cpm_investor_meta_box_callback( $post ) {
     </select>
 
     <label for="cpm_investor_logo">Logo:</label>
-    <input type="file" id="cpm_investor_logo" name="cpm_investor_logo" accept="image/*">
     <?php if ($thumbnail_id): ?>
     <img src="<?php echo wp_get_attachment_url($thumbnail_id); ?>" alt="Logo"
         style="max-width: 100px; max-height: 100px;">
