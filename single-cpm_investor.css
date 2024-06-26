@@ -1,0 +1,21 @@
+/* main section */
+.cpm_investor_section {
+    display: flex;
+    flex-direction: row;
+}
+.cpm_investor{
+    width:1300px;
+}
+
+/* main heading of the page */
+.cpm_investor_heading {
+    text-align: center;
+}
+/* name of the investor */
+.cpminvestor_title{
+    text-align:center;
+}
+/* description by the investor */
+.cpm_investor_content{
+ 
+}
