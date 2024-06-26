@@ -1,46 +1,61 @@
-/* General form styling */
-form {
-  max-width: 500px;
-  margin: 0 auto;
+/* General styling for both frontend and backend */
+.cpm-form-container,
+.cpm-meta-box-container {
+  max-width: 600px;
+  margin: 20px auto;
   padding: 20px;
   border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f9f9f9;
+  border-radius: 5px;
+  background: #f9f9f9;
 }
 
-/* Label styling */
-form label {
+.cpm-form-container label,
+.cpm-meta-box-container label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   font-weight: bold;
 }
 
-/* Input field styling */
-form input[type="text"],
-form input[type="date"],
-form input[type="file"],
-form textarea,
-form select {
+.cpm-form-container input[type="text"],
+.cpm-form-container input[type="date"],
+.cpm-form-container input[type="file"],
+.cpm-form-container textarea,
+.cpm-form-container select,
+.cpm-meta-box-container input[type="text"],
+.cpm-meta-box-container input[type="date"],
+.cpm-meta-box-container input[type="file"],
+.cpm-meta-box-container textarea,
+.cpm-meta-box-container select {
   width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
   box-sizing: border-box;
-  font-size: 16px;
 }
 
-/* Button styling */
-form input[type="submit"] {
-  background-color: #0073aa;
+.cpm-form-container input[type="submit"],
+.cpm-meta-box-container input[type="submit"] {
+  background-color: #4caf50;
   color: white;
   padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
 }
 
-form input[type="submit"]:hover {
-  background-color: #005a87;
+.cpm-form-container input[type="submit"]:hover,
+.cpm-meta-box-container input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Ensure Select2 styling is consistent */
+.cpm-select2-container {
+  width: 100% !important;
+}
+
+/* Add some margin to the image preview */
+.cpm-meta-box-container img {
+  display: block;
+  margin-top: 10px;
 }

@@ -7,7 +7,6 @@ jQuery(document).ready(function ($) {
 jQuery(document).ready(function ($) {
   $(".cpm-select2").select2();
 
-  // Country list from an external API or library
   const countries = [
     "Afghanistan",
     "Albania",
@@ -207,11 +206,11 @@ jQuery(document).ready(function ($) {
   ];
 
   countries.forEach(function (country) {
-    $("#investor_country").append(new Option(country, country));
+    $("#cpm_investor_country").append(new Option(country, country));
   });
 
   // Preselect country in admin
   if (typeof cpm_investor_country !== "undefined") {
-    $("#investor_country").val(cpm_investor_country).trigger("change");
+    $("#cpm_investor_country").val(cpm_investor_country).trigger("change");
   }
 });

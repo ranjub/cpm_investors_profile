@@ -125,6 +125,8 @@ function cpm_investor_submission_form() {
     <label for="investor_country">Country:</label>
     <select id="investor_country" name="investor_country" class="cpm-select2"></select><br><br>
 
+
+
     <input type="submit" name="submit_investor" value="Submit">
 </form>
 <?php
@@ -223,6 +225,9 @@ function cpm_investor_meta_box_callback( $post ) {
     if (!is_array($type_value)) {
         $type_value = array();
     }
+    
+    wp_nonce_field('cpm_investor_save_meta_box_data', 'cpm_investor_meta_box_nonce');
+
     ?>
 <label for="cpm_investor_founded">Founded in:</label>
 <input type="date" id="cpm_investor_founded" name="cpm_investor_founded"
