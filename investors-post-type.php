@@ -6,6 +6,11 @@ Version: 1.0
 Author: Ranju and Prasna
 License: GPL2
 */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 // Enqueue Select2 for both front-end and admin
 function cpm_investor_enqueue_scripts() {
     wp_enqueue_script('jquery');
@@ -28,10 +33,7 @@ function cpm_investor_enqueue_scripts() {
 add_action('wp_enqueue_scripts', 'cpm_investor_enqueue_scripts');
 add_action('admin_enqueue_scripts', 'cpm_investor_enqueue_scripts');
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
+
 
 // Function to register the custom post type
 function cpm_investor_register_post_type() {
