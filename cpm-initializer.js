@@ -251,15 +251,26 @@ jQuery(document).ready(function ($) {
     placeholder: "Select a country",
     allowClear: true,
   });
+
   $("#investment_type").select2({
     tags: true,
+    tokenSeparators: [",", " "],
     placeholder: "Select Investment Type",
   });
-
   $("#cpm_investment_type").select2({
     tags: true,
+    tokenSeparators: [",", " "],
     placeholder: "Select Investment Type",
   });
+  //   $("#investment_type").select2({
+  //     tags: true,
+  //     placeholder: "Select Investment Type",
+  //   });
+
+  //   $("#cpm_investment_type").select2({
+  //     tags: true,
+  //     placeholder: "Select Investment Type",
+  //   });
 
   // Populate country select field in the frontend form
   populateCountrySelect("#investor_country");

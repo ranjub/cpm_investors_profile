@@ -184,13 +184,11 @@ function cpm_investor_submission_form() {
         <label for="investor_country">Country:</label>
         <select id="investor_country" name="investor_country" class="cpm-select2" required></select>
 
-        <label for="investment_type">Investment Type:</label>
-        <select id="investment_type" name="investment_type[]" multiple="multiple" class="cpm-select2">
-            <?php
-            foreach ($terms as $term) {
-                echo '<option value="' . esc_attr($term->term_id) . '">' . esc_html($term->name) . '</option>';
-            }
-            ?>
+        <label for="investment_type">Type of Investment:</label>
+        <select id="investment_type" name="investment_type[]" multiple="multiple">
+            <?php foreach ($terms as $term) : ?>
+            <option value="<?php echo esc_attr($term->term_id); ?>"><?php echo esc_html($term->name); ?></option>
+            <?php endforeach; ?>
         </select>
 
         <input type="submit" name="submit_investor" value="Submit">
@@ -210,6 +208,7 @@ function cpm_investor_handle_form_submission() {
         $investor_type = array_map( 'sanitize_text_field', $_POST['investor_type'] );
         $investing_status = sanitize_text_field( $_POST['investing_status'] );
         $investor_country = sanitize_text_field( $_POST['investor_country'] );
+        $investment_types = array_map('sanitize_text_field', $_POST['investment_type']);
         
         // Create a new post of type 'cpm_investor'
         $new_post = array(
@@ -229,12 +228,28 @@ function cpm_investor_handle_form_submission() {
             update_post_meta( $post_id, 'cpm_investor_country', $investor_country );
             update_post_meta( $post_id, 'cpm_investing_status', $investing_status );
 
-            // Handle the investment type taxonomy terms
-            if ( isset( $_POST['investment_type'] ) ) {
-                $investment_types = array_map( 'intval', $_POST['investment_type'] );
-                wp_set_object_terms( $post_id, $investment_types, 'investment_type' );
-            }
+            // // Handle the investment type taxonomy terms
+            // if ( isset( $_POST['investment_type'] ) ) {
+            //     $investment_types = array_map( 'intval', $_POST['investment_type'] );
+            //     wp_set_object_terms( $post_id, $investment_types, 'investment_type' );
+            // }
+
+           // Set taxonomy terms
+        $term_ids = array();
+        foreach ($investment_types as $investment_type) {
+            if (is_numeric($investment_type)) {
+                $term_ids[] = intval($investment_type);
+            } else {
+                $new_term = wp_insert_term($investment_type, 'investment_type');
+                if (!is_wp_error($new_term)) {
+                    $term_ids[] = $new_term['term_id'];
+                }
         }
+    }
+    
+    wp_set_post_terms($post_id, $term_ids, 'investment_type');
+       
+    
 
         // Handle the logo upload and set it as the featured image
         if ( ! empty( $_FILES['investor_logo']['name'] ) ) {
@@ -262,6 +277,8 @@ function cpm_investor_handle_form_submission() {
         }
     }
 }
+}
+    
 add_action( 'init', 'cpm_investor_handle_form_submission' );
 
 // Display the 'founded in' year in the post edit screen
@@ -278,7 +295,7 @@ function cpm_investor_add_meta_box() {
 add_action( 'add_meta_boxes', 'cpm_investor_add_meta_box' );
 
 
- // Save the 'founded in' year and 'investor type' as post meta admin side 
+ // Save the data as post meta admin side 
 
 function cpm_investor_meta_box_callback( $post ) {
     wp_nonce_field('cpm_investor_nonce_action', 'cpm_investor_nonce');
@@ -343,6 +360,14 @@ function cpm_investor_meta_box_callback( $post ) {
 </div>
 <?php
 }
+// Fetch terms for the form
+function cpm_get_investment_terms() {
+    $terms = get_terms(array(
+        'taxonomy' => 'investment_type',
+        'hide_empty' => false,
+    ));
+    return $terms;
+}
 
 // Save the 'founded in' year from the post edit screen
 function cpm_investor_save_meta_box_data( $post_id ) {
@@ -358,6 +383,7 @@ function cpm_investor_save_meta_box_data( $post_id ) {
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return;
     }
+
     if (isset($_POST['post_type']) && 'cpm_investor' == $_POST['post_type']) {
         if (!current_user_can('edit_post', $post_id)) {
             return;
@@ -411,36 +437,13 @@ if (isset($_POST['cpm_investor_valid_for'])) {
     update_post_meta($post_id, 'cpm_investor_valid_for', sanitize_text_field($_POST['cpm_investor_valid_for']));
 }
 
+    $terms = cpm_get_investment_terms();
+    $selected_terms = wp_get_post_terms($post_id, 'investment_type', array('fields' => 'ids'));
+
+}
 
 add_action('save_post', 'cpm_investor_save_meta_box_data');
-// Handle the logo upload and set it as the featured image
-if (!empty($_FILES['cpm_investor_logo']['name'])) {
-$file = $_FILES['cpm_investor_logo'];
-$upload = wp_handle_upload($file, array('test_form' => false));
 
-if (!isset($upload['error']) && isset($upload['file'])) {
-$filetype = wp_check_filetype(basename($upload['file']), null);
-$wp_upload_dir = wp_upload_dir();
-
-$attachment = array(
-'guid' => $wp_upload_dir['url'] . '/' . basename($upload['file']),
-'post_mime_type' => $filetype['type'],
-'post_title' => preg_replace('/\.[^.]+$/', '', basename($upload['file'])),
-'post_content' => '',
-'post_status' => 'inherit'
-);
-
-$attach_id = wp_insert_attachment($attachment, $upload['file'], $post_id);
-require_once(ABSPATH . 'wp-admin/includes/image.php');
-$attach_data = wp_generate_attachment_metadata($attach_id, $upload['file']);
-wp_update_attachment_metadata($attach_id, $attach_data);
-set_post_thumbnail($post_id, $attach_id);
-}
-}
-}
-
-
-add_action( 'save_post', 'cpm_investor_save_meta_box_data' );
 
 // Remove Custom Fields meta box for custom post type 'cpm_investor'
 function cpm_investor_remove_custom_fields_meta_box() {
