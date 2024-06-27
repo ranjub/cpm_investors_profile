@@ -32,7 +32,9 @@ get_header();
 
                        <?php echo '<p class= "investor_logo">' . get_the_post_thumbnail(); '</p>'; ?>
 
-                       <?php   echo '<h2 class="investor_username">' . get_the_title() . '</h2>';  ?>
+                       <?php   
+                     //   echo '<h2 class="investor_username">' . get_the_title() . '</h2>'; 
+                        ?>
 
                         
                </div>
