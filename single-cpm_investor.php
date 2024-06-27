@@ -8,6 +8,7 @@ get_header();
  <section class="cpm_investor_section">
 <div class = "cpm_investor">
    <h2 class="cpm_investor_heading">Investor Details</h2>
+
    <?php
    $investor_type = get_post_meta(get_the_ID(), 'cpm_investor_type', true); // This will be an array
       ?>
@@ -22,7 +23,9 @@ get_header();
                 <?php endif; ?>
    <p class = "cpm_investor_country"><strong>Country: </strong><?php echo esc_html(get_post_meta(get_the_ID(), 'cpm_investor_country', true)); ?></p>
    <p class = "cpm_investing_status"><strong>Investing Status: </strong><?php echo esc_html(get_post_meta(get_the_ID(), 'cpm_investing_status', true)); ?></p>
-   <p class = "cpm_investmet_type"><strong>Investment Type: </strong><?php echo esc_html(get_post_meta(get_the_ID(), 'investment_type', true)); ?></p>
+   <p class = "cpm_investment_type"><strong>Investment Type: </strong><?php echo esc_html(get_post_meta(get_the_ID(), 'investment_type', true)); ?></p>
+   <p class = "cpm_investor_publish_date"><strong>Publish Date: </strong><?php echo esc_html(get_post_meta(get_the_ID(), 'cpm_investor_publish_date', true)); ?></p>
+   <p class = "cpm_investor_valid_days"><strong>Valid Days: </strong><?php echo esc_html(get_post_meta(get_the_ID(), 'cpm_investor_valid_days', true)); ?></p>
 
  </div>
   <!-- for sidebar  -->
