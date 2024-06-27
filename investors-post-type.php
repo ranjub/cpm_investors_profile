@@ -5,6 +5,7 @@ Description: A plugin to create a custom post type for Investors.
 Version: 1.0
 Author: Ranju and Prashna
 License: GPL2
+Text Domain: cpm_investors
 */
 
 // Exit if accessed directly
@@ -57,37 +58,37 @@ add_action('admin_enqueue_scripts', 'cpm_investor_enqueue_scripts');
 function cpm_investor_register_post_type() {
 
     $labels = array(
-        'name'                  => _x( 'Investors', 'Post Type General Name', 'textdomain' ),
-        'singular_name'         => _x( 'Investor', 'Post Type Singular Name', 'textdomain' ),
-        'menu_name'             => __( 'Investors', 'textdomain' ),
-        'name_admin_bar'        => __( 'Investor', 'textdomain' ),
-        'archives'              => __( 'Investor Archives', 'textdomain' ),
-        'attributes'            => __( 'Investor Attributes', 'textdomain' ),
-        'parent_item_colon'     => __( 'Parent Investor:', 'textdomain' ),
-        'all_items'             => __( 'All Investors', 'textdomain' ),
-        'add_new_item'          => __( 'Add New Investor', 'textdomain' ),
-        'add_new'               => __( 'Add New', 'textdomain' ),
-        'new_item'              => __( 'New Investor', 'textdomain' ),
-        'edit_item'             => __( 'Edit Investor', 'textdomain' ),
-        'update_item'           => __( 'Update Investor', 'textdomain' ),
-        'view_item'             => __( 'View Investor', 'textdomain' ),
-        'view_items'            => __( 'View Investors', 'textdomain' ),
-        'search_items'          => __( 'Search Investor', 'textdomain' ),
-        'not_found'             => __( 'Not found', 'textdomain' ),
-        'not_found_in_trash'    => __( 'Not found in Trash', 'textdomain' ),
-        'featured_image'        => __( 'Featured Image', 'textdomain' ),
-        'set_featured_image'    => __( 'Set featured image', 'textdomain' ),
-        'remove_featured_image' => __( 'Remove featured image', 'textdomain' ),
-        'use_featured_image'    => __( 'Use as featured image', 'textdomain' ),
-        'insert_into_item'      => __( 'Insert into investor', 'textdomain' ),
-        'uploaded_to_this_item' => __( 'Uploaded to this investor', 'textdomain' ),
-        'items_list'            => __( 'Investors list', 'textdomain' ),
-        'items_list_navigation' => __( 'Investors list navigation', 'textdomain' ),
-        'filter_items_list'     => __( 'Filter investors list', 'textdomain' ),
+        'name'                  => _x( 'Investors', 'Post Type General Name', 'cpm_investors' ),
+        'singular_name'         => _x( 'Investor', 'Post Type Singular Name', 'cpm_investors' ),
+        'menu_name'             => __( 'Investors', 'cpm_investors' ),
+        'name_admin_bar'        => __( 'Investor', 'cpm_investors' ),
+        'archives'              => __( 'Investor Archives', 'cpm_investors' ),
+        'attributes'            => __( 'Investor Attributes', 'cpm_investors' ),
+        'parent_item_colon'     => __( 'Parent Investor:', 'cpm_investors' ),
+        'all_items'             => __( 'All Investors', 'cpm_investors' ),
+        'add_new_item'          => __( 'Add New Investor', 'cpm_investors' ),
+        'add_new'               => __( 'Add New', 'cpm_investors' ),
+        'new_item'              => __( 'New Investor', 'cpm_investors' ),
+        'edit_item'             => __( 'Edit Investor', 'cpm_investors' ),
+        'update_item'           => __( 'Update Investor', 'cpm_investors' ),
+        'view_item'             => __( 'View Investor', 'cpm_investors' ),
+        'view_items'            => __( 'View Investors', 'cpm_investors' ),
+        'search_items'          => __( 'Search Investor', 'cpm_investors' ),
+        'not_found'             => __( 'Not found', 'cpm_investors' ),
+        'not_found_in_trash'    => __( 'Not found in Trash', 'cpm_investors' ),
+        'featured_image'        => __( 'Featured Image', 'cpm_investors' ),
+        'set_featured_image'    => __( 'Set featured image', 'cpm_investors' ),
+        'remove_featured_image' => __( 'Remove featured image', 'cpm_investors' ),
+        'use_featured_image'    => __( 'Use as featured image', 'cpm_investors' ),
+        'insert_into_item'      => __( 'Insert into investor', 'cpm_investors' ),
+        'uploaded_to_this_item' => __( 'Uploaded to this investor', 'cpm_investors' ),
+        'items_list'            => __( 'Investors list', 'cpm_investors' ),
+        'items_list_navigation' => __( 'Investors list navigation', 'cpm_investors' ),
+        'filter_items_list'     => __( 'Filter investors list', 'cpm_investors' ),
     );
     $args = array(
-        'label'                 => __( 'Investor', 'textdomain' ),
-        'description'           => __( 'Post Type for Investors', 'textdomain' ),
+        'label'                 => __( 'Investor', 'cpm_investors' ),
+        'description'           => __( 'Post Type for Investors', 'cpm_investors' ),
         'labels'                => $labels,
         'supports'              => array( 'title', 'editor', 'thumbnail', 'revisions' ),
         'hierarchical'          => false,
@@ -140,6 +141,11 @@ function cpm_investor_register_taxonomy() {
 }
 add_action('init', 'cpm_investor_register_taxonomy');
 
+// Ensure taxonomy is displayed as tags
+function cpm_investor_add_taxonomy_to_post_type() {
+    register_taxonomy_for_object_type('investment_type', 'cpm_investor');
+}
+add_action('init', 'cpm_investor_add_taxonomy_to_post_type');
 
 // Shortcode to display the form
 function cpm_investor_submission_form() {
@@ -277,6 +283,7 @@ function cpm_investor_handle_form_submission() {
         }
     }
 }
+// echo "Investor registered successsfully";
 }
     
 add_action( 'init', 'cpm_investor_handle_form_submission' );
@@ -439,7 +446,7 @@ if (isset($_POST['cpm_investor_valid_for'])) {
 
     $terms = cpm_get_investment_terms();
     $selected_terms = wp_get_post_terms($post_id, 'investment_type', array('fields' => 'ids'));
-
+   
 }
 
 add_action('save_post', 'cpm_investor_save_meta_box_data');
@@ -474,9 +481,9 @@ add_action('wp_enqueue_scripts', 'cpm_investor_enqueue_styles');
 
 function cpm_investor_register_sidebar() {
     register_sidebar(array(
-        'name'          => __('Investor Sidebar', 'textdomain'),
+        'name'          => __('Investor Sidebar', 'cpm_investors'),
         'id'            => 'investor-sidebar',
-        'description'   => __('Widgets in this area will be shown on the single investor pages.', 'textdomain'),
+        'description'   => __('Widgets in this area will be shown on the single investor pages.', 'cpm_investors'),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget'  => '</div>',
         'before_title'  => '<h2 class="widget-title">',
