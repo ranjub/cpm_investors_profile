@@ -22,7 +22,7 @@
 .cpm_investor_content {
     width:1100px;
     margin-left: 50px;
-    text-align: center;
+    text-align: left;
     font-size: 20px;
     line-height: 25px;
 }
@@ -34,4 +34,17 @@
 .cpm_investor_type{
     margin-left: 50px;
 
+}
+.cpm_investor_country{
+    margin-left:50px;
+}
+.cpm_investing_status{
+    margin-left:50px;
+}
+.cpm_investmet_type{
+    margin-left:50px;
+}
+.investor_sidebar{
+    width:90px;
+    margin-top:70px;
 }
