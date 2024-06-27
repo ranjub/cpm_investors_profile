@@ -7,7 +7,7 @@ get_header();
 ?>
  <section class="cpm_investor_section">
 <div class = "cpm_investor">
-   <h1 class="cpm_investor_heading">Investor Details</h1>
+   <h2 class="cpm_investor_heading">Investor Details</h2>
    <?php
    $investor_type = get_post_meta(get_the_ID(), 'cpm_investor_type', true); // This will be an array
       ?>

@@ -159,7 +159,7 @@ function cpm_investor_submission_form() {
         <input type="text" id="investor_name" name="investor_name" required>
 
         <label for="investor_description">Short Description:</label>
-        <textarea id="investor_description" name="investor_description" rows="4" cols="50" required></textarea>
+        <textarea id="investor_description" name="investor_description" rows="4" cols="50" ></textarea>
 
         <label for="investor_founded">Founded in:</label>
         <input type="text" id="investor_founded" name="investor_founded" required>
