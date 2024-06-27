@@ -1,21 +1,30 @@
 /* main div of the single page */
-.investor-profile_maindiv{
+.investor-profile_maindiv {
     width: 85%;
     margin-left: 35px;
 }
 
 /* profile heading div */
-.profile_header{
-   text-align: center;
-   background-color: #B3E2A7;
-   padding-bottom: 0px;
+.profile_header {
+    text-align: center;
+    background-color: #B3E2A7;
+    padding-bottom: 0px;
 
 }
+
 /* heading */
-.investor_profile{
+.investor_profile {
     padding-top: 20px;
     margin-bottom: 0px;
 }
-.investor_moto{
-    padding-bottom:5px;
+
+.investor_moto {
+    padding-bottom: 5px;
+}
+.investor_content_div{
+
+}
+.cpm_investor_logo{
+    /* height: 150px;
+    width: 160px; */
 }
