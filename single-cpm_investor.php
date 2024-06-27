@@ -19,7 +19,7 @@ get_header();
           $investor_id = get_the_ID();
           $publish_date_admin  = get_post_meta($investor_id, 'cpm_investor_publish_date', true);   
           $valid_days = get_post_meta($investor_id, 'cpm_investor_valid_for', true);  // get the data from the db
-  
+          $investor_type = get_post_meta( $investor_id, 'cpm_investor_type', true); // This will be an array
          //  $total_valid_days = $publish_date_admin ." " .  $valid_days ;
          // echo $valid_days;
 
@@ -36,29 +36,76 @@ get_header();
 
                         
                </div>
-               <div>
-                  <h3>Investor Details</h3>
+               <div class= "investor_details_div">
+                  <h2 class="cpm_investor_details">Investor Details</h2>
 
+                  <!-- for the title -->
+                  <h3 class="cpminvestor_title"> <?php the_title(); ?></h3> 
+
+                    <!-- founded date -->
+                  <p class = "cpm_investor_foundedin" id="investor_attr"><strong>Founded In: </strong>
+                  <?php echo esc_html(get_post_meta($investor_id, 'cpm_investor_founded', true)); ?></p>
+
+                  <!-- investor type -->
+                      <?php if (!empty($investor_type)) : ?>
+                           <p class="cpm_investor_type" id="investor_attr"><strong>Investor Type:</strong> 
+                           <?php echo implode(', ', array_map('esc_html', $investor_type)); ?></p>
+                         <?php 
+                            endif;
+                         ?>
+                  <!-- Investor country -->
+                  <p class = "cpm_investor_country" id="investor_attr"><strong> Country: </strong>
+                  <?php echo esc_html(get_post_meta( $investor_id, 'cpm_investor_country', true)); ?></p>
+
+                  <!-- Investing Status -->
+                  <p class = "cpm_investing_status" id="investor_attr"><strong>Investing Status: </strong>
+                  <?php echo esc_html(get_post_meta($investor_id, 'cpm_investing_status', true)); ?></p>
+
+                  <!-- Investment Type -->
+                  <p class = "cpm_investment_type" id="investor_attr"><strong>Investment Type: </strong>
+                  <?php echo esc_html(get_post_meta( $investor_id, 'investment_type', true)); ?></p>
+
+                <!-- for the description -->
+                 <p class="cpm_investment_content" id="investor_attr"><strong>Description:<strong><br>
+                 <?php the_content(); ?></p>
+
+               </div>
+               <div class="side-bar">
+                   <aside id="secondary" class="widget-area">
+                     <?php dynamic_sidebar('investor-sidebar'); ?>
+                   </aside>
                </div>
 
               
                <?php
                else :
                   // If no posts found
-                  echo 'No posts found.';          
+                  // <p class="cpm_investment_content" id="investor_attr">Description:</p>
+                  
+                  echo '<p class = "expire_message">';
+                  echo "Session Expired " ;
+                  echo '<br>';
+                  echo "Please Contact HO";
+                  echo '<p>';
+                 
             endif;
-             
-
+           
+                  
          endif;
+            
           
          // while( $publish_date_admin<= $total_valid_day){
          //    echo '<h2>' . the_title() . '</h2>';
          //    break;
          // }
 
-      
          ?>
+         
    </div>  
+   
+         <?php
+        
+         ?>
   </section>
   <?php
   get_footer();     
