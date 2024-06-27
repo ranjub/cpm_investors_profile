@@ -150,16 +150,17 @@ function cpm_investor_submission_form() {
         'hide_empty' => false,
     ));
     ?>
-<!-- Form title -->
-<h2 class="form-title">Investor Submission Form</h2>
+
 <!-- frontend form -->
 <div class="cpm-form-container">
+    <!-- Form title -->
+    <h2 class="form-title">Investor Submission Form</h2>
     <form action="" method="post" enctype="multipart/form-data">
         <label for="investor_name">Name of Investor:</label>
         <input type="text" id="investor_name" name="investor_name" required>
 
         <label for="investor_description">Short Description:</label>
-        <textarea id="investor_description" name="investor_description" rows="4" cols="50" ></textarea>
+        <textarea id="investor_description" name="investor_description" rows="4" cols="50"></textarea>
 
         <label for="investor_founded">Founded in:</label>
         <input type="text" id="investor_founded" name="investor_founded" required>
@@ -280,13 +281,15 @@ add_action( 'add_meta_boxes', 'cpm_investor_add_meta_box' );
  // Save the 'founded in' year and 'investor type' as post meta admin side 
 
 function cpm_investor_meta_box_callback( $post ) {
+    wp_nonce_field('cpm_investor_nonce_action', 'cpm_investor_nonce');
+
     $founded_value = get_post_meta( $post->ID, 'cpm_investor_founded', true );
     $type_value = get_post_meta($post->ID, 'cpm_investor_type', true);
     $thumbnail_id = get_post_thumbnail_id($post->ID);
     $investing_status_value = get_post_meta($post->ID, 'cpm_investing_status', true);
     $country_value = get_post_meta($post->ID, 'cpm_investor_country', true);
     $publish_date = get_post_meta($post->ID, 'cpm_investor_publish_date', true);
-    $valid_for_days = get_post_meta($post->ID, 'cpm_investor_valid_days', true);
+    $valid_for = get_post_meta($post->ID, 'cpm_investor_valid_for', true);
     if (!is_array($type_value)) {
         $type_value = array();
     }
@@ -325,13 +328,18 @@ function cpm_investor_meta_box_callback( $post ) {
     <select id="cpm_investor_country" name="cpm_investor_country" class="cpm-select2">
         <!-- Options will be populated by JavaScript -->
     </select>
-    <label for="cpm_investor_publish_date">Publish Date:</label>
-    <input type="text" id="cpm_investor_publish_date" name="cpm_investor_publish_date"
-        value="<?php echo esc_attr($publish_date); ?>" class="datepicker">
 
-    <label for="cpm_investor_valid_days">Valid for</label>
-    <input type="text" id="cpm_investor_valid_days" name="cpm_investor_valid_days"
-        value="<?php echo esc_attr($valid_for_days); ?>" placeholder="Enter number of days">
+    <p>
+        <label for="cpm_investor_publish_date">Publish Date:</label>
+        <input type="date" id="cpm_investor_publish_date" name="cpm_investor_publish_date"
+            value="<?php echo esc_attr($publish_date); ?>">
+    </p>
+    <p>
+        <label for="cpm_investor_valid_for">Valid for (days):</label>
+        <input type="number" id="cpm_investor_valid_for" name="cpm_investor_valid_for"
+            value="<?php echo esc_attr($valid_for); ?>">
+    </p>
+
 </div>
 <?php
 }
@@ -396,18 +404,15 @@ if (array_key_exists('cpm_investor_publish_date', $_POST)) {
     );
 }
 
-// Update 'Valid for ___ days'
-if (array_key_exists('cpm_investor_valid_days', $_POST)) {
-    update_post_meta(
-        $post_id,
-        'cpm_investor_valid_days',
-        sanitize_text_field($_POST['cpm_investor_valid_days'])
-    );
+if (isset($_POST['cpm_investor_publish_date'])) {
+    update_post_meta($post_id, 'cpm_investor_publish_date', sanitize_text_field($_POST['cpm_investor_publish_date']));
 }
-if (isset($_POST['cpm_investment_type'])) {
-    $investment_types = array_map('intval', $_POST['cpm_investment_type']);
-    wp_set_object_terms($post_id, $investment_types, 'investment_type');
+if (isset($_POST['cpm_investor_valid_for'])) {
+    update_post_meta($post_id, 'cpm_investor_valid_for', sanitize_text_field($_POST['cpm_investor_valid_for']));
 }
+
+
+add_action('save_post', 'cpm_investor_save_meta_box_data');
 // Handle the logo upload and set it as the featured image
 if (!empty($_FILES['cpm_investor_logo']['name'])) {
 $file = $_FILES['cpm_investor_logo'];
@@ -433,6 +438,7 @@ set_post_thumbnail($post_id, $attach_id);
 }
 }
 }
+
 
 add_action( 'save_post', 'cpm_investor_save_meta_box_data' );
 
