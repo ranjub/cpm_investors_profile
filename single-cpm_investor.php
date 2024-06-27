@@ -37,6 +37,7 @@ get_header();
                         
                </div>
                <div>
+                  <h3>Investor Details</h3>
 
                </div>
 

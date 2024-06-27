@@ -22,9 +22,14 @@
     padding-bottom: 5px;
 }
 .investor_content_div{
-
+ display: flex;
+ flex-direction: row;
 }
 .cpm_investor_logo{
-    /* height: 150px;
-    width: 160px; */
+    margin-left: 35px;
+}
+.investor_logo{
+    height: 150px;
+    width: 160px;
+    border-radius: 50%;
 }
