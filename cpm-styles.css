@@ -59,3 +59,7 @@
   display: block;
   margin-top: 10px;
 }
+
+#investor_description{
+  pointer-events: auto;
+}

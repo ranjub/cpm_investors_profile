@@ -1,63 +1,21 @@
-/* main section */
-.cpm_investor_section {
-    display: flex;
-    flex-direction: row;
+/* main div of the single page */
+.investor-profile_maindiv{
+    width: 85%;
+    margin-left: 35px;
 }
 
-.cpm_investor {
-    width: 1300px;
-}
-
-/* main heading of the page */
-.cpm_investor_heading {
-    text-align: center;
-}
-
-/* name of the investor */
-.cpminvestor_title {
-    text-align: center;
-}
-
-/* description by the investor */
-.cpm_investor_content {
-    width: 1100px;
-    margin-left: 50px;
-    text-align: left;
-    font-size: 20px;
-    line-height: 25px;
-}
-
-.cpm_investor_foundedin {
-    margin-left: 50px;
-    /* text-align:center; */
-}
-
-.cpm_investor_type {
-    margin-left: 50px;
+/* profile heading div */
+.profile_header{
+   text-align: center;
+   background-color: #B3E2A7;
+   padding-bottom: 0px;
 
 }
-
-.cpm_investor_country {
-    margin-left: 50px;
+/* heading */
+.investor_profile{
+    padding-top: 20px;
+    margin-bottom: 0px;
 }
-
-.cpm_investing_status {
-    margin-left: 50px;
-}
-
-.cpm_investment_type {
-    margin-left: 50px;
-}
-
-.cpm_investor_publish_date {
-    margin-left: 50px;
-}
-
-.cpm_investor_valid_days {
-    margin-left: 50px;
-}
-
-.investor_sidebar {
-    width: 90px;
-    margin-top: 70px;
+.investor_moto{
+    padding-bottom:5px;
 }

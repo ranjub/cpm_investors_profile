@@ -154,13 +154,10 @@ function cpm_investor_submission_form() {
 <!-- frontend form -->
 <div class="cpm-form-container">
     <!-- Form title -->
-    <h2 class="form-title">Investor Submission Form</h2>
-    <form action="" method="post" enctype="multipart/form-data">
-        <label for="investor_name">Name of Investor:</label>
-        <input type="text" id="investor_name" name="investor_name" required>
-
+    <h2 class="form-title">Investor Submission Form</h2><textarea></textarea>
+    <form  method="post" enctype="multipart/form-data">
         <label for="investor_description">Short Description:</label>
-        <textarea id="investor_description" name="investor_description" rows="4" cols="50"></textarea>
+        <textarea ></textarea>
 
         <label for="investor_founded">Founded in:</label>
         <input type="text" id="investor_founded" name="investor_founded" required>

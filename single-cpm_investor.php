@@ -5,37 +5,39 @@ if (!defined('ABSPATH')) {
 }
 get_header();
 ?>
- <section class="cpm_investor_section">
-<div class = "cpm_investor">
-   <h2 class="cpm_investor_heading">Investor Details</h2>
+ <!-- Investors profile header -->
+  <section class="singlepage_profile">
+      <div class="investor-profile_maindiv">
+         <div class="profile_header">
+             <h2 class="investor_profile">CPM Investor Profile</h2>
+             <p class="investor_moto">No.1 Investing Platform</p>
+         </div>
 
-   <?php
-   $investor_type = get_post_meta(get_the_ID(), 'cpm_investor_type', true); // This will be an array
-      ?>
+         <!-- condition to check if the investor date is valid or not -->
+         <?php
+         // get the data from the db
 
-  <h2 class="cpminvestor_title"> <?php the_title(); ?></h2>
-  <div class="cpm_investor_content">
-  <p > <?php the_content(); ?> <p>
-  </div>
-  <p class = "cpm_investor_foundedin"><strong>Founded In: </strong><?php echo esc_html(get_post_meta(get_the_ID(), 'cpm_investor_founded', true)); ?></p>
-  <?php if (!empty($investor_type)) : ?>
-                    <p class="cpm_investor_type"><strong>Investor Type:</strong> <?php echo implode(', ', array_map('esc_html', $investor_type)); ?></p>
-                <?php endif; ?>
-   <p class = "cpm_investor_country"><strong>Country: </strong><?php echo esc_html(get_post_meta(get_the_ID(), 'cpm_investor_country', true)); ?></p>
-   <p class = "cpm_investing_status"><strong>Investing Status: </strong><?php echo esc_html(get_post_meta(get_the_ID(), 'cpm_investing_status', true)); ?></p>
-   <p class = "cpm_investment_type"><strong>Investment Type: </strong><?php echo esc_html(get_post_meta(get_the_ID(), 'investment_type', true)); ?></p>
-   <p class = "cpm_investor_publish_date"><strong>Publish Date: </strong><?php echo esc_html(get_post_meta(get_the_ID(), 'cpm_investor_publish_date', true)); ?></p>
-   <p class = "cpm_investor_valid_days"><strong>Valid Days: </strong><?php echo esc_html(get_post_meta(get_the_ID(), 'cpm_investor_valid_days', true)); ?></p>
+          $investor_id = get_the_ID();
+          $publish_date_admin  = get_post_meta($investor_id, 'cpm_investor_publish_date', true);   //30th may
+          $valid_days = get_post_meta($investor_id, 'cpm_investor_valid_for', true);  
+       
+         //  $total_valid_days = $publish_date_admin ." " .  $valid_days ;
+         // echo $valid_days;
+          if( have_posts() ):
 
- </div>
-  <!-- for sidebar  -->
-      <div class="investor_sidebar">
-              <aside id="secondary" class="widget-area">
-                     <?php dynamic_sidebar('investor-sidebar'); ?>
-            </aside>
+            if( $valid_days >= 0):
+               echo '<h2>' . get_the_title() . '</h2>';               
+            endif;
+
+         endif;
+          
+         // while( $publish_date_admin<= $total_valid_day){
+         //    echo '<h2>' . the_title() . '</h2>';
+         //    break;
+         // }
+
+      
+         ?>
       </div>
-</section>
+  </section>
 
-<?php
-get_footer();
-?>
