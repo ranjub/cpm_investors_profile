@@ -492,4 +492,14 @@ function cpm_investor_register_sidebar() {
 }
 add_action('widgets_init', 'cpm_investor_register_sidebar');
 
-?>
+// to add archieve page 
+function cpm_investors_template( $template ) {
+    if ( is_post_type_archive( 'cpm_investor' ) ) {
+        $archive_template = plugin_dir_path( __FILE__ ) . 'templates/archive-cpm_investor.php';
+        if ( file_exists( $archive_template ) ) {
+            return $archive_template;
+        }
+    }
+    return $template;
+}
+add_filter( 'archive_template', 'cpm_investors_template' );
