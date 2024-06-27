@@ -1,74 +1,61 @@
-/* Form container */
-.cpm-form-container {
+/* General styling for both frontend and backend */
+.cpm-form-container,
+.cpm-meta-box-container {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 20px;
-  background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: #f9f9f9;
 }
 
-/* Form title */
-.cpm-form-container h2.form-title {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-  font-size: 24px;
-  text-transform: uppercase;
-}
-
-/* Form labels */
-.cpm-form-container label {
+.cpm-form-container label,
+.cpm-meta-box-container label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-/* Form input fields and select boxes */
 .cpm-form-container input[type="text"],
+.cpm-form-container input[type="date"],
 .cpm-form-container input[type="file"],
 .cpm-form-container textarea,
-.cpm-form-container select {
+.cpm-form-container select,
+.cpm-meta-box-container input[type="text"],
+.cpm-meta-box-container input[type="date"],
+.cpm-meta-box-container input[type="file"],
+.cpm-meta-box-container textarea,
+.cpm-meta-box-container select {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
   box-sizing: border-box;
 }
 
-/* Submit button */
-.cpm-form-container input[type="submit"] {
+.cpm-form-container input[type="submit"],
+.cpm-meta-box-container input[type="submit"] {
   background-color: #4caf50;
   color: white;
-  padding: 15px 20px; /* Increased padding */
+  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
-  display: block;
-  margin: 20px auto 0; /* Center align with space at the top */
-  transition: background-color 0.3s ease;
 }
 
-.cpm-form-container input[type="submit"]:hover {
+.cpm-form-container input[type="submit"]:hover,
+.cpm-meta-box-container input[type="submit"]:hover {
   background-color: #45a049;
 }
 
-/* Select2 styles */
-.select2-container {
+/* Ensure Select2 styling is consistent */
+.cpm-select2-container {
   width: 100% !important;
 }
 
-/* Optional: Specific styling for the file input */
-.cpm-form-container input[type="file"] {
-  cursor: pointer;
-}
-
-/* Optional: Adjustments for smaller screens */
-@media (max-width: 768px) {
-  .cpm-form-container {
-    width: 100%;
-    padding: 10px;
-  }
+/* Add some margin to the image preview */
+.cpm-meta-box-container img {
+  display: block;
+  margin-top: 10px;
 }

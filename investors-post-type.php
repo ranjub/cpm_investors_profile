@@ -27,6 +27,18 @@ function cpm_investor_enqueue_scripts() {
     // Enqueue custom script for initializing Select2
     wp_enqueue_script('cpm-initializer', plugin_dir_url(__FILE__) . 'cpm-initializer.js', array('jquery', 'select2'), null, true);
     wp_enqueue_style('cpm-styles', plugin_dir_url(__FILE__) . 'cpm-styles.css');
+
+    // Enqueue jQuery UI Datepicker
+    wp_enqueue_script('jquery-ui-datepicker');
+
+    // Enqueue Datepicker style
+    wp_enqueue_style('jquery-ui-datepicker-css', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
+
+    // Localize datepicker script
+    wp_localize_script('jquery-ui-datepicker', 'datepicker_args', array(
+        'dateFormat' => 'yy-mm-dd', // Adjust date format as needed
+    ));
+
     
     if (is_admin()) {
         global $post;
@@ -273,6 +285,8 @@ function cpm_investor_meta_box_callback( $post ) {
     $thumbnail_id = get_post_thumbnail_id($post->ID);
     $investing_status_value = get_post_meta($post->ID, 'cpm_investing_status', true);
     $country_value = get_post_meta($post->ID, 'cpm_investor_country', true);
+    $publish_date = get_post_meta($post->ID, 'cpm_investor_publish_date', true);
+    $valid_for_days = get_post_meta($post->ID, 'cpm_investor_valid_days', true);
     if (!is_array($type_value)) {
         $type_value = array();
     }
@@ -311,6 +325,13 @@ function cpm_investor_meta_box_callback( $post ) {
     <select id="cpm_investor_country" name="cpm_investor_country" class="cpm-select2">
         <!-- Options will be populated by JavaScript -->
     </select>
+    <label for="cpm_investor_publish_date">Publish Date:</label>
+    <input type="text" id="cpm_investor_publish_date" name="cpm_investor_publish_date"
+        value="<?php echo esc_attr($publish_date); ?>" class="datepicker">
+
+    <label for="cpm_investor_valid_days">Valid for</label>
+    <input type="text" id="cpm_investor_valid_days" name="cpm_investor_valid_days"
+        value="<?php echo esc_attr($valid_for_days); ?>" placeholder="Enter number of days">
 </div>
 <?php
 }
@@ -366,7 +387,23 @@ if (array_key_exists('cpm_investor_country', $_POST)) {
         sanitize_text_field($_POST['cpm_investor_country'])
     );
 }
+// Update 'Publish Date'
+if (array_key_exists('cpm_investor_publish_date', $_POST)) {
+    update_post_meta(
+        $post_id,
+        'cpm_investor_publish_date',
+        sanitize_text_field($_POST['cpm_investor_publish_date'])
+    );
+}
 
+// Update 'Valid for ___ days'
+if (array_key_exists('cpm_investor_valid_days', $_POST)) {
+    update_post_meta(
+        $post_id,
+        'cpm_investor_valid_days',
+        sanitize_text_field($_POST['cpm_investor_valid_days'])
+    );
+}
 if (isset($_POST['cpm_investment_type'])) {
     $investment_types = array_map('intval', $_POST['cpm_investment_type']);
     wp_set_object_terms($post_id, $investment_types, 'investment_type');
