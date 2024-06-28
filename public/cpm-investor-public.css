@@ -1,0 +1,46 @@
+/* General styling for frontend (public) */
+.cpm-form-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #f9f9f9;
+}
+
+.cpm-form-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.cpm-form-container input[type="text"],
+.cpm-form-container input[type="date"],
+.cpm-form-container input[type="file"],
+.cpm-form-container textarea,
+.cpm-form-container select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.cpm-form-container input[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cpm-form-container input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Ensure Select2 styling is consistent */
+.cpm-select2-container {
+  width: 100% !important;
+}

@@ -1,5 +1,4 @@
-/* General styling for both frontend and backend */
-.cpm-form-container,
+/* General styling for backend (admin) */
 .cpm-meta-box-container {
   max-width: 600px;
   margin: 20px auto;
@@ -9,18 +8,12 @@
   background: #f9f9f9;
 }
 
-.cpm-form-container label,
 .cpm-meta-box-container label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-.cpm-form-container input[type="text"],
-.cpm-form-container input[type="date"],
-.cpm-form-container input[type="file"],
-.cpm-form-container textarea,
-.cpm-form-container select,
 .cpm-meta-box-container input[type="text"],
 .cpm-meta-box-container input[type="date"],
 .cpm-meta-box-container input[type="file"],
@@ -34,7 +27,6 @@
   box-sizing: border-box;
 }
 
-.cpm-form-container input[type="submit"],
 .cpm-meta-box-container input[type="submit"] {
   background-color: #4caf50;
   color: white;
@@ -44,7 +36,6 @@
   cursor: pointer;
 }
 
-.cpm-form-container input[type="submit"]:hover,
 .cpm-meta-box-container input[type="submit"]:hover {
   background-color: #45a049;
 }

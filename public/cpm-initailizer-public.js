@@ -1,11 +1,11 @@
 jQuery(document).ready(function ($) {
-  $("#investor_type, #cpm_investor_type").select2({
+  $("#investor_type").select2({
     placeholder: "Select Investor Type",
     allowClear: true,
   });
 
   // Initialize jQuery UI Datepicker with year view only
-  $("#cpm_investor_founded, #investor_founded")
+  $("#investor_founded")
     .datepicker({
       changeYear: true,
       showButtonPanel: true,
@@ -18,10 +18,7 @@ jQuery(document).ready(function ($) {
       $(".ui-datepicker-month").hide();
       $(".ui-datepicker-calendar").hide();
     });
-});
 
-//for drop down list of countries
-jQuery(document).ready(function ($) {
   // List of countries
   var countries = [
     "Afghanistan",
@@ -231,23 +228,7 @@ jQuery(document).ready(function ($) {
     });
   }
 
-  // Apply select2 to the necessary fields with appropriate placeholders
-  $("#investor_type").select2({
-    placeholder: "Select Investor Type",
-    allowClear: true,
-  });
-
-  $("#cpm_investor_type").select2({
-    placeholder: "Select Investor Type",
-    allowClear: true,
-  });
-
   $("#investor_country").select2({
-    placeholder: "Select a country",
-    allowClear: true,
-  });
-
-  $("#cpm_investor_country").select2({
     placeholder: "Select a country",
     allowClear: true,
   });
@@ -257,29 +238,7 @@ jQuery(document).ready(function ($) {
     tokenSeparators: [",", " "],
     placeholder: "Select Investment Type",
   });
-  $("#cpm_investment_type").select2({
-    tags: true,
-    tokenSeparators: [",", " "],
-    placeholder: "Select Investment Type",
-  });
-  //   $("#investment_type").select2({
-  //     tags: true,
-  //     placeholder: "Select Investment Type",
-  //   });
-
-  //   $("#cpm_investment_type").select2({
-  //     tags: true,
-  //     placeholder: "Select Investment Type",
-  //   });
 
   // Populate country select field in the frontend form
   populateCountrySelect("#investor_country");
-
-  // Populate country select field in the backend form
-  populateCountrySelect("#cpm_investor_country");
-
-  // Set the selected value in the backend form
-  if (typeof cpm_investor_country !== "undefined") {
-    $("#cpm_investor_country").val(cpm_investor_country).trigger("change");
-  }
 });
