@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 // Enqueue Select2 for both front-end and admin
 function cpm_investor_enqueue_scripts() {
+    // wp_enqueue_script('cpm-custom-script', plugin_dir_url(__FILE__) . '/assets/js/cpm-initializer.js');
     wp_enqueue_script('jquery');
     // Enqueue jQuery UI CSS
     wp_enqueue_style('jquery-ui-css', 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
@@ -26,11 +27,12 @@ function cpm_investor_enqueue_scripts() {
     wp_enqueue_script('select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), null, true);
     
     // Enqueue custom script for initializing Select2
-    wp_enqueue_script('cpm-initializer', plugin_dir_url(__FILE__) . 'cpm-initializer.js', array('jquery', 'select2'), null, true);
+    wp_enqueue_script('cpm-initializer', plugin_dir_url(__FILE__) . '/assets/js/cpm-initializer.js', array('jquery', 'select2'), null, true);
     wp_enqueue_style('cpm-styles', plugin_dir_url(__FILE__) . 'cpm-styles.css');
+    
 
     // Enqueue jQuery UI Datepicker
-    wp_enqueue_script('jquery-ui-datepicker');
+    wp_enqueue_script('jquery-ui-datePicker');
 
     // Enqueue Datepicker style
     wp_enqueue_style('jquery-ui-datepicker-css', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
@@ -497,13 +499,14 @@ function cpm_investor_register_sidebar() {
 }
 add_action('widgets_init', 'cpm_investor_register_sidebar');
 
-function cpm_investor_archive_template( $archive_template ) {
-    if ( is_post_type_archive( 'cpm_investor' ) ) {
-        $plugin_template = plugin_dir_path( __FILE__ ) . 'archive-cpm_investor.php';
-        if ( file_exists( $plugin_template ) ) {
-            return $plugin_template;
-        }
-    }
-    return $archive_template;
-}
-add_filter( 'archive_template', 'cpm_investor_archive_template' );
+// to add archieve page 
+// function cpm_investors_template( $template ) {
+//     if ( is_post_type_archive( 'cpm_investor' ) ) {
+//         $archive_template = plugin_dir_path( __FILE__ ) . 'templates/archive-cpm_investor.php';
+//         if ( file_exists( $archive_template ) ) {
+//             return $archive_template;
+//         }
+//     }
+//     return $template;
+// }
+// add_filter( 'archive_template', 'cpm_investors_template' );
