@@ -27,7 +27,7 @@ function cpm_investor_enqueue_scripts() {
     wp_enqueue_script('select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), null, true);
     
     // Enqueue custom script for initializing Select2
-    wp_enqueue_script('cpm-initializer', plugin_dir_url(__FILE__) . '/assets/js/cpm-initializer.js', array('jquery', 'select2'), null, true);
+    wp_enqueue_script('cpm-scripts', plugin_dir_url(__FILE__) . 'cpm-initializer.js', array('jquery', 'select2'), null, true);
     wp_enqueue_style('cpm-styles', plugin_dir_url(__FILE__) . 'cpm-styles.css');
     
 
@@ -510,3 +510,4 @@ add_action('widgets_init', 'cpm_investor_register_sidebar');
 //     return $template;
 // }
 // add_filter( 'archive_template', 'cpm_investors_template' );
+
