@@ -1,17 +1,9 @@
 /* main div of the single page */
 .investor-profile_maindiv {
-<<<<<<< Updated upstream
-    width: 90%;
-    margin-left: 65px;
-=======
-<<<<<<< HEAD
   width: 85%;
   margin-left: 35px;
-=======
-    width: 90%;
-    margin-left: 65px;
->>>>>>> cb0bcc97b6459c39dea6168aec26e6ad7f073236
->>>>>>> Stashed changes
+  width: 90%;
+  margin-left: 65px;
 }
 
 /* profile heading div */
@@ -30,21 +22,6 @@
 .investor_moto {
   padding-bottom: 5px;
 }
-<<<<<<< Updated upstream
-
-.investor_content_div {
-    display: flex;
-    flex-direction: row;
-}
-
-.cpm_investor_logo {
-    margin-left: 40px;
-    width: 25%;
-    
-    /* background-color: bisque; */
-}
-=======
-<<<<<<< HEAD
 .investor_content_div {
   display: flex;
   flex-direction: row;
@@ -57,73 +34,62 @@
   width: 160px;
   border-radius: 50%;
 }
-=======
 
 .investor_content_div {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .cpm_investor_logo {
-    margin-left: 40px;
-    width: 25%;
-    
-    /* background-color: bisque; */
+  margin-left: 40px;
+  width: 25%;
+
+  /* background-color: bisque; */
 }
->>>>>>> Stashed changes
 
 .investor_logo {
-    height: 150px;
-    width: 190px;
-    border-radius: 50%;
-    margin-left: 140px;
-    margin-bottom: 50px;
-    /* border:solid black 3px ; */
+  height: 150px;
+  width: 190px;
+  border-radius: 50%;
+  margin-left: 140px;
+  margin-bottom: 50px;
+  /* border:solid black 3px ; */
 }
 
 .investor_username {
-    margin-left: 140px;
-
+  margin-left: 140px;
 }
 
 .investor_details_div {
-    width: 57%;
-    /* background-color: lavender; */
+  width: 57%;
+  /* background-color: lavender; */
 }
 
 .cpm_investor_details {
-    text-align: center;
-    margin-bottom: 0px;
-
+  text-align: center;
+  margin-bottom: 0px;
 }
 
 .cpminvestor_title {
-    text-align: center;
+  text-align: center;
 }
 
 #investor_attr {
-    margin-bottom: 2px;
+  margin-bottom: 2px;
 }
 
 .cpm_investment_content {
-    text-align: justify;
+  text-align: justify;
 }
 
 /* sidebar */
 .side-bar {
-    margin-left: 9px;
-    
+  margin-left: 9px;
 }
-
 
 /* error message */
 .expire_message {
-    text-align: center;
-    margin-top: 50px;
-    margin-left: 30em;
-<<<<<<< Updated upstream
+  text-align: center;
+  margin-top: 50px;
+  margin-left: 30em;
 }
-=======
-}
->>>>>>> cb0bcc97b6459c39dea6168aec26e6ad7f073236
->>>>>>> Stashed changes
