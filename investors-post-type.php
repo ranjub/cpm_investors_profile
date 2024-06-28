@@ -497,14 +497,13 @@ function cpm_investor_register_sidebar() {
 }
 add_action('widgets_init', 'cpm_investor_register_sidebar');
 
-// to add archieve page 
-function cpm_investors_template( $template ) {
+function cpm_investor_archive_template( $archive_template ) {
     if ( is_post_type_archive( 'cpm_investor' ) ) {
-        $archive_template = plugin_dir_path( __FILE__ );
-        if ( file_exists( $archive_template ) ) {
-            return $archive_template;
+        $plugin_template = plugin_dir_path( __FILE__ ) . 'archive-cpm_investor.php';
+        if ( file_exists( $plugin_template ) ) {
+            return $plugin_template;
         }
     }
-    return $template;
+    return $archive_template;
 }
-add_filter( 'archive_template', 'cpm_investors_template' );
+add_filter( 'archive_template', 'cpm_investor_archive_template' );
