@@ -1,0 +1,51 @@
+.investors-archive {
+  padding: 20px;
+}
+
+.investors-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.investor-item {
+  flex: 1 1 calc(33.333% - 20px);
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.investor-item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.investor-item:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.investor-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.investor-logo img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.investor-title {
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #333;
+}

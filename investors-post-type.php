@@ -48,6 +48,11 @@ function cpm_investor_enqueue_scripts() {
             wp_localize_script('cpm-initializer', 'cpm_investor_country', $country_value);
         }
     }
+    if (is_post_type_archive('cpm_investor')) {
+        wp_enqueue_style('archive-investor-style', plugin_dir_url(__FILE__) . 'archive-cpm_investor.css', array(), '1.0.0', 'all');
+        
+    }
+
 }
 add_action('wp_enqueue_scripts', 'cpm_investor_enqueue_scripts');
 add_action('admin_enqueue_scripts', 'cpm_investor_enqueue_scripts');
@@ -493,13 +498,13 @@ function cpm_investor_register_sidebar() {
 add_action('widgets_init', 'cpm_investor_register_sidebar');
 
 // to add archieve page 
-function cpm_investors_template( $template ) {
-    if ( is_post_type_archive( 'cpm_investor' ) ) {
-        $archive_template = plugin_dir_path( __FILE__ ) . 'templates/archive-cpm_investor.php';
-        if ( file_exists( $archive_template ) ) {
-            return $archive_template;
-        }
-    }
-    return $template;
-}
-add_filter( 'archive_template', 'cpm_investors_template' );
+// function cpm_investors_template( $template ) {
+//     if ( is_post_type_archive( 'cpm_investor' ) ) {
+//         $archive_template = plugin_dir_path( __FILE__ ) . 'templates/archive-cpm_investor.php';
+//         if ( file_exists( $archive_template ) ) {
+//             return $archive_template;
+//         }
+//     }
+//     return $template;
+// }
+// add_filter( 'archive_template', 'cpm_investors_template' );

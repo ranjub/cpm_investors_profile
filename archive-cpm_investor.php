@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <?php
 get_header();
 ?>
@@ -22,3 +23,5 @@ get_header();
 
 get_footer();
 ?>
+=======
+>>>>>>> Stashed changes

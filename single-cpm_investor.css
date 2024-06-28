@@ -1,26 +1,36 @@
 /* main div of the single page */
 .investor-profile_maindiv {
+<<<<<<< Updated upstream
     width: 90%;
     margin-left: 65px;
+=======
+<<<<<<< HEAD
+  width: 85%;
+  margin-left: 35px;
+=======
+    width: 90%;
+    margin-left: 65px;
+>>>>>>> cb0bcc97b6459c39dea6168aec26e6ad7f073236
+>>>>>>> Stashed changes
 }
 
 /* profile heading div */
 .profile_header {
-    text-align: center;
-    background-color: #B3E2A7;
-    padding-bottom: 0px;
-
+  text-align: center;
+  background-color: #b3e2a7;
+  padding-bottom: 0px;
 }
 
 /* heading */
 .investor_profile {
-    padding-top: 20px;
-    margin-bottom: 0px;
+  padding-top: 20px;
+  margin-bottom: 0px;
 }
 
 .investor_moto {
-    padding-bottom: 5px;
+  padding-bottom: 5px;
 }
+<<<<<<< Updated upstream
 
 .investor_content_div {
     display: flex;
@@ -33,6 +43,34 @@
     
     /* background-color: bisque; */
 }
+=======
+<<<<<<< HEAD
+.investor_content_div {
+  display: flex;
+  flex-direction: row;
+}
+.cpm_investor_logo {
+  margin-left: 35px;
+}
+.investor_logo {
+  height: 150px;
+  width: 160px;
+  border-radius: 50%;
+}
+=======
+
+.investor_content_div {
+    display: flex;
+    flex-direction: row;
+}
+
+.cpm_investor_logo {
+    margin-left: 40px;
+    width: 25%;
+    
+    /* background-color: bisque; */
+}
+>>>>>>> Stashed changes
 
 .investor_logo {
     height: 150px;
@@ -83,4 +121,9 @@
     text-align: center;
     margin-top: 50px;
     margin-left: 30em;
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> cb0bcc97b6459c39dea6168aec26e6ad7f073236
+>>>>>>> Stashed changes
