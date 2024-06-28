@@ -41,7 +41,7 @@
 }
 
 .cpm_investor_logo {
-  margin-left: 40px;
+  margin-left: 6px;
   width: 25%;
 
   /* background-color: bisque; */
@@ -51,7 +51,7 @@
   height: 150px;
   width: 190px;
   border-radius: 50%;
-  margin-left: 140px;
+  margin-left: 40px;
   margin-bottom: 50px;
   /* border:solid black 3px ; */
 }
@@ -84,7 +84,7 @@
 
 /* sidebar */
 .side-bar {
-  margin-left: 9px;
+  margin-left: 20px;
 }
 
 /* error message */
