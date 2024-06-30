@@ -20,12 +20,37 @@ define('CPM_INVESTORS_ADMIN_DIR', CPM_INVESTORS_DIR . 'admin/');
 define('CPM_INVESTORS_PUBLIC_DIR', CPM_INVESTORS_DIR . 'public/');
 define('CPM_INVESTORS_TEMPLATES_DIR', CPM_INVESTORS_DIR . 'templates/');
 
-// Include admin and public files
-if (is_admin()) {
-    require_once CPM_INVESTORS_ADMIN_DIR . 'cpm-investor-admin.php';
-} else {
-    require_once CPM_INVESTORS_PUBLIC_DIR . 'cpm-investor-public.php';
+// Load single template
+function cpm_investors_load_template($template) {
+    if (is_singular('cpm_investor')) {
+        $template = CPM_INVESTORS_TEMPLATES_DIR . 'single-cpm_investor.php';
+    }
+    return $template;
 }
+add_filter('template_include', 'cpm_investors_load_template');
+
+// Load archive template
+function cpm_investors_load_archive_template($archive_template) {
+    if (is_post_type_archive('cpm_investor')) {
+        $archive_template = CPM_INVESTORS_TEMPLATES_DIR . 'templates/archive-cpm_investor.php';
+    }
+    return $archive_template;
+}
+add_filter('archive_template', 'cpm_investors_load_archive_template');
+
+// Register sidebar
+function cpm_investors_register_sidebar() {
+    register_sidebar(array(
+        'name'          => __('Investor Sidebar', 'cpm_investors'),
+        'id'            => 'investor-sidebar',
+        'description'   => __('Widgets in this area will be shown on the single investor pages.', 'cpm_investors'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ));
+}
+add_action('widgets_init', 'cpm_investors_register_sidebar');
 
 // Enqueue scripts and styles
 function cpm_investors_enqueue_scripts() {
@@ -54,3 +79,10 @@ function cpm_investors_enqueue_admin_scripts() {
     wp_enqueue_style('cpm-investors-admin-style', CPM_INVESTORS_URL . 'admin/cpm-styles-admin.css');
 }
 add_action('admin_enqueue_scripts', 'cpm_investors_enqueue_admin_scripts');
+
+// Include admin and public files
+if (is_admin()) {
+    require_once CPM_INVESTORS_ADMIN_DIR . 'cpm-investor-admin.php';
+} else {
+    require_once CPM_INVESTORS_PUBLIC_DIR . 'cpm-investor-public.php';
+}
