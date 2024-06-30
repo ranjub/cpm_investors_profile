@@ -30,8 +30,8 @@ if (is_admin()) {
 // Enqueue scripts and styles
 function cpm_investors_enqueue_scripts() {
     // Enqueue public scripts and styles
-    wp_enqueue_script('cpm-investors-public-script', CPM_INVESTORS_URL . 'public/cpm-initializer-public.js', array('jquery', 'jquery-ui-datepicker'), '1.0', true);
-    wp_enqueue_style('cpm-investors-public-style', CPM_INVESTORS_URL . 'public/cpm-styles-public.css');
+    wp_enqueue_script('cpm-investors-public-script', CPM_INVESTORS_URL . 'public/cpm-initailizer-public.js', array('jquery', 'jquery-ui-datepicker'), '1.0', true);
+    wp_enqueue_style('cpm-investors-public-style', CPM_INVESTORS_URL . 'public/cpm-investor-public.css');
     wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
     wp_enqueue_script('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), '4.0.13', true);
     wp_enqueue_style('select2-css', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');

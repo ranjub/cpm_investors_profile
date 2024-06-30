@@ -70,7 +70,7 @@ function cpm_register_investor_post_type() {
         'description'           => __( 'Post Type Description', 'cpm_investors' ),
         'labels'                => $labels,
         'supports'              => array( 'title', 'editor', 'thumbnail', ),
-        'taxonomies'            => array( 'category', 'post_tag' ),
+        'taxonomies'            => array( 'category', 'post_tag','investment_type' ),
         'hierarchical'          => false,
         'public'                => true,
         'show_ui'               => true,

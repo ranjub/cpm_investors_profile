@@ -7,8 +7,8 @@ if (!defined('ABSPATH')) {
 
 // Enqueue Public Scripts and Styles
 function cpm_enqueue_public_scripts() {
-    wp_enqueue_script('cpm-public-js', plugin_dir_url(__FILE__) . 'cpm-initializer-public.js', array('jquery', 'jquery-ui-datepicker'), '1.0', true);
-    wp_enqueue_style('cpm-public-css', plugin_dir_url(__FILE__) . 'cpm-styles-public.css');
+    wp_enqueue_script('cpm-public-js', plugin_dir_url(__FILE__) . 'cpm-initailizer-public.js', array('jquery', 'jquery-ui-datepicker'), '1.0', true);
+    wp_enqueue_style('cpm-public-css', plugin_dir_url(__FILE__) . 'cpm-investor-public.css');
     wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
     wp_enqueue_script('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), '4.0.13', true);
     wp_enqueue_style('select2-css', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
@@ -59,9 +59,11 @@ function cpm_investor_submission_form() {
 
         <label for="investment_type">Type of Investment:</label>
         <select id="investment_type" name="investment_type[]" multiple="multiple">
+            <?php if (!empty($terms) && !is_wp_error($terms)) : ?>
             <?php foreach ($terms as $term) : ?>
             <option value="<?php echo esc_attr($term->term_id); ?>"><?php echo esc_html($term->name); ?></option>
             <?php endforeach; ?>
+            <?php endif; ?>
         </select>
 
         <input type="submit" name="submit_investor" value="Submit">
@@ -139,4 +141,49 @@ function cpm_investor_handle_form_submission() {
 }
 }
 add_action('init', 'cpm_investor_handle_form_submission');
-?>
+
+
+//to load the single page
+function load_investor_template($template) {
+    if (is_singular('cpm_investor')) {
+        $plugin_path = plugin_dir_path(__FILE__);
+        $template_name = 'single-cpm_investor.php';
+        $template = $plugin_path . $template_name;
+    }
+    return $template;
+}
+add_filter('template_include', 'load_investor_template');
+//enqueue styles for single page
+function cpm_investor_enqueue_styles() {
+    if (is_singular('cpm_investor')) {
+        wp_enqueue_style('single-investor-style', plugin_dir_url(__FILE__) . 'templates/single-cpm_investor.css', array(), '1.0.0', 'all');
+    }
+}
+add_action('wp_enqueue_scripts', 'cpm_investor_enqueue_styles');
+
+
+//to register the sidebar in widgets for single page
+
+function cpm_investor_register_sidebar() {
+    register_sidebar(array(
+        'name'          => __('Investor Sidebar', 'cpm_investors'),
+        'id'            => 'investor-sidebar',
+        'description'   => __('Widgets in this area will be shown on the single investor pages.', 'cpm_investors'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ));
+}
+add_action('widgets_init', 'cpm_investor_register_sidebar');
+
+function cpm_investor_archive_template( $archive_template ) {
+    if ( is_post_type_archive( 'cpm_investor' ) ) {
+        $plugin_template = plugin_dir_path( __FILE__ ) . 'templates/archive-cpm_investor.php';
+        if ( file_exists( $plugin_template ) ) {
+            return $plugin_template;
+        }
+    }
+    return $archive_template;
+}
+add_filter( 'archive_template', 'cpm_investor_archive_template' );

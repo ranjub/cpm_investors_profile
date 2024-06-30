@@ -1,4 +1,5 @@
-/* General styling for backend (admin) */
+/* General styling for both frontend and backend */
+.cpm-form-container,
 .cpm-meta-box-container {
   max-width: 600px;
   margin: 20px auto;
@@ -8,12 +9,18 @@
   background: #f9f9f9;
 }
 
+.cpm-form-container label,
 .cpm-meta-box-container label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
+.cpm-form-container input[type="text"],
+.cpm-form-container input[type="date"],
+.cpm-form-container input[type="file"],
+.cpm-form-container textarea,
+.cpm-form-container select,
 .cpm-meta-box-container input[type="text"],
 .cpm-meta-box-container input[type="date"],
 .cpm-meta-box-container input[type="file"],
@@ -27,6 +34,7 @@
   box-sizing: border-box;
 }
 
+.cpm-form-container input[type="submit"],
 .cpm-meta-box-container input[type="submit"] {
   background-color: #4caf50;
   color: white;
@@ -36,6 +44,7 @@
   cursor: pointer;
 }
 
+.cpm-form-container input[type="submit"]:hover,
 .cpm-meta-box-container input[type="submit"]:hover {
   background-color: #45a049;
 }
@@ -49,4 +58,32 @@
 .cpm-meta-box-container img {
   display: block;
   margin-top: 10px;
+}
+
+/* Adjust layout for specific fields */
+.cpm-meta-box-container label,
+.cpm-meta-box-container input,
+.cpm-meta-box-container select,
+.cpm-meta-box-container textarea {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.cpm-meta-box-container input[type="text"],
+.cpm-meta-box-container input[type="date"],
+.cpm-meta-box-container input[type="file"],
+.cpm-meta-box-container textarea,
+.cpm-meta-box-container select {
+  width: calc(100% - 20px); /* Adjust width for padding */
+}
+
+.cpm-meta-box-container input[type="submit"] {
+  width: auto; /* Adjust width for submit button */
+}
+
+/* Clear floats for labels and inputs */
+.cpm-meta-box-container::after {
+  content: "";
+  display: block;
+  clear: both;
 }
