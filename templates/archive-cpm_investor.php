@@ -6,9 +6,19 @@ get_header(); ?>
     <h1>Investors</h1>
     <!-- filter for search area  -->
    
-     <h3>Search</h3>
+     <h3>Search By</h3>
      <div>
-        
+     <div>
+            <div class = "filter-search">
+                <form id="searchform" method= "get">
+                  <input type="text" id="searchFilter" name="Free text search" placeholder="Search" value="<?php echo get_search_query(); ?>" />
+                  <input type="text" id="searchFilter" name="country" placeholder="Investor Country" value="<?php echo get_search_query(); ?>" />
+                  <input type="text" id="searchFilter" name="investment-type" placeholder="Investment Type" value="<?php echo get_search_query(); ?>" />
+                  <input type="text" id="searchFilter" name="searchstatus" placeholder="Investing Status" value="<?php echo get_search_query(); ?>" />
+                </form>
+            </div>
+
+            
      </div>
             <!-- handiling the search filter form -->
              <?php
@@ -18,10 +28,10 @@ if (isset($_GET['searchstatus'])) {
     
     // Query posts by meta key value
     $args = array(
-        'post_type'  => 'cpm_investor', // Adjust according to your needs
+        'post_type'  => 'cpm_investor', //post type
         'meta_query' => array(
             array(
-                'key'     => 'cpm_investing_status', 
+                'key'     => 'cpm_investing_status',  //meta key in db
                 'value'   => $searchTerm,
                 'compare' => '=',
             ),
