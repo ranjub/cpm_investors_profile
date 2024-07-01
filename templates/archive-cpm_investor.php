@@ -27,29 +27,29 @@ get_header(); ?>
         // Modify the query to include search parameters
         $meta_query = array();
 
-        if (!empty($_GET['searcharea'])) {
-            $meta_query[] = array(
-                'key'     => 'cpm_investing_status', 
-                'value'   => sanitize_text_field($_GET['searcharea']),
-               'compare' => 'LIKE',
-            );
-            
-        }
-        if (!empty($_GET['searcharea'])) {
-            $meta_query[] = array(
-                'key'     =>  'cpm_investor_country',
-                'value'   => sanitize_text_field($_GET['searcharea']),
-               'compare' => 'LIKE',
-            );
-        }
-        if (!empty($_GET['searcharea'])) {
-            $meta_query[] = array(
-                'key'     =>  'investment-type',
-                'value'   => sanitize_text_field($_GET['searcharea']),
-                'compare' => 'LIKE',
-            );
-        }
-    //    var_dump($meta_query);
+    if (!empty($_GET['searcharea'])) {
+          $search_term = sanitize_text_field($_GET['searcharea']);
+    
+          $meta_query[] = array(
+             'relation' => 'OR', // This will allow matching any of the following conditions
+                 array(
+                      'key'     => 'cpm_investing_status',
+                      'value'   => $search_term,
+                      'compare' => 'LIKE',
+                    ),
+                array(
+                      'key'     => 'cpm_investor_country',
+                      'value'   => $search_term,
+                      'compare' => 'LIKE',
+                    ),
+                array(
+                      'key'     => 'investment-type',
+                      'value'   => $search_term,
+                      'compare' => 'LIKE',
+                    ),
+             );
+}
+// filter for investor country
         if (!empty($_GET['country'])) {
             $meta_query[] = array(
                 'key'     => 'cpm_investor_country',
@@ -57,7 +57,7 @@ get_header(); ?>
                 'compare' => 'LIKE',
             );
         }
-
+// filter for investment type
         if (!empty($_GET['investment-type'])) {
             $meta_query[] = array(
                 'key'     => 'investment_type',
@@ -65,7 +65,7 @@ get_header(); ?>
                 'compare' => 'LIKE',
             );
         }
-
+// filter for investing status
         if (!empty($_GET['searchstatus'])) {
             $meta_query[] = array(
                 'key'     => 'cpm_investing_status',
