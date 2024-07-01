@@ -10,7 +10,7 @@ get_header(); ?>
      <div>
         <!-- for searching freely -->
             <div>
-                         <input type="text" id="searchFilter" name="earch" placeholder="Search"value="<?php echo get_search_query(); ?>" />
+                         <input type="text" id="searchFilter" name="search" placeholder="Search"value="<?php echo get_search_query(); ?>" />
                          
            </div>
 
@@ -38,17 +38,23 @@ get_header(); ?>
 
             <!-- handiling the search filter form -->
              <?php
- function cpm_investing_status ()
-{
-    if (!empty($search_terms['investing_status'])) {
-            $meta_query[] = array(
-                'key' => 'cpm_investing_status',
-                'value' => $search_terms['investing_status'],
-                'compare' => 'LIKE'
-            );
-        }
-}       
-add_action('wp', 'cpm_investing_status');
+ function filter_posts_by_country( $query ) {
+    global $pagenow;
+
+    // Check if we're on the edit screen and the query is the main query
+    if ( is_admin() ||!$query->is_main_query() ) return;
+
+    // Check if the country parameter is present
+    if ( isset($_GET['investor_country']) &&!empty($_GET['investor_country']) ) {
+        $investor_country = sanitize_text_field($_GET['investor_country']);
+
+        // Modify the query to include posts from the specified country
+        $query->set('meta_key', 'country'); // Assuming 'country' is the meta key
+        $query->set('meta_value', $country);
+    }
+}
+
+add_action('pre_get_posts', 'filter_posts_by_country');
 
 ?>
 
