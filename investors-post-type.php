@@ -27,8 +27,8 @@ function cpm_investor_enqueue_scripts() {
     wp_enqueue_script('select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), null, true);
     
     // Enqueue custom script for initializing Select2
-    wp_enqueue_script('cpm-scripts', plugin_dir_url(__FILE__) . 'cpm-initailizer-admin.js', array('jquery', 'select2'), null, true);
-    wp_enqueue_style('cpm-styles', plugin_dir_url(__FILE__) . 'cpm-styles-admin.css');
+    wp_enqueue_script('cpm-scripts', plugin_dir_url(__FILE__) . 'admin/cpm-initializer-admin.js', array('jquery', 'select2'), null, true);
+    wp_enqueue_style('cpm-styles', plugin_dir_url(__FILE__) . 'admin/cpm-styles-admin.css');
     
 
     // Enqueue jQuery UI Datepicker
@@ -493,7 +493,7 @@ add_filter( 'archive_template', 'cpm_investors_template' );
 //enqueue styles for single page
 function cpm_investor_enqueue_styles() {
     if (is_singular('cpm_investor')) {
-        wp_enqueue_style('single-investor-style', plugin_dir_url(__FILE__) . 'cpm-investor-public.css', array(), '1.0.0', 'all');
+        wp_enqueue_style('single-investor-style', plugin_dir_url(__FILE__) . 'templates/single-cpm_investor.css', array(), '1.0.0', 'all');
     }
 }
 add_action('wp_enqueue_scripts', 'cpm_investor_enqueue_styles');
