@@ -474,18 +474,6 @@ function load_investor_template($template) {
     }
     return $template;
 }
-<<<<<<< HEAD
-add_filter('template_include', 'cpm_investors_load_template');
-
-// Load archive template
-function cpm_investors_load_archive_template($template) {
-    if (is_post_type_archive('cpm_investor')) {
-        $template = CPM_INVESTORS_TEMPLATES_DIR . 'archive-cpm_investor.php';
-    }
-    return $template;
-}
-add_filter('template_include', 'cpm_investors_load_archive_template');
-=======
 add_filter('template_include', 'load_investor_template');
 //enqueue styles for single page
 function cpm_investor_enqueue_styles() {
@@ -494,7 +482,6 @@ function cpm_investor_enqueue_styles() {
     }
 }
 add_action('wp_enqueue_scripts', 'cpm_investor_enqueue_styles');
->>>>>>> b5a558454843e772051369377e8bb2307955f6a6
 
 
 //to register the sidebar in widgets for single page
@@ -523,4 +510,3 @@ add_action('widgets_init', 'cpm_investor_register_sidebar');
 //     return $template;
 // }
 // add_filter( 'archive_template', 'cpm_investors_template' );
-
