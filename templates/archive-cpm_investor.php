@@ -9,7 +9,7 @@ get_header(); ?>
     <h3>Search By</h3>
     <div class="filter-search">
         <form id="searchform" method="get">
-            <input type="text" id="searchFilter" name="s" placeholder="Free text search"
+            <input type="text" id="searchFilter" name="searcharea" placeholder="Free text search"
                 value="<?php echo get_search_query(); ?>" />
             <input type="text" id="searchFilter" name="country" placeholder="Investor Country"
                 value="<?php echo esc_attr($_GET['country'] ?? ''); ?>" />
@@ -27,6 +27,29 @@ get_header(); ?>
         // Modify the query to include search parameters
         $meta_query = array();
 
+        if (!empty($_GET['searcharea'])) {
+            $meta_query[] = array(
+                'key'     => 'cpm_investing_status', 
+                'value'   => sanitize_text_field($_GET['searcharea']),
+               'compare' => 'LIKE',
+            );
+            
+        }
+        if (!empty($_GET['searcharea'])) {
+            $meta_query[] = array(
+                'key'     =>  'cpm_investor_country',
+                'value'   => sanitize_text_field($_GET['searcharea']),
+               'compare' => 'LIKE',
+            );
+        }
+        if (!empty($_GET['searcharea'])) {
+            $meta_query[] = array(
+                'key'     =>  'investment-type',
+                'value'   => sanitize_text_field($_GET['searcharea']),
+                'compare' => 'LIKE',
+            );
+        }
+    //    var_dump($meta_query);
         if (!empty($_GET['country'])) {
             $meta_query[] = array(
                 'key'     => 'cpm_investor_country',
