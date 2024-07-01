@@ -4,75 +4,29 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
+
 // Enqueue Admin Scripts and Styles
 function cpm_enqueue_admin_scripts() {
     wp_enqueue_script('jquery');
     wp_enqueue_script('cpm-admin-js', plugin_dir_url(__FILE__) . 'admin/cpm-initializer-admin.js', array('jquery', 'jquery-ui-datepicker'), '1.0', true);
-    wp_enqueue_style('cpm-admin-css', plugin_dir_url(__FILE__) . 'admin/cpm-styles-admin.css');
+    wp_enqueue_style('cpm-admin-css', plugin_dir_url(__FILE__) . 'cpm-styles-admin.css');
     wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
     wp_enqueue_script('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), '4.0.13', true);
     wp_enqueue_style('select2-css', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
-// Enqueue jQuery UI Datepicker
-wp_enqueue_script('jquery-ui-datePicker');
+    wp_enqueue_script('jquery-ui-datepicker');
+    wp_enqueue_style('jquery-ui-datepicker-css', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
+    wp_localize_script('jquery-ui-datepicker', 'datepicker_args', array('dateFormat' => 'yy-mm-dd'));
 
-// Enqueue Datepicker style
-wp_enqueue_style('jquery-ui-datepicker-css', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
-
-// Localize datepicker script
-wp_localize_script('jquery-ui-datepicker', 'datepicker_args', array(
-    'dateFormat' => 'yy-mm-dd', // Adjust date format as needed
-));
-if (is_admin()) {
     global $post;
     if ($post && $post->post_type == 'cpm_investor') {
         $country_value = get_post_meta($post->ID, 'cpm_investor_country', true);
         wp_localize_script('cpm-initializer', 'cpm_investor_country', $country_value);
     }
-}
-if (is_post_type_archive('cpm_investor')) {
-    wp_enqueue_style('archive-investor-style', plugin_dir_url(__FILE__) . 'templates/archive-cpm_investor.css', array(), '1.0.0', 'all');
-    
-}
+    if (is_post_type_archive('cpm_investor')) {
+        wp_enqueue_style('archive-investor-style', plugin_dir_url(__FILE__) . '../templates/archive-cpm_investor.css', array(), '1.0.0', 'all');
+    }
 }
 add_action('admin_enqueue_scripts', 'cpm_enqueue_admin_scripts');
-// Register Custom Post Type
-function cpm_investors_custom_post_type() {
-    $labels = array(
-        'name'               => _x( 'Investors', 'post type general name', 'cpm_investors' ),
-        'singular_name'      => _x( 'Investor', 'post type singular name', 'cpm_investors' ),
-        'menu_name'          => _x( 'Investors', 'admin menu', 'cpm_investors' ),
-        'name_admin_bar'     => _x( 'Investor', 'add new on admin bar', 'cpm_investors' ),
-        'add_new'            => _x( 'Add New', 'investor', 'cpm_investors' ),
-        'add_new_item'       => __( 'Add New Investor', 'cpm_investors' ),
-        'new_item'           => __( 'New Investor', 'cpm_investors' ),
-        'edit_item'          => __( 'Edit Investor', 'cpm_investors' ),
-        'view_item'          => __( 'View Investor', 'cpm_investors' ),
-        'all_items'          => __( 'All Investors', 'cpm_investors' ),
-        'search_items'       => __( 'Search Investors', 'cpm_investors' ),
-        'parent_item_colon'  => __( 'Parent Investors:', 'cpm_investors' ),
-        'not_found'          => __( 'No investors found.', 'cpm_investors' ),
-        'not_found_in_trash' => __( 'No investors found in Trash.', 'cpm_investors' )
-    );
-
-    $args = array(
-        'labels'             => $labels,
-        'public'             => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'investors' ),
-        'capability_type'    => 'post',
-        'has_archive'        => true,
-        'hierarchical'       => false,
-        'menu_position'      => null,
-        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
-        'taxonomies'            => array( 'category', 'post_tag','investment_type' )
-    );
-
-    register_post_type( 'cpm_investor', $args );
-}
-add_action( 'init', 'cpm_investors_custom_post_type' );
 
 // Register the Investment Type taxonomy
 function cpm_investor_register_taxonomy() {
@@ -109,6 +63,7 @@ function cpm_investor_add_taxonomy_to_post_type() {
     register_taxonomy_for_object_type('investment_type', 'cpm_investor');
 }
 add_action('init', 'cpm_investor_add_taxonomy_to_post_type');
+
 // Display the 'founded in' year in the post edit screen
 function cpm_investor_add_meta_box() {
     add_meta_box(
@@ -120,15 +75,13 @@ function cpm_investor_add_meta_box() {
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'cpm_investor_add_meta_box' );
+add_action('add_meta_boxes', 'cpm_investor_add_meta_box');
 
-
- // Save the data as post meta admin side 
-
+// Save the data as post meta admin side
 function cpm_investor_meta_box_callback( $post ) {
     wp_nonce_field('cpm_investor_nonce_action', 'cpm_investor_nonce');
 
-    $founded_value = get_post_meta( $post->ID, 'cpm_investor_founded', true );
+    $founded_value = get_post_meta($post->ID, 'cpm_investor_founded', true);
     $type_value = get_post_meta($post->ID, 'cpm_investor_type', true);
     $thumbnail_id = get_post_thumbnail_id($post->ID);
     $investing_status_value = get_post_meta($post->ID, 'cpm_investing_status', true);
@@ -140,13 +93,11 @@ function cpm_investor_meta_box_callback( $post ) {
     }
     
     wp_nonce_field('cpm_investor_save_meta_box_data', 'cpm_investor_meta_box_nonce');
-
     ?>
 <div class="cpm-meta-box-container">
     <label for="cpm_investor_founded">Founded in:</label>
     <input type="text" id="cpm_investor_founded" name="cpm_investor_founded"
         value="<?php echo esc_attr($founded_value); ?>">
-
 
     <label for="cpm_investor_type">Investor Type:</label>
     <select id="cpm_investor_type" name="cpm_investor_type[]" multiple="multiple" class="cpm-select2">
@@ -170,9 +121,7 @@ function cpm_investor_meta_box_callback( $post ) {
     </select>
 
     <label for="cpm_investor_country">Country:</label>
-    <select id="cpm_investor_country" name="cpm_investor_country" class="cpm-select2">
-        <!-- Options will be populated by JavaScript -->
-    </select>
+    <select id="cpm_investor_country" name="cpm_investor_country" class="cpm-select2"></select>
 
     <p>
         <label for="cpm_investor_publish_date">Publish Date:</label>
@@ -184,10 +133,10 @@ function cpm_investor_meta_box_callback( $post ) {
         <input type="number" id="cpm_investor_valid_for" name="cpm_investor_valid_for"
             value="<?php echo esc_attr($valid_for); ?>">
     </p>
-
 </div>
 <?php
 }
+
 // Fetch terms for the form
 function cpm_get_investment_terms() {
     $terms = get_terms(array(
@@ -198,8 +147,7 @@ function cpm_get_investment_terms() {
 }
 
 // Save the 'founded in' year from the post edit screen
-function cpm_investor_save_meta_box_data( $post_id ) {
-
+function cpm_investor_save_meta_box_data($post_id) {
     if (!isset($_POST['cpm_investor_meta_box_nonce'])) {
         return;
     }
@@ -218,65 +166,35 @@ function cpm_investor_save_meta_box_data( $post_id ) {
         }
     }
 
-if ( array_key_exists( 'cpm_investor_founded', $_POST ) ) {
-update_post_meta(
-$post_id,
-'cpm_investor_founded',
-sanitize_text_field( $_POST['cpm_investor_founded'] )
-);
-}
+    if (array_key_exists('cpm_investor_founded', $_POST)) {
+        update_post_meta($post_id, 'cpm_investor_founded', sanitize_text_field($_POST['cpm_investor_founded']));
+    }
 
-if (array_key_exists('cpm_investor_type', $_POST)) {
-$investor_type = array_map('sanitize_text_field', $_POST['cpm_investor_type']);
-update_post_meta(
-$post_id,
-'cpm_investor_type',
-$investor_type
-);
-}
-if (array_key_exists('cpm_investing_status', $_POST)) {
-    update_post_meta(
-        $post_id,
-        'cpm_investing_status',
-        sanitize_text_field($_POST['cpm_investing_status'])
-    );
-}
+    if (array_key_exists('cpm_investor_type', $_POST)) {
+        $investor_type = array_map('sanitize_text_field', $_POST['cpm_investor_type']);
+        update_post_meta($post_id, 'cpm_investor_type', $investor_type);
+    }
 
-if (array_key_exists('cpm_investor_country', $_POST)) {
-    update_post_meta(
-        $post_id,
-        'cpm_investor_country',
-        sanitize_text_field($_POST['cpm_investor_country'])
-    );
-}
-// Update 'Publish Date'
-if (array_key_exists('cpm_investor_publish_date', $_POST)) {
-    update_post_meta(
-        $post_id,
-        'cpm_investor_publish_date',
-        sanitize_text_field($_POST['cpm_investor_publish_date'])
-    );
-}
+    if (array_key_exists('cpm_investing_status', $_POST)) {
+        update_post_meta($post_id, 'cpm_investing_status', sanitize_text_field($_POST['cpm_investing_status']));
+    }
 
-if (isset($_POST['cpm_investor_publish_date'])) {
-    update_post_meta($post_id, 'cpm_investor_publish_date', sanitize_text_field($_POST['cpm_investor_publish_date']));
-}
-if (isset($_POST['cpm_investor_valid_for'])) {
-    update_post_meta($post_id, 'cpm_investor_valid_for', sanitize_text_field($_POST['cpm_investor_valid_for']));
-}
+    if (array_key_exists('cpm_investor_country', $_POST)) {
+        update_post_meta($post_id, 'cpm_investor_country', sanitize_text_field($_POST['cpm_investor_country']));
+    }
 
-    $terms = cpm_get_investment_terms();
-    $selected_terms = wp_get_post_terms($post_id, 'investment_type', array('fields' => 'ids'));
-   
+    if (array_key_exists('cpm_investor_publish_date', $_POST)) {
+        update_post_meta($post_id, 'cpm_investor_publish_date', sanitize_text_field($_POST['cpm_investor_publish_date']));
+    }
+
+    if (isset($_POST['cpm_investor_valid_for'])) {
+        update_post_meta($post_id, 'cpm_investor_valid_for', sanitize_text_field($_POST['cpm_investor_valid_for']));
+    }
 }
-
-
 add_action('save_post', 'cpm_investor_save_meta_box_data');
-
 
 // Remove Custom Fields meta box for custom post type 'cpm_investor'
 function cpm_investor_remove_custom_fields_meta_box() {
-remove_meta_box( 'postcustom', 'cpm_investor', 'normal' );
+    remove_meta_box('postcustom', 'cpm_investor', 'normal');
 }
-
-add_action( 'do_meta_boxes', 'cpm_investor_remove_custom_fields_meta_box' );
+add_action('do_meta_boxes', 'cpm_investor_remove_custom_fields_meta_box');
