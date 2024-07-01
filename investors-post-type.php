@@ -30,13 +30,13 @@ function cpm_investors_load_template($template) {
 add_filter('template_include', 'cpm_investors_load_template');
 
 // Load archive template
-function cpm_investors_load_archive_template($archive_template) {
+function cpm_investors_load_archive_template($template) {
     if (is_post_type_archive('cpm_investor')) {
-        $archive_template = CPM_INVESTORS_TEMPLATES_DIR . 'templates/archive-cpm_investor.php';
+        $template = CPM_INVESTORS_TEMPLATES_DIR . 'archive-cpm_investor.php';
     }
-    return $archive_template;
+    return $template;
 }
-add_filter('archive_template', 'cpm_investors_load_archive_template');
+add_filter('template_include', 'cpm_investors_load_archive_template');
 
 // Register sidebar
 function cpm_investors_register_sidebar() {

@@ -35,58 +35,43 @@ if (is_post_type_archive('cpm_investor')) {
 }
 add_action('admin_enqueue_scripts', 'cpm_enqueue_admin_scripts');
 // Register Custom Post Type
-function cpm_register_investor_post_type() {
+function cpm_investors_custom_post_type() {
     $labels = array(
-        'name'                  => _x( 'Investors', 'Post Type General Name', 'cpm_investors' ),
-        'singular_name'         => _x( 'Investor', 'Post Type Singular Name', 'cpm_investors' ),
-        'menu_name'             => __( 'Investors', 'cpm_investors' ),
-        'name_admin_bar'        => __( 'Investor', 'cpm_investors' ),
-        'archives'              => __( 'Investor Archives', 'cpm_investors' ),
-        'attributes'            => __( 'Investor Attributes', 'cpm_investors' ),
-        'parent_item_colon'     => __( 'Parent Investor:', 'cpm_investors' ),
-        'all_items'             => __( 'All Investors', 'cpm_investors' ),
-        'add_new_item'          => __( 'Add New Investor', 'cpm_investors' ),
-        'add_new'               => __( 'Add New', 'cpm_investors' ),
-        'new_item'              => __( 'New Investor', 'cpm_investors' ),
-        'edit_item'             => __( 'Edit Investor', 'cpm_investors' ),
-        'update_item'           => __( 'Update Investor', 'cpm_investors' ),
-        'view_item'             => __( 'View Investor', 'cpm_investors' ),
-        'view_items'            => __( 'View Investors', 'cpm_investors' ),
-        'search_items'          => __( 'Search Investor', 'cpm_investors' ),
-        'not_found'             => __( 'Not found', 'cpm_investors' ),
-        'not_found_in_trash'    => __( 'Not found in Trash', 'cpm_investors' ),
-        'featured_image'        => __( 'Featured Image', 'cpm_investors' ),
-        'set_featured_image'    => __( 'Set featured image', 'cpm_investors' ),
-        'remove_featured_image' => __( 'Remove featured image', 'cpm_investors' ),
-        'use_featured_image'    => __( 'Use as featured image', 'cpm_investors' ),
-        'insert_into_item'      => __( 'Insert into investor', 'cpm_investors' ),
-        'uploaded_to_this_item' => __( 'Uploaded to this investor', 'cpm_investors' ),
-        'items_list'            => __( 'Investors list', 'cpm_investors' ),
-        'items_list_navigation' => __( 'Investors list navigation', 'cpm_investors' ),
-        'filter_items_list'     => __( 'Filter investors list', 'cpm_investors' ),
+        'name'               => _x( 'Investors', 'post type general name', 'cpm_investors' ),
+        'singular_name'      => _x( 'Investor', 'post type singular name', 'cpm_investors' ),
+        'menu_name'          => _x( 'Investors', 'admin menu', 'cpm_investors' ),
+        'name_admin_bar'     => _x( 'Investor', 'add new on admin bar', 'cpm_investors' ),
+        'add_new'            => _x( 'Add New', 'investor', 'cpm_investors' ),
+        'add_new_item'       => __( 'Add New Investor', 'cpm_investors' ),
+        'new_item'           => __( 'New Investor', 'cpm_investors' ),
+        'edit_item'          => __( 'Edit Investor', 'cpm_investors' ),
+        'view_item'          => __( 'View Investor', 'cpm_investors' ),
+        'all_items'          => __( 'All Investors', 'cpm_investors' ),
+        'search_items'       => __( 'Search Investors', 'cpm_investors' ),
+        'parent_item_colon'  => __( 'Parent Investors:', 'cpm_investors' ),
+        'not_found'          => __( 'No investors found.', 'cpm_investors' ),
+        'not_found_in_trash' => __( 'No investors found in Trash.', 'cpm_investors' )
     );
+
     $args = array(
-        'label'                 => __( 'Investor', 'cpm_investors' ),
-        'description'           => __( 'Post Type Description', 'cpm_investors' ),
-        'labels'                => $labels,
-        'supports'              => array( 'title', 'editor', 'thumbnail', ),
-        'taxonomies'            => array( 'category', 'post_tag','investment_type' ),
-        'hierarchical'          => false,
-        'public'                => true,
-        'show_ui'               => true,
-        'show_in_menu'          => true,
-        'menu_position'         => 5,
-        'show_in_admin_bar'     => true,
-        'show_in_nav_menus'     => true,
-        'can_export'            => true,
-        'has_archive'           => true,
-        'exclude_from_search'   => false,
-        'publicly_queryable'    => true,
-        'capability_type'       => 'post',
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'investors' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
+        'taxonomies'            => array( 'category', 'post_tag','investment_type' )
     );
+
     register_post_type( 'cpm_investor', $args );
 }
-add_action( 'init', 'cpm_register_investor_post_type', 0 );
+add_action( 'init', 'cpm_investors_custom_post_type' );
 
 // Register the Investment Type taxonomy
 function cpm_investor_register_taxonomy() {
