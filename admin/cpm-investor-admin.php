@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 // Enqueue Admin Scripts and Styles
 function cpm_enqueue_admin_scripts() {
+    wp_enqueue_script('jquery');
     wp_enqueue_script('cpm-admin-js', plugin_dir_url(__FILE__) . 'admin/cpm-initializer-admin.js', array('jquery', 'jquery-ui-datepicker'), '1.0', true);
     wp_enqueue_style('cpm-admin-css', plugin_dir_url(__FILE__) . 'admin/cpm-styles-admin.css');
     wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
