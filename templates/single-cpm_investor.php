@@ -4,6 +4,7 @@ if (!defined('ABSPATH')) {
    exit;
 }
 get_header();
+
 ?>
 <!-- Investors profile header -->
 <section class="singlepage_profile">

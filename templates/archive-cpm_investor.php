@@ -1,6 +1,5 @@
 <?php
 /* Template Name: Investor Archive */
-
 get_header(); ?>
 
 <div class="investors-archive">
