@@ -8,57 +8,53 @@ get_header(); ?>
    
      <h3>Search</h3>
      <div>
-        <!-- for searching freely -->
-            <div>
-                         <input type="text" id="searchFilter" name="search" placeholder="Search"value="<?php echo get_search_query(); ?>" />
-                         
-           </div>
-
-           <!-- for filtering with country -->
-            <div>
-            <input type="text" id="searchFilter" name="investor_country" placeholder="Country" value="<?php echo get_search_query(); ?>" />
-           
-            </div>
-
-            <!-- filter to search the investing  status  -->
-            <div>
-            <input type="text" id="searchFilter" name="investing_status" placeholder="Investing Status" value="<?php echo get_search_query(); ?>" />
-            
-            </div>
-
-             <!-- filter to search the investment type  -->
-            <div>
-            <input type="text" id="searchFilter" name="investor_type" placeholder="Investment Type" value="<?php echo get_search_query(); ?>" />
-           
-            </div>
-            <!-- search button -->
-            <!-- <div>
-            <button>Filter</button>
-            </div> -->
-
+        
+     </div>
             <!-- handiling the search filter form -->
              <?php
- function filter_posts_by_country( $query ) {
-    global $pagenow;
+// Check if the form was submitted
+if (isset($_GET['searchstatus'])) {
+    $searchTerm = sanitize_text_field($_GET['searchstatus']);
+    
+    // Query posts by meta key value
+    $args = array(
+        'post_type'  => 'cpm_investor', // Adjust according to your needs
+        'meta_query' => array(
+            array(
+                'key'     => 'cpm_investing_status', 
+                'value'   => $searchTerm,
+                'compare' => '=',
+            ),
+        ),
+    );
+    $query = new WP_Query($args);
 
-    // Check if we're on the edit screen and the query is the main query
-    if ( is_admin() ||!$query->is_main_query() ) return;
+    // Check if any posts were found
+    if ($query->have_posts()) {
+        // Start output buffering to capture the post content
+        ob_start();
 
-    // Check if the country parameter is present
-    if ( isset($_GET['investor_country']) &&!empty($_GET['investor_country']) ) {
-        $investor_country = sanitize_text_field($_GET['investor_country']);
+        // Loop through the posts and display them
+        while ($query->have_posts()) {
+            $query->the_post();
+            get_the_post_thumbnail();
+        }
 
-        // Modify the query to include posts from the specified country
-        $query->set('meta_key', 'country'); // Assuming 'country' is the meta key
-        $query->set('meta_value', $country);
+        // End output buffering and display the captured content
+        echo '<div>'. ob_get_clean(). '</div>';
+
+        // Reset post data to avoid conflicts with other loops
+        wp_reset_postdata();
+    } else {
+        echo "No posts found with the entered input.";
     }
 }
 
-add_action('pre_get_posts', 'filter_posts_by_country');
+
 
 ?>
 
-    </div>
+   
    <!-- to display investor with logo and having valid days on -->
     <div class="investors-grid">
         <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
