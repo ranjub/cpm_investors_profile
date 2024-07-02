@@ -64,6 +64,7 @@ function cpm_investor_add_taxonomy_to_post_type() {
 }
 add_action('init', 'cpm_investor_add_taxonomy_to_post_type');
 
+
 // Display the 'founded in' year in the post edit screen
 function cpm_investor_add_meta_box() {
     add_meta_box(

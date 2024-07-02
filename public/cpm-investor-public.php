@@ -119,7 +119,7 @@ function cpm_investor_submission_form() {
 
 
         <label for="investment_type">Type of Investment:</label>
-        <select id="investment_type" name="investment_type[]" multiple="multiple" class="cpm-select2" required>
+        <select id="investment_type" name="investment_type[]" multiple="multiple">
             <?php if (!empty($terms) && !is_wp_error($terms)) : ?>
             <?php foreach ($terms as $term) : ?>
             <option value="<?php echo esc_attr($term->term_id); ?>"><?php echo esc_html($term->name); ?></option>
