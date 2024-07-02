@@ -93,6 +93,7 @@ add_action('widgets_init', 'cpm_investors_register_sidebar');
 // Enqueue scripts and styles
 function cpm_investors_enqueue_scripts() {
     // Enqueue public scripts and styles
+    wp_enqueue_script('jquery');
     wp_enqueue_script('cpm-investors-public-script', CPM_INVESTORS_URL . 'public/cpm-initailizer-public.js', array('jquery', 'jquery-ui-datepicker'), '1.0', true);
     wp_enqueue_style('cpm-investors-public-style', CPM_INVESTORS_URL . 'public/cpm-investor-public.css');
     wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
@@ -114,6 +115,7 @@ add_action('wp_enqueue_scripts', 'cpm_investors_enqueue_scripts');
 
 // Enqueue admin scripts and styles separately
 function cpm_investors_enqueue_admin_scripts() {
+    wp_enqueue_script('jquery');
     wp_enqueue_script('cpm-investors-admin-script', CPM_INVESTORS_URL . 'admin/cpm-initializer-admin.js', array('jquery'), '1.0', true);
     wp_enqueue_style('cpm-investors-admin-style', CPM_INVESTORS_URL . 'admin/cpm-styles-admin.css');
 }

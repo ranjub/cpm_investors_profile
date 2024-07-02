@@ -227,16 +227,14 @@ jQuery(document).ready(function ($) {
       $select.append(option);
     });
   }
+  $("investment_type").select2({
+    tags: true,
+    tokenSeparators: [","],
+  });
 
   $("#investor_country").select2({
     placeholder: "Select a country",
     allowClear: true,
-  });
-
-  $("#investment_type").select2({
-    tags: true,
-    tokenSeparators: [",", " "],
-    placeholder: "Select Investment Type",
   });
 
   // Populate country select field in the frontend form

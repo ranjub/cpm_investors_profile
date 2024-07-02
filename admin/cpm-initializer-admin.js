@@ -235,8 +235,7 @@ jQuery(document).ready(function ($) {
 
   $("#cpm_investment_type").select2({
     tags: true,
-    tokenSeparators: [",", " "],
-    placeholder: "Select Investment Type",
+    tokenSeparators: [","],
   });
 
   // Populate country select field in the backend form

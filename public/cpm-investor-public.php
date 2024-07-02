@@ -121,6 +121,11 @@ function cpm_investor_handle_form_submission() {
 
             // Handle the logo upload and set it as the featured image
             if (!empty($_FILES['investor_logo']['name'])) {
+                // Ensure the function is available
+                if (!function_exists('wp_handle_upload')) {
+                    require_once(ABSPATH . 'wp-admin/includes/file.php');
+                }
+
                 $file = $_FILES['investor_logo'];
                 $upload = wp_handle_upload($file, array('test_form' => false));
                 if ($upload && !isset($upload['error'])) {
@@ -137,8 +142,7 @@ function cpm_investor_handle_form_submission() {
                     set_post_thumbnail($post_id, $attachment_id);
                 }
             }
-
+        }
     }
-}
 }
 add_action('init', 'cpm_investor_handle_form_submission');
