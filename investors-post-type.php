@@ -99,7 +99,7 @@ function cpm_investors_enqueue_scripts() {
     wp_enqueue_script('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), '4.0.13', true);
     wp_enqueue_style('select2-css', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
 //enqueue font awesome
-wp_enqueue_style('cpm_investor_font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
+    wp_enqueue_style('cpm_investor_font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
     // Enqueue archive-specific stylesheet
     if (is_post_type_archive('cpm_investor')) {
         wp_enqueue_style('cpm-investors-archive-style', CPM_INVESTORS_URL . 'templates/archive-cpm_investor.css');
