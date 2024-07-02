@@ -8,12 +8,16 @@ get_header();
 ?>
 <!-- Investors profile header -->
 <section class="singlepage_profile">
-    <div class="investor-profile_maindiv">
-        <div class="profile_header">
-            <h2 class="investor_profile">CPM Investor Profile</h2>
-            <p class="investor_moto">No.1 Investing Platform</p>
-        </div>
-    </div>
+    <div class= "mainsingle-page">
+            <div class="investor-profile_maindiv">
+                    <div class="profile_header">
+                    <h2 class="investor_profile">CPM Investor Profile</h2>
+                    <p class="investor_moto">No.1 Investing Platform</p>
+                    
+
+             </div>
+             <h2 class="cpm_investor_details">Investor Details</h2>
+   
     <!-- condition to check if the investor date is valid or not -->
     <?php
           //assigning the 
@@ -40,8 +44,7 @@ get_header();
 
         </div>
         <div class="investor_details_div">
-            <h2 class="cpm_investor_details">Investor Details</h2>
-
+           
             <!-- for the title -->
             <h3 class="cpminvestor_title"> <?php the_title(); ?></h3>
 
@@ -75,7 +78,9 @@ get_header();
         </div>
         <div class="side-bar">
             <aside id="secondary" class="widget-area">
-                <?php dynamic_sidebar('investor-sidebar'); ?>
+                <?php dynamic_sidebar('investor-sidebar'); 
+                get_sidebar();
+                ?>
             </aside>
         </div>
 
@@ -109,6 +114,7 @@ get_header();
     <?php
         
          ?>
+</div>
 </section>
 <?php
   get_footer();     

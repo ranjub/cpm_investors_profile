@@ -47,6 +47,17 @@ get_header(); ?>
                       'value'   => $search_term,
                       'compare' => 'LIKE',
                     ),
+                    array(
+                        'key'     => 'cpm_investor_type',
+                        'value'   => $search_term,
+                        'compare' => 'LIKE',
+                      ),
+                  array(
+                     'key'     => 'post_title',
+                     'value'   => $search_term,
+                     'compare' => 'LIKE',
+                   ),
+
              );
 }
 // filter for investor country

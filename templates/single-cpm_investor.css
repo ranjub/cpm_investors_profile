@@ -1,9 +1,13 @@
 /* main div of the single page */
 .investor-profile_maindiv {
-  width: 85%;
-  margin-left: 35px;
-  width: 90%;
-  margin-left: 65px;
+  width: 100%;
+  /* margin-left: 35px; */
+  /* width: 90%; */
+  /* margin-left: 65px; */
+}
+
+.mainsingle-page {
+  width: 70em;
 }
 
 /* profile heading div */
@@ -11,24 +15,24 @@
   text-align: center;
   background-color: #b3e2a7;
   padding-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 /* heading */
 .investor_profile {
   padding-top: 20px;
-  margin-bottom: 0px;
+  margin-bottom: 0em;
 }
 
 .investor_moto {
   padding-bottom: 5px;
+  margin-bottom: 0em;
 }
-.investor_content_div {
-  display: flex;
-  flex-direction: row;
-}
+
 .cpm_investor_logo {
   margin-left: 35px;
 }
+
 .investor_logo {
   height: 150px;
   width: 160px;
@@ -52,6 +56,7 @@
   width: 190px;
   border-radius: 50%;
   margin-left: 40px;
+  margin-right: 5px;
   margin-bottom: 50px;
   /* border:solid black 3px ; */
 }
@@ -61,7 +66,7 @@
 }
 
 .investor_details_div {
-  width: 57%;
+  width: 60%;
   /* background-color: lavender; */
 }
 
@@ -71,7 +76,8 @@
 }
 
 .cpminvestor_title {
-  text-align: center;
+  /* text-align: center; */
+  padding-bottom: 5px;
 }
 
 #investor_attr {
