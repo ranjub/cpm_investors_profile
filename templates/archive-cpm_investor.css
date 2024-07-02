@@ -2,6 +2,8 @@
 .investors-archive {
   padding: 20px;
   background-color: #f9f9f9;
+  max-width: 1200px; /* Set a max-width to limit the width of content */
+  margin: 0 auto; /* Center align the content */
 }
 
 /* Search filters styling */
@@ -9,11 +11,8 @@
   margin-top: 0;
 }
 
-#searchFilter {
-  margin-bottom: 10px;
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
+.filter-search {
+  margin-bottom: 20px; /* Add space below the filter section */
 }
 
 .filter-search form {
@@ -50,12 +49,17 @@
 }
 
 .investor-item {
-  flex: 1 1 calc(33.333% - 20px);
+  flex: 1 1 calc(33.333% - 20px); /* Ensure each item takes up 33% with gaps in between */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   border-radius: 8px;
   overflow: hidden;
   transition: box-shadow 0.3s;
+  margin-bottom: 20px; /* Add space below each item */
+  max-width: calc(33.333% - 20px); /* Limit max-width to maintain uniformity */
+  min-width: calc(
+    33.333% - 20px
+  ); /* Ensure minimum width to prevent shrinking */
 }
 
 .investor-item:hover {
