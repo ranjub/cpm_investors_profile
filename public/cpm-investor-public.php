@@ -1,65 +1,125 @@
 <?php
 
+
+
 // Exit if accessed directly
+
 if (!defined('ABSPATH')) {
+
     exit;
+
 }
+
+
 
 // Enqueue Public Scripts and Styles
+
 function cpm_enqueue_public_scripts() {
+
     wp_enqueue_script('jquery');
+
     wp_enqueue_script('cpm-public-js', plugin_dir_url(__FILE__) . 'public/cpm-initailizer-public.js', array('jquery', 'jquery-ui-datepicker'), '1.0', true);
+
     wp_enqueue_style('cpm-public-css', plugin_dir_url(__FILE__) . 'public/cpm-investor-public.css');
+
     wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
+
     wp_enqueue_script('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), '4.0.13', true);
+
     wp_enqueue_style('select2-css', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
+
 }
+
 add_action('wp_enqueue_scripts', 'cpm_enqueue_public_scripts');
 
+
+
 // Shortcode to display the form
+
 function cpm_investor_submission_form() {
+
     ob_start();
 
+
+
     $terms = get_terms(array(
+
         'taxonomy' => 'investment_type',
+
         'hide_empty' => false,
+
     ));
+
     ?>
 
+
+
 <!-- frontend form -->
+
 <div class="cpm-form-container">
+
     <!-- Form title -->
+
     <h2 class="form-title">Investor Submission Form</h2>
+
     <form action="" method="post" enctype="multipart/form-data">
+
         <label for="investor_name">Name of Investor:</label>
+
         <input type="text" id="investor_name" name="investor_name" required>
 
+
+
         <label for="investor_description">Short Description:</label>
+
         <textarea id="investor_description" name="investor_description" rows="4" cols="50"></textarea>
 
+
+
         <label for="investor_founded">Founded in:</label>
-        <input type="text" id="investor_founded" name="investor_founded" class="founded_in" required>
+
+        <input type="text" id="investor_founded" name="investor_founded" required>
+
+
 
         <label for="investor_type">Investor Type:</label>
+
         <select id="investor_type" name="investor_type[]" multiple="multiple" class="cpm-select2" required>
+
             <option value="VC">VC</option>
+
             <option value="Accelerator">Accelerator</option>
+
         </select>
+
+
 
         <label for="investor_logo">Logo:</label>
+
         <input type="file" id="investor_logo" name="investor_logo" accept="image/*" required>
 
+
+
         <label for="investing_status">Investing Status:</label>
+
         <select id="investing_status" name="investing_status" required>
+
             <option value="Actively Investing">Actively Investing</option>
+
             <option value="Relaxed Investing">Relaxed Investing</option>
+
         </select>
 
+
+
         <label for="investor_country">Country:</label>
+
         <select id="investor_country" name="investor_country" class="cpm-select2" required></select>
 
+
+
         <label for="investment_type">Type of Investment:</label>
-        <select id="investment_type" name="investment_type[]" multiple="multiple">
+        <select id="investment_type" name="investment_type[]" multiple="multiple" class="cpm-select2" required>
             <?php if (!empty($terms) && !is_wp_error($terms)) : ?>
             <?php foreach ($terms as $term) : ?>
             <option value="<?php echo esc_attr($term->term_id); ?>"><?php echo esc_html($term->name); ?></option>
@@ -68,12 +128,20 @@ function cpm_investor_submission_form() {
         </select>
 
         <input type="submit" name="submit_investor" value="Submit">
+
     </form>
+
 </div>
+
 <?php
+
     return ob_get_clean();
+
 }
+
 add_shortcode('cpm_investor_form', 'cpm_investor_submission_form');
+
+
 
 // Handle form submission
 function cpm_investor_handle_form_submission() {
