@@ -38,7 +38,7 @@ function cpm_investor_submission_form() {
         <textarea id="investor_description" name="investor_description" rows="4" cols="50"></textarea>
 
         <label for="investor_founded">Founded in:</label>
-        <input type="text" id="investor_founded" name="investor_founded" required>
+        <input type="text" id="investor_founded" name="investor_founded" class="founded_in" required>
 
         <label for="investor_type">Investor Type:</label>
         <select id="investor_type" name="investor_type[]" multiple="multiple" class="cpm-select2" required>

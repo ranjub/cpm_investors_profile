@@ -10,8 +10,15 @@ jQuery(document).ready(function ($) {
       changeYear: true,
       showButtonPanel: true,
       dateFormat: "yy",
-      onClose: function (dateText, inst) {
-        $(this).datepicker("setDate", new Date(inst.selectedYear, 1));
+      beforeShow: function (input, inst) {
+        var $input = $(input);
+        var offset = $input.offset();
+        setTimeout(function () {
+          inst.dpDiv.css({
+            top: offset.top + $input.outerHeight(),
+            left: offset.left,
+          });
+        }, 10);
       },
     })
     .focus(function () {
