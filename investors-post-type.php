@@ -148,14 +148,19 @@ function cpm_investors_enqueue_scripts() {
     if (is_singular('cpm_investor')) {
         wp_enqueue_style('cpm-investors-single-style', CPM_INVESTORS_URL . 'templates/single-cpm_investor.css');
     }
+
+      // js for search suggestion
+      wp_enqueue_script('search-suggeston-public', plugin_dir_url(__FILE__). '/public/search-suggeston-public.js', array('jquery'), null, true);
+      wp_localize_script('search-suggeston-public', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+  
 }
 add_action('wp_enqueue_scripts', 'cpm_investors_enqueue_scripts');
 
 // Enqueue admin scripts and styles separately
 function cpm_investors_enqueue_admin_scripts() {
     wp_enqueue_script('jquery');
-    wp_enqueue_script('cpm-investors-admin-script', CPM_INVESTORS_URL . 'admin/cpm-initializer-admin.js', array('jquery'), '1.0', true);
-    wp_enqueue_style('cpm-investors-admin-style', CPM_INVESTORS_URL . 'admin/cpm-styles-admin.css');
+    wp_enqueue_script('cpm-investors-admin-script', plugin_dir_url(__FILE__) . 'admin/cpm-initializer-admin.js', array('jquery'), '1.0', true);
+    wp_enqueue_style('cpm-investors-admin-style', plugin_dir_url(__FILE__) . 'admin/cpm-styles-admin.css');
 }
 add_action('admin_enqueue_scripts', 'cpm_investors_enqueue_admin_scripts');
 

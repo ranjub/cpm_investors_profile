@@ -16,6 +16,10 @@ function cpm_enqueue_admin_scripts() {
     wp_enqueue_script('jquery-ui-datepicker');
     wp_enqueue_style('jquery-ui-datepicker-css', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
     wp_localize_script('jquery-ui-datepicker', 'datepicker_args', array('dateFormat' => 'yy-mm-dd'));
+    // js for search suggestion
+    wp_enqueue_script('search-suggeston-public', get_template_directory_uri(). '/public/search-suggeston-public.js', array('jquery'), null, true);
+    wp_localize_script('search-suggeston-public', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+
 
     global $post;
     if ($post && $post->post_type == 'cpm_investor') {

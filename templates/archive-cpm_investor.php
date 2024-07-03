@@ -1,6 +1,7 @@
 <?php
 /* Template Name: Investor Archive */
-get_header(); ?>
+get_header(); 
+?>
 
 <div class="investors-archive">
     <h1>Investors</h1>
@@ -79,6 +80,7 @@ get_header(); ?>
                 'key'     => 'cpm_investor_country',
                 'value'   => sanitize_text_field($_GET['country']),
                 'compare' => 'LIKE',
+                'term' => $option,
             );
         }
 
