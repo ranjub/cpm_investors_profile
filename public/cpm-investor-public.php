@@ -47,6 +47,11 @@ function cpm_investor_submission_form() {
         'hide_empty' => false,
     ));
 
+    // Check if form was submitted successfully
+    if (isset($_GET['submission']) && $_GET['submission'] == 'success') {
+        echo '<div class="cpm-form-success">Your form submission was successful!</div>';
+    }
+
     ?>
 
 
@@ -210,6 +215,10 @@ function cpm_investor_handle_form_submission() {
             
                         wp_set_post_terms($post_id, $term_ids, 'investment_type');
             
+
+            // Redirect to the form with a success message
+            wp_redirect(add_query_arg('submission', 'success', wp_get_referer()));
+            exit;
         }
     }
 }

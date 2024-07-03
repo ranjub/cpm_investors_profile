@@ -211,9 +211,8 @@ jQuery(document).ready(function ($) {
 
     "Kiribati",
 
-    "Korea, North",
-
-    "Korea, South",
+    "South Korea",
+    "North Korea",
 
     "Kosovo",
 
