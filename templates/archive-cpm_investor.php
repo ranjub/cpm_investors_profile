@@ -10,12 +10,60 @@ get_header(); ?>
         <form id="searchform" method="get">
             <input type="text" id="searchFilter" name="searcharea" placeholder="Free text search"
                 value="<?php echo get_search_query(); ?>" />
-            <input type="text" id="searchFilter" name="country" placeholder="Investor Country"
-                value="<?php echo esc_attr($_GET['country'] ?? ''); ?>" />
-            <input type="text" id="searchFilter" name="investment-type" placeholder="Investment Type"
-                value="<?php echo esc_attr($_GET['investment-type'] ?? ''); ?>" />
-            <input type="text" id="searchFilter" name="searchstatus" placeholder="Investing Status"
-                value="<?php echo esc_attr($_GET['searchstatus'] ?? ''); ?>" />
+
+            <?php
+            // Fetch unique countries
+            $countries = get_posts(array(
+                'post_type' => 'cpm_investor',
+                'posts_per_page' => -1,
+                'fields' => 'ids',
+                'meta_key' => 'cpm_investor_country',
+                'meta_value' => '',
+                'meta_compare' => '!=',
+                'orderby' => 'meta_value',
+                'order' => 'ASC',
+                'distinct' => true,
+            ));
+            $unique_countries = array();
+            foreach ($countries as $country_id) {
+                $country = get_post_meta($country_id, 'cpm_investor_country', true);
+                if (!in_array($country, $unique_countries)) {
+                    $unique_countries[] = $country;
+                }
+            }
+            ?>
+
+            <select id="searchFilter" name="country">
+                <option value=""><?php esc_html_e('Select Country', 'cpm_investors'); ?></option>
+                <?php foreach ($unique_countries as $country) : ?>
+                <option value="<?php echo esc_attr($country); ?>"
+                    <?php selected(esc_attr($_GET['country'] ?? ''), $country); ?>>
+                    <?php echo esc_html($country); ?>
+                </option>
+                <?php endforeach; ?>
+            </select>
+
+            <select id="searchFilter" name="searchinvestortype">
+                <option value=""><?php esc_html_e('Select Investor Type', 'cpm_investors'); ?></option>
+                <option value="VC" <?php selected(esc_attr($_GET['searchinvestortype'] ?? ''), 'VC'); ?>>
+                    <?php esc_html_e('VC', 'cpm_investors'); ?></option>
+                <option value="Accelerator"
+                    <?php selected(esc_attr($_GET['searchinvestortype'] ?? ''), 'Accelerator'); ?>>
+                    <?php esc_html_e('Accelerator', 'cpm_investors'); ?></option>
+            </select>
+
+
+
+            <select id="searchFilter" name="searchstatus">
+                <option value=""><?php esc_html_e('Select Investing Status', 'cpm_investors'); ?></option>
+                <option value="Actively Investing"
+                    <?php selected(esc_attr($_GET['searchstatus'] ?? ''), 'Actively Investing'); ?>>
+                    <?php esc_html_e('Actively Investing', 'cpm_investors'); ?></option>
+                <option value="Relaxed Investing"
+                    <?php selected(esc_attr($_GET['searchstatus'] ?? ''), 'Relaxed Investing'); ?>>
+                    <?php esc_html_e('Relaxed Investing', 'cpm_investors'); ?></option>
+            </select>
+
             <button type="submit">Filter</button>
         </form>
     </div>
@@ -23,7 +71,7 @@ get_header(); ?>
     <!-- Display investors with logo and valid days on -->
     <div class="investors-grid">
         <?php
-        // Modify the query to include search parameters
+        // Initialize WP_Query based on search filters
         $meta_query = array('relation' => 'AND');
 
         if (!empty($_GET['country'])) {
@@ -34,10 +82,10 @@ get_header(); ?>
             );
         }
 
-        if (!empty($_GET['investment-type'])) {
+        if (!empty($_GET['searchinvestortype'])) {
             $meta_query[] = array(
-                'key'     => 'investment_type',
-                'value'   => sanitize_text_field($_GET['investment-type']),
+                'key'     => 'cpm_investor_type',
+                'value'   => sanitize_text_field($_GET['searchinvestortype']),
                 'compare' => 'LIKE',
             );
         }

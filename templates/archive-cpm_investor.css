@@ -22,7 +22,7 @@
 }
 
 .filter-search input {
-  flex: 1;
+  /* flex: 1; */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -44,7 +44,8 @@
 /* Grid layout for investors */
 .investors-grid {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
   gap: 20px;
 }
 
