@@ -43,11 +43,8 @@ function cpm_investor_submission_form() {
 
 
     $terms = get_terms(array(
-
         'taxonomy' => 'investment_type',
-
         'hide_empty' => false,
-
     ));
 
     ?>
@@ -154,6 +151,7 @@ function cpm_investor_handle_form_submission() {
         $investor_country = sanitize_text_field($_POST['investor_country']);
         $investment_types = array_map('sanitize_text_field', $_POST['investment_type']);
 
+
         // Create a new post of type 'cpm_investor'
         $new_post = array(
             'post_title'   => $investor_name,
@@ -172,20 +170,7 @@ function cpm_investor_handle_form_submission() {
             update_post_meta($post_id, 'cpm_investor_country', $investor_country);
             update_post_meta($post_id, 'cpm_investing_status', $investing_status);
 
-            // Set taxonomy terms
-            $term_ids = array();
-            foreach ($investment_types as $investment_type) {
-                if (is_numeric($investment_type)) {
-                    $term_ids[] = intval($investment_type);
-                } else {
-                    $new_term = wp_insert_term($investment_type, 'investment_type');
-                    if (!is_wp_error($new_term)) {
-                        $term_ids[] = $new_term['term_id'];
-                    }
-                }
-            }
-
-            wp_set_post_terms($post_id, $term_ids, 'investment_type');
+         
 
             // Handle the logo upload and set it as the featured image
             if (!empty($_FILES['investor_logo']['name'])) {
@@ -210,6 +195,21 @@ function cpm_investor_handle_form_submission() {
                     set_post_thumbnail($post_id, $attachment_id);
                 }
             }
+                        // Set taxonomy terms
+                        $term_ids = array();
+                        foreach ($investment_types as $investment_type) {
+                            if (is_numeric($investment_type)) {
+                                $term_ids[] = intval($investment_type);
+                            } else {
+                                $new_term = wp_insert_term($investment_type, 'investment_type');
+                                if (!is_wp_error($new_term)) {
+                                    $term_ids[] = $new_term['term_id'];
+                                }
+                            }
+                        }
+            
+                        wp_set_post_terms($post_id, $term_ids, 'investment_type');
+            
         }
     }
 }
