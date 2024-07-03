@@ -80,7 +80,6 @@ get_header();
                 'key'     => 'cpm_investor_country',
                 'value'   => sanitize_text_field($_GET['country']),
                 'compare' => 'LIKE',
-                'term' => $option,
             );
         }
 
