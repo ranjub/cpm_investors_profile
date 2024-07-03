@@ -23,7 +23,7 @@ get_header();
                 'meta_compare' => '!=',
                 'orderby' => 'meta_value',
                 'order' => 'ASC',
-                'distinct' => true,
+                // 'distinct' => true,
             ));
             $unique_countries = array();
             foreach ($countries as $country_id) {
@@ -80,7 +80,7 @@ get_header();
                 'key'     => 'cpm_investor_country',
                 'value'   => sanitize_text_field($_GET['country']),
                 'compare' => 'LIKE',
-                'term' => $option,
+                
             );
         }
 
@@ -136,7 +136,7 @@ get_header();
         <?php
             endif;
         endwhile;
-        else:
+    else:
         ?>
         <p><?php esc_html_e('No investors found.', 'cpm_investors'); ?></p>
         <?php endif; wp_reset_postdata(); ?>
