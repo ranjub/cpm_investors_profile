@@ -16,60 +16,66 @@ $investing_status = $wpdb->get_col("SELECT DISTINCT meta_value FROM {$wpdb->post
         <form id="searchform" method="get">
             <input type="text" id="searchFilter" name="searcharea" placeholder="Free text search"
                 value="<?php echo get_search_query(); ?>" />
-               
 
-            <!-- <input type="text" id="searchFilter" name="country" placeholder="Investor Country"
-                value="<?php //echo esc_attr($_GET['country'] ?? ''); ?>" /> -->
+            <?php
+            // Fetch unique countries
+            $countries = get_posts(array(
+                'post_type' => 'cpm_investor',
+                'posts_per_page' => -1,
+                'fields' => 'ids',
+                'meta_key' => 'cpm_investor_country',
+                'meta_value' => '',
+                'meta_compare' => '!=',
+                'orderby' => 'meta_value',
+                'order' => 'ASC',
+                'distinct' => true,
+            ));
+            $unique_countries = array();
+            foreach ($countries as $country_id) {
+                $country = get_post_meta($country_id, 'cpm_investor_country', true);
+                if (!in_array($country, $unique_countries)) {
+                    $unique_countries[] = $country;
+                }
+            }
+            ?>
+
+            <select id="searchFilter" name="country">
+                <option value=""><?php esc_html_e('Select Country', 'cpm_investors'); ?></option>
+                <?php foreach ($unique_countries as $country) : ?>
+                <option value="<?php echo esc_attr($country); ?>"
+                    <?php selected(esc_attr($_GET['country'] ?? ''), $country); ?>>
+                    <?php echo esc_html($country); ?>
+                </option>
+                <?php endforeach; ?>
+            </select>
+
+            <select id="searchFilter" name="searchinvestortype">
+                <option value=""><?php esc_html_e('Select Investor Type', 'cpm_investors'); ?></option>
+                <option value="VC" <?php selected(esc_attr($_GET['searchinvestortype'] ?? ''), 'VC'); ?>>
+                    <?php esc_html_e('VC', 'cpm_investors'); ?></option>
+                <option value="Accelerator"
+                    <?php selected(esc_attr($_GET['searchinvestortype'] ?? ''), 'Accelerator'); ?>>
+                    <?php esc_html_e('Accelerator', 'cpm_investors'); ?></option>
+            </select>
 
 
-<?php
-//investor country dropdown
 
-echo '<select class="investor-dropdown" id="searchFilter" name="country" placeholder="Investor Country">';
-foreach ($investor_country_values as $key => $unique_value) {
-echo '<option value="'.$unique_value.'">'.$unique_value.'</option>';
-
-}
-// investor country dropdown
-echo '<select class="investor-dropdown" id="searchFilter" name="investor_type" placeholder="investor-type">';
-foreach ($investortypes as $key => $investortypes) {
-echo '<option value="'.$investortypes.'">'.$investortypes.'</option>';
-
-}
-
-//investor-status
-
-echo '<select class="investor-dropdown" id="searchFilter" name="searchstatus" placeholder="Investing Status">';
-foreach ($investing_status as $key => $investing_status) {
-echo '<option value="'.$investing_status.'">'.$investing_status.'</option>';
-
-}
-echo '</select>';
-?>
-
-
-
-
-
-                <!-- <div id="suggestions-list"></div> -->
-
-            <!-- <input type="text" id="searchFilter" name="investment-type" placeholder="Investor Type"
-                value="
-                <?php 
-                // echo esc_attr($_GET['investor_type'] ?? ''); ?>" /> -->
-                <!-- <div id="suggestions-list1"></div> -->
-
-            <!-- <input type="text" id="searchFilter" name="searchstatus" placeholder="Investing Status" -->
-                <!-- value="<?php 
-                // echo esc_attr($_GET['searchstatus'] ?? ''); ?>" /> -->
-                <!-- <div id="suggestions-list2"></div> -->
+            <select id="searchFilter" name="searchstatus">
+                <option value=""><?php esc_html_e('Select Investing Status', 'cpm_investors'); ?></option>
+                <option value="Actively Investing"
+                    <?php selected(esc_attr($_GET['searchstatus'] ?? ''), 'Actively Investing'); ?>>
+                    <?php esc_html_e('Actively Investing', 'cpm_investors'); ?></option>
+                <option value="Relaxed Investing"
+                    <?php selected(esc_attr($_GET['searchstatus'] ?? ''), 'Relaxed Investing'); ?>>
+                    <?php esc_html_e('Relaxed Investing', 'cpm_investors'); ?></option>
+            </select>
 
             <button type="submit">Filter</button>
         </form>
     </div>
 
     <!--  to show suggestion in the search bar -->
-         <?php
+    <?php
            
 
             // Replace 'your_meta_key' with your actual meta key
@@ -85,10 +91,7 @@ echo '</select>';
     <!-- Display investors with logo and valid days on -->
     <div class="investors-grid">
         <?php
-          $investor_id = get_the_ID();
-          $option = get_post_meta($investor_id, 'cpm_investor_country', true); 
-          //var_dump($option);
-        // Modify the query to include search parameters
+        // Initialize WP_Query based on search filters
         $meta_query = array('relation' => 'AND');
 
         if (!empty($_GET['country'])) {
@@ -100,10 +103,10 @@ echo '</select>';
             );
         }
 
-        if (!empty($_GET['investor-type'])) {
+        if (!empty($_GET['searchinvestortype'])) {
             $meta_query[] = array(
-                'key'     => 'investor_type',
-                'value'   => sanitize_text_field($_GET['investor_type']),
+                'key'     => 'cpm_investor_type',
+                'value'   => sanitize_text_field($_GET['searchinvestortype']),
                 'compare' => 'LIKE',
             );
         }
