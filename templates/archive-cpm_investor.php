@@ -23,7 +23,7 @@ get_header();
                 'meta_compare' => '!=',
                 'orderby' => 'meta_value',
                 'order' => 'ASC',
-                // 'distinct' => true,
+                'distinct' => true,
             ));
             $unique_countries = array();
             foreach ($countries as $country_id) {
@@ -53,8 +53,6 @@ get_header();
                     <?php esc_html_e('Accelerator', 'cpm_investors'); ?></option>
             </select>
 
-
-
             <select id="searchFilter" name="searchstatus">
                 <option value=""><?php esc_html_e('Select Investing Status', 'cpm_investors'); ?></option>
                 <option value="Actively Investing"
@@ -80,7 +78,6 @@ get_header();
                 'key'     => 'cpm_investor_country',
                 'value'   => sanitize_text_field($_GET['country']),
                 'compare' => 'LIKE',
-                
             );
         }
 
@@ -103,16 +100,21 @@ get_header();
         $args = array(
             'post_type'  => 'cpm_investor',
             'meta_query' => $meta_query,
-            's' => isset($_GET['searcharea']) ? sanitize_text_field($_GET['searcharea']) : '',
         );
+
+        if (!empty($_GET['searcharea'])) {
+            $args['s'] = sanitize_text_field($_GET['searcharea']);
+        }
 
         $query = new WP_Query($args);
 
-        if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post();
-            $investor_id = get_the_ID();
-            $valid_days = get_post_meta($investor_id, 'cpm_investor_valid_for', true);  // Get the data from the DB
-            $investing_status = get_post_meta($investor_id, 'cpm_investing_status', true); // Get the investing status
-            if ($valid_days >= 0):
+        if ($query->have_posts()) : 
+            while ($query->have_posts()) : 
+                $query->the_post();
+                $investor_id = get_the_ID();
+                $valid_days = get_post_meta($investor_id, 'cpm_investor_valid_for', true);  // Get the data from the DB
+                $investing_status = get_post_meta($investor_id, 'cpm_investing_status', true); // Get the investing status
+                if ($valid_days >= 0):
         ?>
         <div class="investor-item">
             <a href="<?php the_permalink(); ?>">
@@ -134,12 +136,15 @@ get_header();
             </a>
         </div>
         <?php
-            endif;
-        endwhile;
-    else:
+                endif;
+            endwhile;
+        else:
         ?>
         <p><?php esc_html_e('No investors found.', 'cpm_investors'); ?></p>
-        <?php endif; wp_reset_postdata(); ?>
+        <?php 
+        endif; 
+        wp_reset_postdata(); 
+        ?>
     </div>
 </div>
 
