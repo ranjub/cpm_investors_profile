@@ -16,7 +16,6 @@ function cpm_enqueue_admin_scripts() {
     wp_enqueue_script('jquery-ui-datepicker');
     wp_enqueue_style('jquery-ui-datepicker-css', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
     wp_localize_script('jquery-ui-datepicker', 'datepicker_args', array('dateFormat' => 'yy-mm-dd'));
-    
 
     global $post;
     if ($post && $post->post_type == 'cpm_investor') {
@@ -28,6 +27,7 @@ function cpm_enqueue_admin_scripts() {
     }
 }
 add_action('admin_enqueue_scripts', 'cpm_enqueue_admin_scripts');
+
 
 // Display the 'founded in' year in the post edit screen
 function cpm_investor_add_meta_box() {
@@ -86,8 +86,9 @@ function cpm_investor_meta_box_callback( $post ) {
     </select>
 
     <label for="cpm_investor_country">Country:</label>
-    <select id="cpm_investor_country" name="cpm_investor_country" class="cpm-select2"></select>
-
+    <select id="cpm_investor_country" name="cpm_investor_country" class="cpm-select2">
+        <!-- Options will be populated by JS -->
+    </select>
     <p>
         <label for="cpm_investor_publish_date">Publish Date:</label>
         <input type="date" id="cpm_investor_publish_date" name="cpm_investor_publish_date"
@@ -99,6 +100,9 @@ function cpm_investor_meta_box_callback( $post ) {
             value="<?php echo esc_attr($valid_for); ?>">
     </p>
 </div>
+<script type="text/javascript">
+var cpm_investor_country = "<?php echo esc_js($country_value); ?>";
+</script>
 <?php
 }
 

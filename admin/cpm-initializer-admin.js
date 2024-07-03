@@ -227,6 +227,7 @@ jQuery(document).ready(function ($) {
     "Zimbabwe",
   ];
 
+  // Function to populate the country select
   function populateCountrySelect(selector) {
     var $select = $(selector);
     countries.forEach(function (country) {
@@ -235,21 +236,22 @@ jQuery(document).ready(function ($) {
     });
   }
 
+  // Initialize Select2 for country select
   $("#cpm_investor_country").select2({
     placeholder: "Select a country",
     allowClear: true,
   });
 
+  // Populate country select
+  populateCountrySelect("#cpm_investor_country");
+
+  // Set the selected country value
+  if (typeof cpm_investor_country !== "undefined" && cpm_investor_country) {
+    $("#cpm_investor_country").val(cpm_investor_country).trigger("change");
+  }
+
   $("#cpm_investment_type").select2({
     tags: true,
     tokenSeparators: [","],
   });
-
-  // Populate country select field in the backend form
-  populateCountrySelect("#cpm_investor_country");
-
-  // Set the selected value in the backend form
-  if (typeof cpm_investor_country !== "undefined") {
-    $("#cpm_investor_country").val(cpm_investor_country).trigger("change");
-  }
 });
