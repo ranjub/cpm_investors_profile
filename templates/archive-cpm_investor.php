@@ -10,7 +10,7 @@ get_header();
     <div class="filter-search">
         <form id="searchform" method="get">
             <input type="text" id="searchFilter" name="searcharea" placeholder="Free text search"
-                value="<?php echo get_search_query(); ?>" />
+                value="<?php echo get_search_query(), esc_attr($_GET['searcharea'] ?? ''); ?>" />
 
             <?php
             // Fetch unique countries
