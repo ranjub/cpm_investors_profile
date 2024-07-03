@@ -1,11 +1,6 @@
 <?php
 /* Template Name: Investor Archive */
 get_header(); 
-global $wpdb;
-$investor_country_values = $wpdb->get_col("SELECT DISTINCT meta_value FROM {$wpdb->postmeta} WHERE meta_key = 'cpm_investor_country'");
-$investortypes = $wpdb->get_col("SELECT DISTINCT meta_value FROM {$wpdb->postmeta} WHERE meta_key = 'investor_type'");
-$investing_status = $wpdb->get_col("SELECT DISTINCT meta_value FROM {$wpdb->postmeta} WHERE meta_key = 'cpm_investing_status'");
-//var_dump($investor_country_values);
 ?>
 
 <div class="investors-archive">
@@ -74,20 +69,6 @@ $investing_status = $wpdb->get_col("SELECT DISTINCT meta_value FROM {$wpdb->post
         </form>
     </div>
 
-    <!--  to show suggestion in the search bar -->
-    <?php
-           
-
-            // Replace 'your_meta_key' with your actual meta key
- 
-//                $dropdown = '<select id="meta-dropdown" name="meta_dropdown">';
-
-//                   foreach ($unique_values as $value) {
-//                     $dropdown .= "<option value='{$value}'>{$value}</option>";
-//             }
-
-// $dropdown .= '</select>';
-         ?>
     <!-- Display investors with logo and valid days on -->
     <div class="investors-grid">
         <?php
