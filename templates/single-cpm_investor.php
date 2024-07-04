@@ -68,14 +68,16 @@ get_header();
                 <?php echo esc_html(get_post_meta($investor_id, 'cpm_investing_status', true)); ?></p>
 
             <!-- Investment Type -->
-            <p class="cpm_investment_type" id="investor_attr"><strong>Investment Type: </strong>
+            <p class="cpm_invesF tment_type" id="investor_attr"><strong>Investment Type: </strong>
                 <?php echo esc_html(get_post_meta( $investor_id, 'investment_type', true)); ?></p>
             
                 <!-- Capital (USD) -->
-                 <div class= "currency-exchange">
-
-                                   <a href="">  <img class="dollor-exchange"src="<?php 
-                                   echo plugin_dir_url(__FILE__) . 'images\icons8-dollar-euro-exchange-50.png'; ?>" alt="Your Image Description"></a> 
+                <strong>Capital (USD): </strong>
+                 <div class= "currency-exchange">  
+                    <input type="text" class="currency" id="investor_attr" value=" <?php  echo esc_html(get_post_meta( $investor_id, 'cpm_capital_usd', true)).'$'; ?>" readonly>
+                  
+                   <button class="exchange-button">   <img class="dollor-exchange" class=""src="<?php 
+                    echo plugin_dir_url(__FILE__) . 'images\icons8-dollar-euro-exchange-50.png'; ?>" alt="Currency Exchange Logo"></button>  
 
                  </div>
             <!-- for the description -->
