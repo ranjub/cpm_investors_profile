@@ -14,14 +14,14 @@
 .profile_header {
   text-align: center;
   background-color: #b3e2a7;
-  padding-bottom: 0px;
-  margin-bottom: 0px;
+  padding-top : 15px;
+  padding-bottom: 2px;
 }
 
 /* heading */
 .investor_profile {
-  padding-top: 20px;
-  margin-bottom: 0em;
+  /* padding-top: 20px; */
+  /* margin-bottom: 0em; */
 }
 
 .investor_moto {
@@ -72,7 +72,7 @@
 
 .cpm_investor_details {
   text-align: center;
-  margin-bottom: 0px;
+ padding-top: 10px;
 }
 
 .cpminvestor_title {
@@ -86,6 +86,7 @@
 
 .cpm_investment_content {
   text-align: justify;
+  line-height: 25px;
 }
 
 /* sidebar */

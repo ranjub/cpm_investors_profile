@@ -11,9 +11,9 @@ get_header();
     <div class= "mainsingle-page">
             <div class="investor-profile_maindiv">
                     <div class="profile_header">
-                    <h2 class="investor_profile">CPM Investor Profile</h2>
-                    <p class="investor_moto">No.1 Investing Platform</p>
-                    
+                            <h2 class="investor_profile">CPM Investor Profile</h2>
+                            <!-- <p class="investor_moto">No.1 Investing Platform</p> -->
+                    </div>
 
              </div>
              <h2 class="cpm_investor_details">Investor Details</h2>
