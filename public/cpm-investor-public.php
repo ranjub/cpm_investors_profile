@@ -130,7 +130,7 @@ function cpm_investor_submission_form() {
 
         <!-- New field for Capital (USD) -->
         <label for="capital_usd">Capital (USD):</label>
-        <input type="text" id="capital_usd" name="capital_usd" required>
+        <input type="number" id="capital_usd" name="capital_usd" required>
 
 
         <input type="submit" name="submit_investor" value="Submit">

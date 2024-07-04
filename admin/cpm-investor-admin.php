@@ -95,7 +95,7 @@ function cpm_investor_meta_box_callback( $post ) {
     <!-- New field for Capital (USD) -->
     <p>
         <label for="cpm_capital_usd">Capital (USD):</label>
-        <input type="text" id="cpm_capital_usd" name="cpm_capital_usd" value="<?php echo esc_attr($capital_usd); ?>">
+        <input type="number" id="cpm_capital_usd" name="cpm_capital_usd" value="<?php echo esc_attr($capital_usd); ?>">
     </p>
     <p>
         <label for="cpm_investor_publish_date">Publish Date:</label>
