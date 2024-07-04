@@ -14,14 +14,14 @@
 .profile_header {
   text-align: center;
   background-color: #b3e2a7;
-  padding-top : 15px;
+  padding-top: 15px;
   padding-bottom: 2px;
 }
 
 /* heading */
 /* .investor_profile { */
-  /* padding-top: 20px; */
-  /* margin-bottom: 0em; */
+/* padding-top: 20px; */
+/* margin-bottom: 0em; */
 /* } */
 
 .investor_moto {
@@ -72,7 +72,7 @@
 
 .cpm_investor_details {
   text-align: center;
-   padding-top: 10px;
+  padding-top: 10px;
 }
 
 .cpminvestor_title {
@@ -99,4 +99,9 @@
   text-align: center;
   margin-top: 50px;
   margin-left: 30em;
+}
+
+/* dollor exchange logo */
+.dollor-exchange {
+  width: 49px;
 }

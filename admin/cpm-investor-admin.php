@@ -10,6 +10,7 @@ function cpm_enqueue_admin_scripts() {
     wp_enqueue_script('jquery');
     wp_enqueue_script('cpm-admin-js', plugin_dir_url(__FILE__) . 'admin/cpm-initializer-admin.js', array('jquery', 'jquery-ui-datepicker'), '1.0', true);
     wp_enqueue_style('cpm-admin-css', plugin_dir_url(__FILE__) . 'cpm-styles-admin.css');
+    wp_enqueue_style('images', plugin_dir_url(__FILE__) . 'money-exchange.png');
     wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
     wp_enqueue_script('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), '4.0.13', true);
     wp_enqueue_style('select2-css', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
