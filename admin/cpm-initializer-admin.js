@@ -255,9 +255,13 @@ jQuery(document).ready(function ($) {
     tokenSeparators: [","],
   });
 
+  //js validation for capital(amount)
   $("#post").on("submit", function (event) {
     var capitalUSD = $("#cpm_capital_usd").val();
-    var isValid = !isNaN(capitalUSD) && capitalUSD.trim() !== "";
+    var isValid =
+      !isNaN(capitalUSD) &&
+      capitalUSD.trim() !== "" &&
+      parseFloat(capitalUSD) >= 0;
 
     if (!isValid) {
       event.preventDefault(); // Prevent form submission

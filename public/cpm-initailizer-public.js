@@ -455,10 +455,14 @@ jQuery(document).ready(function ($) {
   populateCountrySelect("#investor_country");
 });
 
+//js validation for amount
 jQuery(document).ready(function ($) {
   $("#cpm_investor_form").on("submit", function (event) {
     var capitalUSD = $("#capital_usd").val();
-    var isValid = !isNaN(capitalUSD) && capitalUSD.trim() !== "";
+    var isValid =
+      !isNaN(capitalUSD) &&
+      capitalUSD.trim() !== "" &&
+      parseFloat(capitalUSD) >= 0;
 
     if (!isValid) {
       event.preventDefault();
