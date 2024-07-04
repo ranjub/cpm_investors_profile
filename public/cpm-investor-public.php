@@ -128,6 +128,11 @@ function cpm_investor_submission_form() {
             <?php endif; ?>
         </select>
 
+        <!-- New field for Capital (USD) -->
+        <label for="capital_usd">Capital (USD):</label>
+        <input type="text" id="capital_usd" name="capital_usd" required>
+
+
         <input type="submit" name="submit_investor" value="Submit">
 
     </form>
@@ -154,6 +159,7 @@ function cpm_investor_handle_form_submission() {
         $investing_status = sanitize_text_field($_POST['investing_status']);
         $investor_country = sanitize_text_field($_POST['investor_country']);
         $investment_types = array_map('sanitize_text_field', $_POST['investment_type']);
+        $capital_usd = sanitize_text_field($_POST['capital_usd']);
 
 
         // Create a new post of type 'cpm_investor'
@@ -173,6 +179,7 @@ function cpm_investor_handle_form_submission() {
             update_post_meta($post_id, 'cpm_investor_type', $investor_type);
             update_post_meta($post_id, 'cpm_investor_country', $investor_country);
             update_post_meta($post_id, 'cpm_investing_status', $investing_status);
+            update_post_meta($post_id, 'cpm_capital_usd', $capital_usd);
 
          
 

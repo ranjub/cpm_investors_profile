@@ -53,6 +53,8 @@ function cpm_investor_meta_box_callback( $post ) {
     $country_value = get_post_meta($post->ID, 'cpm_investor_country', true);
     $publish_date = get_post_meta($post->ID, 'cpm_investor_publish_date', true);
     $valid_for = get_post_meta($post->ID, 'cpm_investor_valid_for', true);
+    $capital_usd = get_post_meta($post->ID, 'cpm_capital_usd', true); // New field
+
     if (!is_array($type_value)) {
         $type_value = array();
     }
@@ -89,6 +91,12 @@ function cpm_investor_meta_box_callback( $post ) {
     <select id="cpm_investor_country" name="cpm_investor_country" class="cpm-select2">
         <!-- Options will be populated by JS -->
     </select>
+
+    <!-- New field for Capital (USD) -->
+    <p>
+        <label for="cpm_capital_usd">Capital (USD):</label>
+        <input type="text" id="cpm_capital_usd" name="cpm_capital_usd" value="<?php echo esc_attr($capital_usd); ?>">
+    </p>
     <p>
         <label for="cpm_investor_publish_date">Publish Date:</label>
         <input type="date" id="cpm_investor_publish_date" name="cpm_investor_publish_date"
@@ -158,6 +166,9 @@ function cpm_investor_save_meta_box_data($post_id) {
 
     if (isset($_POST['cpm_investor_valid_for'])) {
         update_post_meta($post_id, 'cpm_investor_valid_for', sanitize_text_field($_POST['cpm_investor_valid_for']));
+    }
+    if (array_key_exists('cpm_capital_usd', $_POST)) { 
+        update_post_meta($post_id, 'cpm_capital_usd', sanitize_text_field($_POST['cpm_capital_usd']));
     }
 }
 add_action('save_post', 'cpm_investor_save_meta_box_data');
