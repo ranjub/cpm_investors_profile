@@ -453,14 +453,4 @@ jQuery(document).ready(function ($) {
   // Populate country select field in the frontend form
 
   populateCountrySelect("#investor_country");
-
-  //capital amount validation
-  // Form validation
-  $("#cpm-investor-form").on("submit", function (e) {
-    var capital = $("#capital_usd").val();
-    if (!/^\d+(\.\d{1,2})?$/.test(capital)) {
-      alert("Please enter a valid amount for Capital (USD).");
-      e.preventDefault();
-    }
-  });
 });
