@@ -47,7 +47,7 @@ get_header();
            
             <!-- for the title -->
             <h3 class="cpminvestor_title"> <?php the_title(); ?></h3>
-
+          
             <!-- founded date -->
             <p class="cpm_investor_foundedin" id="investor_attr"><strong>Founded In: </strong>
                 <?php echo esc_html(get_post_meta($investor_id, 'cpm_investor_founded', true)); ?></p>
@@ -70,7 +70,10 @@ get_header();
             <!-- Investment Type -->
             <p class="cpm_investment_type" id="investor_attr"><strong>Investment Type: </strong>
                 <?php echo esc_html(get_post_meta( $investor_id, 'investment_type', true)); ?></p>
-
+            
+                <!-- Capital (USD) -->
+             <p class="investor_currency" id="investor_attr"
+             <?php echo esc_html(get_post_meta($investor_id, ''))?>></p>
             <!-- for the description -->
             <p class="cpm_investment_content" id="investor_attr"><strong>Description:<strong><br>
                         <?php the_content(); ?></p>
