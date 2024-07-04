@@ -454,3 +454,17 @@ jQuery(document).ready(function ($) {
 
   populateCountrySelect("#investor_country");
 });
+
+jQuery(document).ready(function ($) {
+  $("#cpm_investor_form").on("submit", function (event) {
+    var capitalUSD = $("#capital_usd").val();
+    var isValid = !isNaN(capitalUSD) && capitalUSD.trim() !== "";
+
+    if (!isValid) {
+      event.preventDefault();
+      $("#capital_usd_error").show();
+    } else {
+      $("#capital_usd_error").hide();
+    }
+  });
+});

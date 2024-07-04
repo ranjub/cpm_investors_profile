@@ -254,4 +254,16 @@ jQuery(document).ready(function ($) {
     tags: true,
     tokenSeparators: [","],
   });
+
+  $("#post").on("submit", function (event) {
+    var capitalUSD = $("#cpm_capital_usd").val();
+    var isValid = !isNaN(capitalUSD) && capitalUSD.trim() !== "";
+
+    if (!isValid) {
+      event.preventDefault(); // Prevent form submission
+      $("#capital_usd_error").show(); // Show error message
+    } else {
+      $("#capital_usd_error").hide(); // Hide error message
+    }
+  });
 });

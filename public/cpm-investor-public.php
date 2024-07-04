@@ -15,23 +15,14 @@ if (!defined('ABSPATH')) {
 // Enqueue Public Scripts and Styles
 
 function cpm_enqueue_public_scripts() {
-
     wp_enqueue_script('jquery');
-
-    wp_enqueue_script('cpm-public-js', plugin_dir_url(__FILE__) . 'public/cpm-initailizer-public.js', array('jquery', 'jquery-ui-datepicker'), '1.0', true);
-
+    wp_enqueue_script('cpm-public-js', plugin_dir_url(__FILE__) . 'public/cpm-initailizer-public.js', array('jquery'), '1.0', true);
     wp_enqueue_style('cpm-public-css', plugin_dir_url(__FILE__) . 'public/cpm-investor-public.css');
-
     wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
-
     wp_enqueue_script('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), '4.0.13', true);
-
     wp_enqueue_style('select2-css', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
 }
-
 add_action('wp_enqueue_scripts', 'cpm_enqueue_public_scripts');
-
-
 
 // Shortcode to display the form
 
@@ -63,7 +54,7 @@ function cpm_investor_submission_form() {
 
     <h2 class="form-title">Investor Submission Form</h2>
 
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="post" id="cpm_investor_form" enctype="multipart/form-data">
 
         <label for="investor_name">Name of Investor:</label>
 
@@ -111,15 +102,10 @@ function cpm_investor_submission_form() {
 
         </select>
 
-
-
         <label for="investor_country">Country:</label>
 
         <select id="investor_country" name="investor_country" class="cpm-select2" required></select>
-
-
-
-        <label for="investment_type">Type of Investment:</label>
+        <label for="investment_type">Type of Investment</label>
         <select id="investment_type" name="investment_type[]" multiple="multiple">
             <?php if (!empty($terms) && !is_wp_error($terms)) : ?>
             <?php foreach ($terms as $term) : ?>
@@ -130,9 +116,8 @@ function cpm_investor_submission_form() {
 
         <!-- New field for Capital (USD) -->
         <label for="capital_usd">Capital (USD):</label>
-        <input type="number" id="capital_usd" name="capital_usd" required>
-
-
+        <input type="number" id="capital_usd" name="capital_usd" required><br />
+        <span id="capital_usd_error" style="color: red; display: none;">Please enter a valid number.</span><br />
         <input type="submit" name="submit_investor" value="Submit">
 
     </form>
