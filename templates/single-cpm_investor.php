@@ -69,36 +69,6 @@ get_header();
                             <?php echo esc_html(get_post_meta($investor_id, 'investment_type', true)); ?></p>
 
                         <!-- Capital (USD) -->
-<<<<<<< Updated upstream
-                        <div class="currency-exchange">
-                
-                            <p class="currency-capital"><strong>Capital: </strong></p>
-                            <button id="onclick-exchange" class="exchange-button">
-                                <img class="dollor-exchange" src="<?php echo plugin_dir_url(__FILE__) . 'images\icons8-dollar-euro-exchange-50.png'; ?>" alt="Currency Exchange Logo">
-
-                            </button>
-                        </div>
-                        <p class="currency" id="investor_currency" name="usd_amount">
-                           <i class="fa-solid fa-dollar-sign" id= "investor-currency" ></i>
-                            <?php echo esc_html(get_post_meta($investor_id, 'cpm_capital_usd', true)); ?></p>
-
-
-
-
-                        <!-- for the description -->
-                        <p class="cpm_investment_content" id="investor_attr"><strong>Description:<strong><br>
-                                    <?php the_content(); ?>
-                        </p>
-
-                    </div>
-                    <div class="side-bar">
-                        <aside id="secondary" class="widget-area">
-                            <?php dynamic_sidebar('investor-sidebar');
-                            get_sidebar();
-                            ?>
-                        </aside>
-                    </div>
-=======
                         <strong>Capital (USD): </strong>
                         <div class="currency-exchange">
                             <p class="currency" id="investor_currency" name="usd_amount" data-usd-amount="<?php echo esc_html(get_post_meta($investor_id, 'cpm_capital_usd', true)); ?>">
@@ -123,7 +93,6 @@ get_header();
                     ?>
                 </aside>
             </div>
->>>>>>> Stashed changes
 
 
     <?php
@@ -150,15 +119,9 @@ get_header();
 
     ?>
 
-<<<<<<< Updated upstream
-            </div>
-
-            <?php
-=======
     </div>
 
     <?php
->>>>>>> Stashed changes
 
     ?>
     </div>

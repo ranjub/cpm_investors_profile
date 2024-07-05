@@ -24,14 +24,9 @@ jQuery(document).ready(function ($) {
           if (response.data && response.data.AED) {
             const conversionRate = response.data.AED.value;
             const convertAED = usdAmount * conversionRate;
-<<<<<<< Updated upstream
-            $("#investor_currency").text(convertAED.toFixed(2)); // Set the text to the converted amount, formatted to 2 decimal places
-            $('#investor-currency').removeClass('fa-dollar-sign').addClass('fa-check');
-=======
             $currencyElement.html(
               ` <strong>AED </strong>${convertAED.toFixed(2)}`
             );
->>>>>>> Stashed changes
             isConvertedToAED = true; // Set the flag to indicate conversion to AED
           }
         },
