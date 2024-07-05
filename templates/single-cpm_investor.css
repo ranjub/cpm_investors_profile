@@ -106,17 +106,18 @@
 }
 .dollor-exchange {
   /* margin-top: 15px; */
-  width: 30px;
+  width: 15px;
 }
 
 .currency {
-  /* margin-top: 10px; */
-  /* margin-right: 15px; */
+  margin-top: 15px;
+  margin-right: 15px;
   width: 60px;
 }
 .exchange-button {
   /* margin-top:3px; */
   background-color: transparent;
+  width: 65px;
   padding-left: 2px;
 }
 .exchange-button:hover {
