@@ -114,6 +114,7 @@ function cpm_investors_enqueue_scripts()
 
     // Enqueue single-specific stylesheet
     if (is_singular('cpm_investor')) {
+        wp_enqueue_style('cpm_investor_font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
         wp_enqueue_style('cpm-investors-single-style', CPM_INVESTORS_URL . 'templates/single-cpm_investor.css');
     }
 
