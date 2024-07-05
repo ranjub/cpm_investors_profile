@@ -79,23 +79,23 @@ get_header();
                             </button>
                         </div>
 
+
+                        <!-- for the description -->
+                        <p class="cpm_investment_content" id="investor_attr"><strong>Description:<strong><br>
+                                    <?php the_content(); ?>
+                        </p>
+
                     </div>
-                    <!-- for the description -->
-                    <p class="cpm_investment_content" id="investor_attr"><strong>Description:<strong><br>
-                                <?php the_content(); ?>
-                    </p>
-
-            </div>
-            <div class="side-bar">
-                <aside id="secondary" class="widget-area">
-                    <?php dynamic_sidebar('investor-sidebar');
-                    get_sidebar();
-                    ?>
-                </aside>
-            </div>
+                    <div class="side-bar">
+                        <aside id="secondary" class="widget-area">
+                            <?php dynamic_sidebar('investor-sidebar');
+                            get_sidebar();
+                            ?>
+                        </aside>
+                    </div>
 
 
-    <?php
+            <?php
                 else :
                     // If no posts found
                     // <p class="cpm_investment_content" id="investor_attr">Description:</p>
@@ -117,13 +117,13 @@ get_header();
             //    break;
             // }
 
-    ?>
+            ?>
 
-    </div>
+            </div>
 
-    <?php
+            <?php
 
-    ?>
+            ?>
     </div>
 </section>
 <?php
