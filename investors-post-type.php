@@ -60,45 +60,6 @@ function cpm_investors_custom_post_type()
 add_action('init', 'cpm_investors_custom_post_type');
 
 
-// Register the Investment Type taxonomy
-function cpm_investor_register_taxonomy()
-{
-    $labels = array(
-        'name'              => _x('Investment Types', 'taxonomy general name', 'cpm_investor'),
-        'singular_name'     => _x('Investment Type', 'taxonomy singular name', 'cpm_investor'),
-        'search_items'      => __('Search Investment Types', 'cpm_investor'),
-        'all_items'         => __('All Investment Types', 'cpm_investor'),
-        'parent_item'       => __('Parent Investment Type', 'cpm_investor'),
-        'parent_item_colon' => __('Parent Investment Type:', 'cpm_investor'),
-        'edit_item'         => __('Edit Investment Type', 'cpm_investor'),
-        'update_item'       => __('Update Investment Type', 'cpm_investor'),
-        'add_new_item'      => __('Add New Investment Type', 'cpm_investor'),
-        'new_item_name'     => __('New Investment Type Name', 'cpm_investor'),
-        'menu_name'         => __('Investment Type', 'cpm_investor'),
-    );
-
-    $args = array(
-        'hierarchical'      => false,
-        'labels'            => $labels,
-        'show_ui'           => true,
-        'show_admin_column' => true,
-        'update_count_callback' => '_update_post_term_count',
-        'query_var'         => true,
-        'rewrite'           => array('slug' => 'investment-type'),
-    );
-
-    register_taxonomy('investment_type', 'cpm_investor', $args);
-}
-add_action('init', 'cpm_investor_register_taxonomy');
-
-// Ensure taxonomy is displayed as tags
-function cpm_investor_add_taxonomy_to_post_type()
-{
-    register_taxonomy_for_object_type('investment_type', 'cpm_investor');
-}
-add_action('init', 'cpm_investor_add_taxonomy_to_post_type');
-
-
 // Load single template
 function cpm_investors_load_template($template)
 {
@@ -191,16 +152,9 @@ function cpm_investors_enqueue_admin_scripts()
 }
 add_action('admin_enqueue_scripts', 'cpm_investors_enqueue_admin_scripts');
 
-// Include admin and public files
-if (is_admin()) {
-    if (file_exists(CPM_INVESTORS_ADMIN_DIR . 'cpm-investor-admin.php')) {
-        require_once CPM_INVESTORS_ADMIN_DIR . 'cpm-investor-admin.php';
-    }
-} else {
-    if (file_exists(CPM_INVESTORS_PUBLIC_DIR . 'cpm-investor-public.php')) {
-        require_once CPM_INVESTORS_PUBLIC_DIR . 'cpm-investor-public.php';
-    }
-}
+require_once CPM_INVESTORS_ADMIN_DIR . 'cpm-investor-admin.php';
+require_once CPM_INVESTORS_PUBLIC_DIR . 'cpm-investor-public.php';
+
 
 // Flush rewrite rules on activation
 function cpm_investors_rewrite_flush()

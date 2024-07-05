@@ -71,8 +71,9 @@ get_header();
                 <!-- Capital (USD) -->
                 <strong>Capital (USD): </strong>
                 <div class="currency-exchange">
-                    <input type="text" class="currency" id="investor_currency" name="usd_amount"
-                        value=" <?php echo esc_html(get_post_meta($investor_id, 'cpm_capital_usd', true)); ?>" readonly>
+                    <p class="currency" id="investor_currency" name="usd_amount">
+                        <?php echo esc_html(get_post_meta($investor_id, 'cpm_capital_usd', true)); ?>
+                    </p>
                     <button id="onclick-exchange" class="exchange-button">
                         <img class="dollor-exchange"
                             src="<?php echo plugin_dir_url(__FILE__) . 'images\icons8-dollar-euro-exchange-50.png'; ?>"

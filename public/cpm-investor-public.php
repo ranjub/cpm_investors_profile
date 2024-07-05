@@ -33,87 +33,86 @@ function cpm_investor_submission_form()
 
 
 
-<!-- frontend form -->
+    <!-- frontend form -->
 
-<div class="cpm-form-container">
+    <div class="cpm-form-container">
 
-    <!-- Form title -->
+        <!-- Form title -->
 
-    <h2 class="form-title">Investor Submission Form</h2>
+        <h2 class="form-title">Investor Submission Form</h2>
 
-    <form action="" method="post" id="cpm_investor_form" enctype="multipart/form-data">
+        <form action="" method="post" id="cpm_investor_form" enctype="multipart/form-data">
 
-        <label for="investor_name">Name of Investor:</label>
+            <label for="investor_name">Name of Investor:</label>
 
-        <input type="text" id="investor_name" name="investor_name" required>
-
-
-
-        <label for="investor_description">Short Description:</label>
-
-        <textarea id="investor_description" name="investor_description" rows="4" cols="50"></textarea>
+            <input type="text" id="investor_name" name="investor_name" required>
 
 
 
-        <label for="investor_founded">Founded in:</label>
+            <label for="investor_description">Short Description:</label>
 
-        <input type="text" id="investor_founded" name="investor_founded" required>
-
-
-
-        <label for="investor_type">Investor Type:</label>
-
-        <select id="investor_type" name="investor_type[]" multiple="multiple" class="cpm-select2" required>
-
-            <option value="VC">VC</option>
-
-            <option value="Accelerator">Accelerator</option>
-
-        </select>
+            <textarea id="investor_description" name="investor_description" rows="4" cols="50"></textarea>
 
 
 
-        <label for="investor_logo">Logo:</label>
+            <label for="investor_founded">Founded in:</label>
 
-        <input type="file" id="investor_logo" name="investor_logo" accept="image/*" required>
+            <input type="text" id="investor_founded" name="investor_founded" required>
 
 
 
-        <label for="investing_status">Investing Status:</label>
+            <label for="investor_type">Investor Type:</label>
 
-        <select id="investing_status" name="investing_status" required>
+            <select id="investor_type" name="investor_type[]" multiple="multiple" class="cpm-select2" required>
 
-            <option value="Actively Investing">Actively Investing</option>
+                <option value="VC">VC</option>
 
-            <option value="Relaxed Investing">Relaxed Investing</option>
+                <option value="Accelerator">Accelerator</option>
 
-        </select>
+            </select>
 
-        <label for="investor_country">Country:</label>
 
-        <select id="investor_country" name="investor_country" class="cpm-select2" required></select>
-        <label for="investment_type">Type of Investment</label>
-        <select id="investment_type" name="investment_type[]" multiple="multiple">
-            <?php if (!empty($terms) && !is_wp_error($terms)) : ?>
-            <?php foreach ($terms as $term) : ?>
-            <option value="<?php echo esc_attr($term->term_id); ?>"><?php echo esc_html($term->name); ?></option>
-            <?php endforeach; ?>
-            <?php endif; ?>
-        </select>
 
-        <!-- New field for Capital (USD) -->
-        <label for="capital_usd">Capital (USD):</label>
-        <div class="usd_capital_public">
-            <i class="fa-solid fa-dollar-sign"></i> <input type="number" id="capital_usd" name="capital_usd" min="0"
-                required><br />
-            <div>
-                <span id="capital_usd_error" style="color: red; display: none;">Please enter a valid
-                    number.</span><br />
-                <input type="submit" name="submit_investor" value="Submit">
+            <label for="investor_logo">Logo:</label>
 
-    </form>
+            <input type="file" id="investor_logo" name="investor_logo" accept="image/*" required>
 
-</div>
+
+
+            <label for="investing_status">Investing Status:</label>
+
+            <select id="investing_status" name="investing_status" required>
+
+                <option value="Actively Investing">Actively Investing</option>
+
+                <option value="Relaxed Investing">Relaxed Investing</option>
+
+            </select>
+
+            <label for="investor_country">Country:</label>
+
+            <select id="investor_country" name="investor_country" class="cpm-select2" required></select>
+            <label for="investment_type">Type of Investment</label>
+            <select id="investment_type" name="investment_type[]" multiple="multiple">
+                <?php if (!empty($terms) && !is_wp_error($terms)) : ?>
+                    <?php foreach ($terms as $term) : ?>
+                        <option value="<?php echo esc_attr($term->term_id); ?>"><?php echo esc_html($term->name); ?></option>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </select>
+
+            <!-- New field for Capital (USD) -->
+            <label for="capital_usd">Capital (USD):</label>
+            <div class="usd_capital_public">
+                <i class="fa-solid fa-dollar-sign"></i> <input type="number" id="capital_usd" name="capital_usd" min="0" required><br />
+            </div>
+            <span id="capital_usd_error" style="color: red; display: none;">Please enter a valid
+                number.</span><br />
+            <input type="submit" name="submit_investor" value="Submit">
+
+        </form>
+
+    </div>
 
 <?php
 
