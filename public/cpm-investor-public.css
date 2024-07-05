@@ -63,3 +63,16 @@
 .cpm-select2-container {
   width: 100% !important;
 }
+/* css for capital */
+.usd_capital_public {
+  display: flex;
+  align-items: center;
+}
+
+.usd_capital_public i {
+  margin-right: 8px; /* Adjust the spacing between the icon and the input field */
+}
+
+.usd_capital_public input[type="number"] {
+  flex: 1; /* Adjusts the input field to take the remaining space */
+}

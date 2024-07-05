@@ -178,6 +178,8 @@ function cpm_investors_enqueue_admin_scripts()
     wp_enqueue_script('jquery-ui-datepicker');
     wp_enqueue_style('jquery-ui-datepicker-css', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
     wp_localize_script('jquery-ui-datepicker', 'datepicker_args', array('dateFormat' => 'yy-mm-dd'));
+    //enqueue font awesome
+    wp_enqueue_style('cpm_investor_font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
     global $post;
     if ($post && $post->post_type == 'cpm_investor') {
         $country_value = get_post_meta($post->ID, 'cpm_investor_country', true);

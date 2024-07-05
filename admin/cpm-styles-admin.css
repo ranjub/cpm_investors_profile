@@ -87,3 +87,18 @@
   display: block;
   clear: both;
 }
+
+/* css for capital */
+.usd_capital {
+  display: flex;
+  align-items: center;
+}
+
+.usd_capital i {
+  margin-right: 8px; /* Adjust the spacing between the icon and the input field */
+  vertical-align: middle; /* Vertically align the icon to the middle */
+}
+
+.usd_capital input[type="number"] {
+  flex: 1; /* Adjusts the input field to take the remaining space */
+}
