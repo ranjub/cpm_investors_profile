@@ -69,6 +69,7 @@ get_header();
                             <?php echo esc_html(get_post_meta($investor_id, 'investment_type', true)); ?></p>
 
                         <!-- Capital (USD) -->
+<<<<<<< Updated upstream
                         <div class="currency-exchange">
                 
                             <p class="currency-capital"><strong>Capital: </strong></p>
@@ -97,9 +98,35 @@ get_header();
                             ?>
                         </aside>
                     </div>
+=======
+                        <strong>Capital (USD): </strong>
+                        <div class="currency-exchange">
+                            <p class="currency" id="investor_currency" name="usd_amount" data-usd-amount="<?php echo esc_html(get_post_meta($investor_id, 'cpm_capital_usd', true)); ?>">
+                                <strong> $</strong><?php echo esc_html(get_post_meta($investor_id, 'cpm_capital_usd', true)); ?>
+                            </p>
+                            <button id="onclick-exchange" class="exchange-button">
+                                <img class="dollar-exchange" src="<?php echo plugin_dir_url(__FILE__) . 'images/icons8-dollar-euro-exchange-50.png'; ?>" alt="Currency Exchange Logo">
+                            </button>
+                        </div>
+
+                    </div>
+                    <!-- for the description -->
+                    <p class="cpm_investment_content" id="investor_attr"><strong>Description:<strong><br>
+                                <?php the_content(); ?>
+                    </p>
+
+            </div>
+            <div class="side-bar">
+                <aside id="secondary" class="widget-area">
+                    <?php dynamic_sidebar('investor-sidebar');
+                    get_sidebar();
+                    ?>
+                </aside>
+            </div>
+>>>>>>> Stashed changes
 
 
-            <?php
+    <?php
                 else :
                     // If no posts found
                     // <p class="cpm_investment_content" id="investor_attr">Description:</p>
@@ -121,13 +148,19 @@ get_header();
             //    break;
             // }
 
-            ?>
+    ?>
 
+<<<<<<< Updated upstream
             </div>
 
             <?php
+=======
+    </div>
 
-            ?>
+    <?php
+>>>>>>> Stashed changes
+
+    ?>
     </div>
 </section>
 <?php

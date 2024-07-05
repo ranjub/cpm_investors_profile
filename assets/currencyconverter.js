@@ -1,18 +1,16 @@
 jQuery(document).ready(function ($) {
-  let isConvertedToAED = false;
+  let isConvertedToAED = false; // State to track conversion
 
   $("#onclick-exchange").on("click", function (e) {
     e.preventDefault();
 
-    let usdAmount = parseFloat($("#investor_currency").data("usd-amount")); // Get the original USD amount from data attribute
-    if (!usdAmount) {
-      usdAmount = parseFloat($("#investor_currency").text().trim());
-      $("#investor_currency").data("usd-amount", usdAmount); // Store the original USD amount
-    }
+    const $currencyElement = $("#investor_currency");
+    let usdAmount = parseFloat($currencyElement.data("usd-amount"));
 
     if (isConvertedToAED) {
       // Convert back to USD
-      $("#investor_currency").text(usdAmount.toFixed(2)); // Set the text to the original USD amount
+      $currencyElement.html(`<strong>$</strong>${usdAmount.toFixed(2)}`); // Set the text to the original USD amount with dollar sign
+      isConvertedToAED = false; // Set the flag to indicate conversion to USD
     } else {
       // Convert to AED
       const apiKey = "cur_live_w0ZN0pU4HqBYB2igmVBewxY1adPfTlVsbXgCQLM6"; // Your API key
@@ -26,8 +24,14 @@ jQuery(document).ready(function ($) {
           if (response.data && response.data.AED) {
             const conversionRate = response.data.AED.value;
             const convertAED = usdAmount * conversionRate;
+<<<<<<< Updated upstream
             $("#investor_currency").text(convertAED.toFixed(2)); // Set the text to the converted amount, formatted to 2 decimal places
             $('#investor-currency').removeClass('fa-dollar-sign').addClass('fa-check');
+=======
+            $currencyElement.html(
+              ` <strong>AED </strong>${convertAED.toFixed(2)}`
+            );
+>>>>>>> Stashed changes
             isConvertedToAED = true; // Set the flag to indicate conversion to AED
           }
         },
@@ -36,7 +40,5 @@ jQuery(document).ready(function ($) {
         },
       });
     }
-
-    isConvertedToAED = !isConvertedToAED; // Toggle the state
   });
 });
