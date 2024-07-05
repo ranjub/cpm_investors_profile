@@ -6,7 +6,7 @@ jQuery(document).ready(function ($) {
 
     // Check if the conversion has already been done
     if ($(this).data("converted")) {
-      return; // If converted, do nothing
+      return;
     }
     var apiKey = "cur_live_w0ZN0pU4HqBYB2igmVBewxY1adPfTlVsbXgCQLM6"; // Your API key
     var apiUrl = `https://api.currencyapi.com/v3/latest?apikey=cur_live_UdOuQQk8O1sOO6ndGXq5TmHdDnCEO3ZhKcfURalU`; // Correct API URL

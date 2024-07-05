@@ -10,23 +10,6 @@ if (!defined('ABSPATH')) {
 }
 
 
-
-// Enqueue Public Scripts and Styles
-
-function cpm_enqueue_public_scripts()
-{
-    wp_enqueue_script('jquery');
-    wp_enqueue_script('cpm-public-js', plugin_dir_url(__FILE__) . 'public/cpm-initailizer-public.js', array('jquery'), '1.0', true);
-    wp_enqueue_style('cpm-public-css', plugin_dir_url(__FILE__) . 'public/cpm-investor-public.css');
-    wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
-    wp_enqueue_script('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), '4.0.13', true);
-    wp_enqueue_style('select2-css', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
-    //js file to make ajax request 
-    wp_enqueue_script('currency-conversion-script', plugin_dir_url(__FILE__) . '/assets/currencyconverter.js', array('jquery'), null, true);
-
-}
-add_action('wp_enqueue_scripts', 'cpm_enqueue_public_scripts');
-
 // Shortcode to display the form
 
 function cpm_investor_submission_form()
