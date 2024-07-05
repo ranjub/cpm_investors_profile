@@ -29,68 +29,70 @@ get_header();
         // echo $valid_days;
 
         if (have_posts()) : ?>
-            <div class="investor_content_div">
-                <?php
+        <div class="investor_content_div">
+            <?php
                 if ($valid_days >= 0) :
                 ?>
-                    <div class="cpm_investor_logo">
+            <div class="cpm_investor_logo">
 
-                        <?php echo '<p class= "investor_logo">' . get_the_post_thumbnail();
-                            '</p>';
+                <?php echo '<p class= "investor_logo">' . get_the_post_thumbnail();
+                        '</p>';
                         ?>
 
-                    </div>
-                    <div class="investor_details_div">
+            </div>
+            <div class="investor_details_div">
 
-                        <!-- for the title -->
-                        <h3 class="cpminvestor_title"> <?php the_title(); ?></h3>
+                <!-- for the title -->
+                <h3 class="cpminvestor_title"> <?php the_title(); ?></h3>
 
-                        <!-- founded date -->
-                        <p class="cpm_investor_foundedin" id="investor_attr"><strong>Founded In: </strong>
-                            <?php echo esc_html(get_post_meta($investor_id, 'cpm_investor_founded', true)); ?></p>
+                <!-- founded date -->
+                <p class="cpm_investor_foundedin" id="investor_attr"><strong>Founded In: </strong>
+                    <?php echo esc_html(get_post_meta($investor_id, 'cpm_investor_founded', true)); ?></p>
 
-                        <!-- investor type -->
-                        <?php if (!empty($investor_type)) : ?>
-                            <p class="cpm_investor_type" id="investor_attr"><strong>Investor Type:</strong>
-                                <?php echo implode(', ', array_map('esc_html', $investor_type)); ?></p>
-                        <?php
+                <!-- investor type -->
+                <?php if (!empty($investor_type)) : ?>
+                <p class="cpm_investor_type" id="investor_attr"><strong>Investor Type:</strong>
+                    <?php echo implode(', ', array_map('esc_html', $investor_type)); ?></p>
+                <?php
                         endif;
                         ?>
-                        <!-- Investor country -->
-                        <p class="cpm_investor_country" id="investor_attr"><strong> Country: </strong>
-                            <?php echo esc_html(get_post_meta($investor_id, 'cpm_investor_country', true)); ?></p>
+                <!-- Investor country -->
+                <p class="cpm_investor_country" id="investor_attr"><strong> Country: </strong>
+                    <?php echo esc_html(get_post_meta($investor_id, 'cpm_investor_country', true)); ?></p>
 
-                        <!-- Investing Status -->
-                        <p class="cpm_investing_status" id="investor_attr"><strong>Investing Status: </strong>
-                            <?php echo esc_html(get_post_meta($investor_id, 'cpm_investing_status', true)); ?></p>
+                <!-- Investing Status -->
+                <p class="cpm_investing_status" id="investor_attr"><strong>Investing Status: </strong>
+                    <?php echo esc_html(get_post_meta($investor_id, 'cpm_investing_status', true)); ?></p>
 
-                        <!-- Investment Type -->
-                        <p class="cpm_invesF tment_type" id="investor_attr"><strong>Investment Type: </strong>
-                            <?php echo esc_html(get_post_meta($investor_id, 'investment_type', true)); ?></p>
+                <!-- Investment Type -->
+                <p class="cpm_invesF tment_type" id="investor_attr"><strong>Investment Type: </strong>
+                    <?php echo esc_html(get_post_meta($investor_id, 'investment_type', true)); ?></p>
 
-                        <!-- Capital (USD) -->
-                        <strong>Capital (USD): </strong>
-                        <div class="currency-exchange">
-                            <input type="text" class="currency" id="investor_attr" name="usd_amount" value=" <?php echo esc_html(get_post_meta($investor_id, 'cpm_capital_usd', true)) . '$'; ?>" readonly>
+                <!-- Capital (USD) -->
+                <strong>Capital (USD): </strong>
+                <div class="currency-exchange">
+                    <input type="text" class="currency" id="investor_currency" name="usd_amount"
+                        value=" <?php echo esc_html(get_post_meta($investor_id, 'cpm_capital_usd', true)); ?>" readonly>
+                    <button id="onclick-exchange" class="exchange-button">
+                        <img class="dollor-exchange"
+                            src="<?php echo plugin_dir_url(__FILE__) . 'images\icons8-dollar-euro-exchange-50.png'; ?>"
+                            alt="Currency Exchange Logo">
+                    </button>
 
-                            <!-- <button id="onclick-exchange" class="exchange-button">  -->
-                                <img class="dollor-exchange" class=""  id="onclick-exchange" class="exchange-button" src="<?php echo plugin_dir_url(__FILE__) . 'images\icons8-dollar-euro-exchange-50.png'; ?>" alt="Currency Exchange Logo">
-                            <!-- </button> -->
+                </div>
+                <!-- for the description -->
+                <p class="cpm_investment_content" id="investor_attr"><strong>Description:<strong><br>
+                            <?php the_content(); ?>
+                </p>
 
-                        </div>
-                        <!-- for the description -->
-                        <p class="cpm_investment_content" id="investor_attr"><strong>Description:<strong><br>
-                                    <?php the_content(); ?>
-                        </p>
-
-                    </div>
-                    <div class="side-bar">
-                        <aside id="secondary" class="widget-area">
-                            <?php dynamic_sidebar('investor-sidebar');
+            </div>
+            <div class="side-bar">
+                <aside id="secondary" class="widget-area">
+                    <?php dynamic_sidebar('investor-sidebar');
                             get_sidebar();
                             ?>
-                        </aside>
-                    </div>
+                </aside>
+            </div>
 
 
             <?php
@@ -117,9 +119,9 @@ get_header();
 
             ?>
 
-            </div>
+        </div>
 
-            <?php
+        <?php
 
             ?>
     </div>

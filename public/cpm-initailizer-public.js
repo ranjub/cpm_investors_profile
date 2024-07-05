@@ -1,3 +1,4 @@
+console.log("shxkjz");
 jQuery(document).ready(function ($) {
   $("#investor_type").select2({
     placeholder: "Select Investor Type",

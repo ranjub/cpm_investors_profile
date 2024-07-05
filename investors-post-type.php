@@ -21,7 +21,8 @@ define('CPM_INVESTORS_PUBLIC_DIR', CPM_INVESTORS_DIR . 'public/');
 define('CPM_INVESTORS_TEMPLATES_DIR', CPM_INVESTORS_DIR . 'templates/');
 
 // Register Custom Post Type
-function cpm_investors_custom_post_type() {
+function cpm_investors_custom_post_type()
+{
     $labels = array(
         'name'               => _x('Investors', 'post type general name', 'cpm_investors'),
         'singular_name'      => _x('Investor', 'post type singular name', 'cpm_investors'),
@@ -60,7 +61,8 @@ add_action('init', 'cpm_investors_custom_post_type');
 
 
 // Register the Investment Type taxonomy
-function cpm_investor_register_taxonomy() {
+function cpm_investor_register_taxonomy()
+{
     $labels = array(
         'name'              => _x('Investment Types', 'taxonomy general name', 'cpm_investor'),
         'singular_name'     => _x('Investment Type', 'taxonomy singular name', 'cpm_investor'),
@@ -90,14 +92,16 @@ function cpm_investor_register_taxonomy() {
 add_action('init', 'cpm_investor_register_taxonomy');
 
 // Ensure taxonomy is displayed as tags
-function cpm_investor_add_taxonomy_to_post_type() {
+function cpm_investor_add_taxonomy_to_post_type()
+{
     register_taxonomy_for_object_type('investment_type', 'cpm_investor');
 }
 add_action('init', 'cpm_investor_add_taxonomy_to_post_type');
 
 
 // Load single template
-function cpm_investors_load_template($template) {
+function cpm_investors_load_template($template)
+{
     if (is_singular('cpm_investor')) {
         $template = CPM_INVESTORS_TEMPLATES_DIR . 'single-cpm_investor.php';
     }
@@ -106,7 +110,8 @@ function cpm_investors_load_template($template) {
 add_filter('template_include', 'cpm_investors_load_template');
 
 // Load archive template
-function cpm_investors_load_archive_template($template) {
+function cpm_investors_load_archive_template($template)
+{
     if (is_post_type_archive('cpm_investor')) {
         $template = CPM_INVESTORS_TEMPLATES_DIR . 'archive-cpm_investor.php';
     }
@@ -115,7 +120,8 @@ function cpm_investors_load_archive_template($template) {
 add_filter('template_include', 'cpm_investors_load_archive_template');
 
 // Register sidebar
-function cpm_investors_register_sidebar() {
+function cpm_investors_register_sidebar()
+{
     register_sidebar(array(
         'name'          => __('Investor Sidebar', 'cpm_investors'),
         'id'            => 'investor-sidebar',
@@ -129,7 +135,8 @@ function cpm_investors_register_sidebar() {
 add_action('widgets_init', 'cpm_investors_register_sidebar');
 
 // Enqueue scripts and styles
-function cpm_investors_enqueue_scripts() {
+function cpm_investors_enqueue_scripts()
+{
     // Enqueue public scripts and styles
     wp_enqueue_script('jquery');
     wp_enqueue_script('cpm-investors-public-script', CPM_INVESTORS_URL . 'public/cpm-initailizer-public.js', array('jquery', 'jquery-ui-datepicker'), '1.0', true);
@@ -137,7 +144,7 @@ function cpm_investors_enqueue_scripts() {
     wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
     wp_enqueue_script('select2', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), '4.0.13', true);
     wp_enqueue_style('select2-css', '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
-//enqueue font awesome
+    //enqueue font awesome
     wp_enqueue_style('cpm_investor_font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
     // Enqueue archive-specific stylesheet
     if (is_post_type_archive('cpm_investor')) {
@@ -149,15 +156,18 @@ function cpm_investors_enqueue_scripts() {
         wp_enqueue_style('cpm-investors-single-style', CPM_INVESTORS_URL . 'templates/single-cpm_investor.css');
     }
 
-      // js for search suggestion
-      wp_enqueue_script('search-suggeston-public', plugin_dir_url(__FILE__). '/public/search-suggeston-public.js', array('jquery'), null, true);
-      wp_localize_script('search-suggeston-public', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
-  
+    // js for search suggestion
+    wp_enqueue_script('search-suggeston-public', plugin_dir_url(__FILE__) . '/public/search-suggeston-public.js', array('jquery'), null, true);
+    wp_localize_script('search-suggeston-public', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+
+    //js file to make ajax request 
+    wp_enqueue_script('currency-conversion-script', plugin_dir_url(__FILE__) . '/assets/currencyconverter.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'cpm_investors_enqueue_scripts');
 
 // Enqueue admin scripts and styles separately
-function cpm_investors_enqueue_admin_scripts() {
+function cpm_investors_enqueue_admin_scripts()
+{
     wp_enqueue_script('jquery');
     wp_enqueue_script('cpm-investors-admin-script', plugin_dir_url(__FILE__) . 'admin/cpm-initializer-admin.js', array('jquery'), '1.0', true);
     wp_enqueue_style('cpm-investors-admin-style', plugin_dir_url(__FILE__) . 'admin/cpm-styles-admin.css');
@@ -176,7 +186,8 @@ if (is_admin()) {
 }
 
 // Flush rewrite rules on activation
-function cpm_investors_rewrite_flush() {
+function cpm_investors_rewrite_flush()
+{
     cpm_investors_custom_post_type();
     flush_rewrite_rules();
 }
