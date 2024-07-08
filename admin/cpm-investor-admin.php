@@ -43,13 +43,12 @@ function cpm_investor_add_taxonomy_to_post_type()
 }
 add_action('init', 'cpm_investor_add_taxonomy_to_post_type');
 
-
 // Display the 'founded in' year in the post edit screen
 function cpm_investor_add_meta_box()
 {
     add_meta_box(
         'cpm_investor_meta_box',
-        'Investor Details',
+        __('Investor Details', 'cpm_investor'),
         'cpm_investor_meta_box_callback',
         'cpm_investor',
         'normal',
@@ -78,55 +77,63 @@ function cpm_investor_meta_box_callback($post)
 
     wp_nonce_field('cpm_investor_save_meta_box_data', 'cpm_investor_meta_box_nonce');
 ?>
-    <div class="cpm-meta-box-container">
-        <label for="cpm_investor_founded">Founded in:</label>
-        <input type="text" id="cpm_investor_founded" name="cpm_investor_founded" value="<?php echo esc_attr($founded_value); ?>">
+<div class="cpm-meta-box-container">
+    <label for="cpm_investor_founded"><?php _e('Founded in:', 'cpm_investor'); ?></label>
+    <input type="text" id="cpm_investor_founded" name="cpm_investor_founded"
+        value="<?php echo esc_attr($founded_value); ?>">
 
-        <label for="cpm_investor_type">Investor Type:</label>
-        <select id="cpm_investor_type" name="cpm_investor_type[]" multiple="multiple" class="cpm-select2">
-            <option value="VC" <?php echo in_array('VC', $type_value) ? 'selected' : ''; ?>>VC</option>
-            <option value="Accelerator" <?php echo in_array('Accelerator', $type_value) ? 'selected' : ''; ?>>Accelerator
-            </option>
-        </select>
+    <label for="cpm_investor_type"><?php _e('Investor Type:', 'cpm_investor'); ?></label>
+    <select id="cpm_investor_type" name="cpm_investor_type[]" multiple="multiple" class="cpm-select2">
+        <option value="VC" <?php echo in_array('VC', $type_value) ? 'selected' : ''; ?>>
+            <?php _e('VC', 'cpm_investor'); ?></option>
+        <option value="Accelerator" <?php echo in_array('Accelerator', $type_value) ? 'selected' : ''; ?>>
+            <?php _e('Accelerator', 'cpm_investor'); ?></option>
+    </select>
 
-        <label for="cpm_investor_logo">Logo:</label>
-        <?php if ($thumbnail_id) : ?>
-            <img src="<?php echo wp_get_attachment_url($thumbnail_id); ?>" alt="Logo" style="max-width: 100px; max-height: 100px;">
-        <?php endif; ?>
+    <label for="cpm_investor_logo"><?php _e('Logo:', 'cpm_investor'); ?></label>
+    <?php if ($thumbnail_id) : ?>
+    <img src="<?php echo wp_get_attachment_url($thumbnail_id); ?>" alt="Logo"
+        style="max-width: 100px; max-height: 100px;">
+    <?php endif; ?>
 
-        <label for="cpm_investing_status">Investing Status:</label>
-        <select id="cpm_investing_status" name="cpm_investing_status">
-            <option value="Actively Investing" <?php selected($investing_status_value, 'Actively Investing'); ?>>Actively
-                Investing</option>
-            <option value="Relaxed Investing" <?php selected($investing_status_value, 'Relaxed Investing'); ?>>Relaxed
-                Investing</option>
-        </select>
+    <label for="cpm_investing_status"><?php _e('Investing Status:', 'cpm_investor'); ?></label>
+    <select id="cpm_investing_status" name="cpm_investing_status">
+        <option value="Actively Investing" <?php selected($investing_status_value, 'Actively Investing'); ?>>
+            <?php _e('Actively Investing', 'cpm_investor'); ?></option>
+        <option value="Relaxed Investing" <?php selected($investing_status_value, 'Relaxed Investing'); ?>>
+            <?php _e('Relaxed Investing', 'cpm_investor'); ?></option>
+    </select>
 
-        <label for="cpm_investor_country">Country:</label>
-        <select id="cpm_investor_country" name="cpm_investor_country" class="cpm-select2">
-            <!-- Options will be populated by JS -->
-        </select>
+    <label for="cpm_investor_country"><?php _e('Country:', 'cpm_investor'); ?></label>
+    <select id="cpm_investor_country" name="cpm_investor_country" class="cpm-select2">
+        <!-- Options will be populated by JS -->
+    </select>
 
-        <!-- New field for Capital (USD) -->
-        <p>
-            <label for="cpm_capital_usd">Capital (USD):</label>
-        <div class="usd_capital">
-            <i class="fa-solid fa-dollar-sign"></i><input type="number" id="cpm_capital_usd" name="cpm_capital_usd" min="0" value="<?php echo esc_attr($capital_usd); ?>" required>
-        </div>
-        <div id="capital_usd_error" style="color: red; display: none;">Please enter a valid number for Capital (USD).</div>
-        </p>
-        <p>
-            <label for="cpm_investor_publish_date">Publish Date:</label>
-            <input type="date" id="cpm_investor_publish_date" name="cpm_investor_publish_date" value="<?php echo esc_attr($publish_date); ?>">
-        </p>
-        <p>
-            <label for="cpm_investor_valid_for">Valid for (days):</label>
-            <input type="number" id="cpm_investor_valid_for" name="cpm_investor_valid_for" value="<?php echo esc_attr($valid_for); ?>">
-        </p>
+    <!-- New field for Capital (USD) -->
+    <p>
+        <label for="cpm_capital_usd"><?php _e('Capital (USD):', 'cpm_investor'); ?></label>
+    <div class="usd_capital">
+        <i class="fa-solid fa-dollar-sign"></i>
+        <input type="number" id="cpm_capital_usd" name="cpm_capital_usd" min="0"
+            value="<?php echo esc_attr($capital_usd); ?>" required>
     </div>
-    <script type="text/javascript">
-        var cpm_investor_country = "<?php echo esc_js($country_value); ?>";
-    </script>
+    <div id="capital_usd_error" style="color: red; display: none;">
+        <?php _e('Please enter a valid number for Capital (USD).', 'cpm_investor'); ?></div>
+    </p>
+    <p>
+        <label for="cpm_investor_publish_date"><?php _e('Publish Date:', 'cpm_investor'); ?></label>
+        <input type="date" id="cpm_investor_publish_date" name="cpm_investor_publish_date"
+            value="<?php echo esc_attr($publish_date); ?>">
+    </p>
+    <p>
+        <label for="cpm_investor_valid_for"><?php _e('Valid for (days):', 'cpm_investor'); ?></label>
+        <input type="number" id="cpm_investor_valid_for" name="cpm_investor_valid_for"
+            value="<?php echo esc_attr($valid_for); ?>">
+    </p>
+</div>
+<script type="text/javascript">
+var cpm_investor_country = "<?php echo esc_js($country_value); ?>";
+</script>
 <?php
 }
 
