@@ -1,23 +1,14 @@
 <?php
 
-
-
 // Exit if accessed directly
-
 if (!defined('ABSPATH')) {
-
     exit;
 }
 
-
 // Shortcode to display the form
-
 function cpm_investor_submission_form()
 {
-
     ob_start();
-
-
 
     $terms = get_terms(array(
         'taxonomy' => 'investment_type',
@@ -26,73 +17,47 @@ function cpm_investor_submission_form()
 
     // Check if form was submitted successfully
     if (isset($_GET['submission']) && $_GET['submission'] == 'success') {
-        echo '<div class="cpm-form-success">Your form submission was successful!</div>';
+        echo '<div class="cpm-form-success">' . __('Your form submission was successful!', 'cpm_investor') . '</div>';
     }
 
 ?>
 
-
-
     <!-- frontend form -->
-
     <div class="cpm-form-container">
 
         <!-- Form title -->
-
-        <h2 class="form-title">Investor Submission Form</h2>
+        <h2 class="form-title"><?php _e('Investor Submission Form', 'cpm_investor'); ?></h2>
 
         <form action="" method="post" id="cpm_investor_form" enctype="multipart/form-data">
 
-            <label for="investor_name">Name of Investor:</label>
-
+            <label for="investor_name"><?php _e('Name of Investor:', 'cpm_investor'); ?></label>
             <input type="text" id="investor_name" name="investor_name" required>
 
-
-
-            <label for="investor_description">Short Description:</label>
-
+            <label for="investor_description"><?php _e('Short Description:', 'cpm_investor'); ?></label>
             <textarea id="investor_description" name="investor_description" rows="4" cols="50"></textarea>
 
-
-
-            <label for="investor_founded">Founded in:</label>
-
+            <label for="investor_founded"><?php _e('Founded in:', 'cpm_investor'); ?></label>
             <input type="text" id="investor_founded" name="investor_founded" required>
 
-
-
-            <label for="investor_type">Investor Type:</label>
-
+            <label for="investor_type"><?php _e('Investor Type:', 'cpm_investor'); ?></label>
             <select id="investor_type" name="investor_type[]" multiple="multiple" class="cpm-select2" required>
-
-                <option value="VC">VC</option>
-
-                <option value="Accelerator">Accelerator</option>
-
+                <option value="VC"><?php _e('VC', 'cpm_investor'); ?></option>
+                <option value="Accelerator"><?php _e('Accelerator', 'cpm_investor'); ?></option>
             </select>
 
-
-
-            <label for="investor_logo">Logo:</label>
-
+            <label for="investor_logo"><?php _e('Logo:', 'cpm_investor'); ?></label>
             <input type="file" id="investor_logo" name="investor_logo" accept="image/*" required>
 
-
-
-            <label for="investing_status">Investing Status:</label>
-
+            <label for="investing_status"><?php _e('Investing Status:', 'cpm_investor'); ?></label>
             <select id="investing_status" name="investing_status" required>
-
-                <option value="Actively Investing">Actively Investing</option>
-
-                <option value="Relaxed Investing">Relaxed Investing</option>
-
+                <option value="Actively Investing"><?php _e('Actively Investing', 'cpm_investor'); ?></option>
+                <option value="Relaxed Investing"><?php _e('Relaxed Investing', 'cpm_investor'); ?></option>
             </select>
 
-            <label for="investor_country">Country:</label>
-
+            <label for="investor_country"><?php _e('Country:', 'cpm_investor'); ?></label>
             <select id="investor_country" name="investor_country" class="cpm-select2" required></select>
-            <label for="investment_type">Type of Investment</label>
+
+            <label for="investment_type"><?php _e('Type of Investment', 'cpm_investor'); ?></label>
             <select id="investment_type" name="investment_type[]" multiple="multiple">
                 <?php if (!empty($terms) && !is_wp_error($terms)) : ?>
                     <?php foreach ($terms as $term) : ?>
@@ -102,13 +67,12 @@ function cpm_investor_submission_form()
             </select>
 
             <!-- New field for Capital (USD) -->
-            <label for="capital_usd">Capital (USD):</label>
+            <label for="capital_usd"><?php _e('Capital (USD):', 'cpm_investor'); ?></label>
             <div class="usd_capital_public">
                 <i class="fa-solid fa-dollar-sign"></i> <input type="number" id="capital_usd" name="capital_usd" min="0" required><br />
             </div>
-            <span id="capital_usd_error" style="color: red; display: none;">Please enter a valid
-                number.</span><br />
-            <input type="submit" name="submit_investor" value="Submit">
+            <span id="capital_usd_error" style="color: red; display: none;"><?php _e('Please enter a valid number.', 'cpm_investor'); ?></span><br />
+            <input type="submit" name="submit_investor" value="<?php _e('Submit', 'cpm_investor'); ?>">
 
         </form>
 
@@ -120,8 +84,6 @@ function cpm_investor_submission_form()
 }
 
 add_shortcode('cpm_investor_form', 'cpm_investor_submission_form');
-
-
 
 // Handle form submission
 function cpm_investor_handle_form_submission()
@@ -135,7 +97,6 @@ function cpm_investor_handle_form_submission()
         $investor_country = sanitize_text_field($_POST['investor_country']);
         $investment_types = array_map('sanitize_text_field', $_POST['investment_type']);
         $capital_usd = sanitize_text_field($_POST['capital_usd']);
-
 
         // Create a new post of type 'cpm_investor'
         $new_post = array(
@@ -155,8 +116,6 @@ function cpm_investor_handle_form_submission()
             update_post_meta($post_id, 'cpm_investor_country', $investor_country);
             update_post_meta($post_id, 'cpm_investing_status', $investing_status);
             update_post_meta($post_id, 'cpm_capital_usd', $capital_usd);
-
-
 
             // Handle the logo upload and set it as the featured image
             if (!empty($_FILES['investor_logo']['name'])) {
@@ -181,6 +140,7 @@ function cpm_investor_handle_form_submission()
                     set_post_thumbnail($post_id, $attachment_id);
                 }
             }
+
             // Set taxonomy terms
             $term_ids = array();
             foreach ($investment_types as $investment_type) {
@@ -196,7 +156,6 @@ function cpm_investor_handle_form_submission()
 
             wp_set_post_terms($post_id, $term_ids, 'investment_type');
 
-
             // Redirect to the form with a success message
             wp_redirect(add_query_arg('submission', 'success', wp_get_referer()));
             exit;
@@ -204,3 +163,4 @@ function cpm_investor_handle_form_submission()
     }
 }
 add_action('init', 'cpm_investor_handle_form_submission');
+?>
