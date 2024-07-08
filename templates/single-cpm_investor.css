@@ -1,9 +1,7 @@
 /* main div of the single page */
 .investor-profile_maindiv {
   width: 100%;
-  /* margin-left: 35px; */
-  /* width: 90%; */
-  /* margin-left: 65px; */
+  
 }
 
 .mainsingle-page {
@@ -129,6 +127,3 @@
   /* margin-right:5px; */
   
 }
-/* .fontawesome{
-  color:rgb(14, 13, 13);
-} */
