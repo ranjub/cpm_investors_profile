@@ -124,6 +124,8 @@ function cpm_investors_enqueue_scripts()
 
     //js file to make ajax request 
     wp_enqueue_script('currency-conversion-script', plugin_dir_url(__FILE__) . '/assets/currencyconverter.js', array('jquery'), null, true);
+    wp_enqueue_script('paypal-transction-script', plugin_dir_url(__FILE__) . '/assets/paypal-transaction.js', array('jquery'), null, true);
+
 }
 add_action('wp_enqueue_scripts', 'cpm_investors_enqueue_scripts');
 
