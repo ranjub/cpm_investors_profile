@@ -126,16 +126,17 @@ function cpm_investor_meta_box_callback($post)
             <label for="cpm_investor_valid_for"><?php _e('Valid for (days):', 'cpm_investor'); ?></label>
             <input type="number" id="cpm_investor_valid_for" name="cpm_investor_valid_for" value="<?php echo esc_attr($valid_for); ?>">
         </p>
+        <!-- radio button -->
+        <p>
+            <strong><?php _e('Price Choosen:', 'cpm_investor'); ?></strong>
+            <?php echo esc_html($radio_option); ?>
+        </p>
     </div>
     <script type="text/javascript">
         var cpm_investor_country = "<?php echo esc_js($country_value); ?>";
     </script>
 
-    <!-- radio button -->
-    <p>
-        <strong><?php _e('Price Choosen:', 'cpm_investor'); ?></strong>
-        <?php echo esc_html($radio_option); ?>
-    </p>
+
 <?php
 }
 
