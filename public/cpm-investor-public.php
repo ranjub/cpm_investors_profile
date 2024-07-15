@@ -29,7 +29,7 @@ function cpm_investor_submission_form()
         <h2 class="form-title"><?php _e('Investor Submission Form', 'cpm_investor'); ?></h2>
 
         <form action="" method="post" id="cpm_investor_form" enctype="multipart/form-data">
-
+            <input type="hidden" name="form_type" value="investor_form">
             <label for="investor_name"><?php _e('Name of Investor:', 'cpm_investor'); ?></label>
             <input type="text" id="investor_name" name="investor_name" required>
 
@@ -85,82 +85,128 @@ function cpm_investor_submission_form()
 
 add_shortcode('cpm_investor_form', 'cpm_investor_submission_form');
 
+//new form with radio button and buy button
+function cpm_display_radio_buttons_form($post_id)
+{
+    ob_start(); ?>
+    <form action="" method="post" id="cpm_radio_buttons_form">
+        <input type="hidden" name="form_type" value="radio_buttons_form">
+        <input type="hidden" name="investor_post_id" value="<?php echo $post_id; ?>">
+        <label for="radio_option"><?php _e('Choose an Option:', 'cpm_investor'); ?></label>
+        <div>
+            <input type="radio" id="option1" name="radio_option" value="option1">
+            <label for="option1"><?php _e('Option 1', 'cpm_investor'); ?></label>
+        </div>
+        <div>
+            <input type="radio" id="option2" name="radio_option" value="option2">
+            <label for="option2"><?php _e('Option 2', 'cpm_investor'); ?></label>
+        </div>
+        <div>
+            <input type="radio" id="option3" name="radio_option" value="option3">
+            <label for="option3"><?php _e('Option 3', 'cpm_investor'); ?></label>
+        </div>
+        <input type="submit" name="submit_radio" value="<?php _e('Buy', 'cpm_investor'); ?>">
+    </form>
+<?php
+    return ob_get_clean();
+}
+
+
+
+
+
 // Handle form submission
 function cpm_investor_handle_form_submission()
 {
-    if (isset($_POST['submit_investor']) && isset($_POST['investor_name']) && isset($_POST['investor_description']) && isset($_POST['investor_founded'])) {
-        $investor_name = sanitize_text_field($_POST['investor_name']);
-        $investor_description = sanitize_textarea_field($_POST['investor_description']);
-        $investor_founded = sanitize_text_field($_POST['investor_founded']);
-        $investor_type = array_map('sanitize_text_field', $_POST['investor_type']);
-        $investing_status = sanitize_text_field($_POST['investing_status']);
-        $investor_country = sanitize_text_field($_POST['investor_country']);
-        $investment_types = array_map('sanitize_text_field', $_POST['investment_type']);
-        $capital_usd = sanitize_text_field($_POST['capital_usd']);
+    if (isset($_POST['form_type'])) {
+        if ($_POST['form_type'] == 'investor_form') {
+            if (isset($_POST['submit_investor']) && isset($_POST['investor_name']) && isset($_POST['investor_description']) && isset($_POST['investor_founded'])) {
+                $investor_name = sanitize_text_field($_POST['investor_name']);
+                $investor_description = sanitize_textarea_field($_POST['investor_description']);
+                $investor_founded = sanitize_text_field($_POST['investor_founded']);
+                $investor_type = array_map('sanitize_text_field', $_POST['investor_type']);
+                $investing_status = sanitize_text_field($_POST['investing_status']);
+                $investor_country = sanitize_text_field($_POST['investor_country']);
+                $investment_types = array_map('sanitize_text_field', $_POST['investment_type']);
+                $capital_usd = sanitize_text_field($_POST['capital_usd']);
 
-        // Create a new post of type 'cpm_investor'
-        $new_post = array(
-            'post_title'   => $investor_name,
-            'post_content' => $investor_description,
-            'post_status'  => 'draft',
-            'post_type'    => 'cpm_investor'
-        );
+                // Create a new post of type 'cpm_investor'
+                $new_post = array(
+                    'post_title'   => $investor_name,
+                    'post_content' => $investor_description,
+                    'post_status'  => 'draft',
+                    'post_type'    => 'cpm_investor'
+                );
 
-        // Insert the post into the database
-        $post_id = wp_insert_post($new_post);
+                // Insert the post into the database
+                $post_id = wp_insert_post($new_post);
 
-        // Save the 'founded in' year as post meta
-        if (!is_wp_error($post_id)) {
-            update_post_meta($post_id, 'cpm_investor_founded', $investor_founded);
-            update_post_meta($post_id, 'cpm_investor_type', $investor_type);
-            update_post_meta($post_id, 'cpm_investor_country', $investor_country);
-            update_post_meta($post_id, 'cpm_investing_status', $investing_status);
-            update_post_meta($post_id, 'cpm_capital_usd', $capital_usd);
+                // Save the 'founded in' year as post meta
+                if (!is_wp_error($post_id)) {
+                    update_post_meta($post_id, 'cpm_investor_founded', $investor_founded);
+                    update_post_meta($post_id, 'cpm_investor_type', $investor_type);
+                    update_post_meta($post_id, 'cpm_investor_country', $investor_country);
+                    update_post_meta($post_id, 'cpm_investing_status', $investing_status);
+                    update_post_meta($post_id, 'cpm_capital_usd', $capital_usd);
 
-            // Handle the logo upload and set it as the featured image
-            if (!empty($_FILES['investor_logo']['name'])) {
-                // Ensure the function is available
-                if (!function_exists('wp_handle_upload')) {
-                    require_once(ABSPATH . 'wp-admin/includes/file.php');
-                }
+                    // Handle the logo upload and set it as the featured image
+                    if (!empty($_FILES['investor_logo']['name'])) {
+                        // Ensure the function is available
+                        if (!function_exists('wp_handle_upload')) {
+                            require_once(ABSPATH . 'wp-admin/includes/file.php');
+                        }
 
-                $file = $_FILES['investor_logo'];
-                $upload = wp_handle_upload($file, array('test_form' => false));
-                if ($upload && !isset($upload['error'])) {
-                    $attachment = array(
-                        'post_mime_type' => $upload['type'],
-                        'post_title'     => sanitize_file_name($upload['file']),
-                        'post_content'   => '',
-                        'post_status'    => 'inherit'
-                    );
-                    $attachment_id = wp_insert_attachment($attachment, $upload['file'], $post_id);
-                    require_once(ABSPATH . 'wp-admin/includes/image.php');
-                    $attach_data = wp_generate_attachment_metadata($attachment_id, $upload['file']);
-                    wp_update_attachment_metadata($attachment_id, $attach_data);
-                    set_post_thumbnail($post_id, $attachment_id);
-                }
-            }
-
-            // Set taxonomy terms
-            $term_ids = array();
-            foreach ($investment_types as $investment_type) {
-                if (is_numeric($investment_type)) {
-                    $term_ids[] = intval($investment_type);
-                } else {
-                    $new_term = wp_insert_term($investment_type, 'investment_type');
-                    if (!is_wp_error($new_term)) {
-                        $term_ids[] = $new_term['term_id'];
+                        $file = $_FILES['investor_logo'];
+                        $upload = wp_handle_upload($file, array('test_form' => false));
+                        if ($upload && !isset($upload['error'])) {
+                            $attachment = array(
+                                'post_mime_type' => $upload['type'],
+                                'post_title'     => sanitize_file_name($upload['file']),
+                                'post_content'   => '',
+                                'post_status'    => 'inherit'
+                            );
+                            $attachment_id = wp_insert_attachment($attachment, $upload['file'], $post_id);
+                            require_once(ABSPATH . 'wp-admin/includes/image.php');
+                            $attach_data = wp_generate_attachment_metadata($attachment_id, $upload['file']);
+                            wp_update_attachment_metadata($attachment_id, $attach_data);
+                            set_post_thumbnail($post_id, $attachment_id);
+                        }
                     }
+
+                    // Set taxonomy terms
+                    $term_ids = array();
+                    foreach ($investment_types as $investment_type) {
+                        if (is_numeric($investment_type)) {
+                            $term_ids[] = intval($investment_type);
+                        } else {
+                            $new_term = wp_insert_term($investment_type, 'investment_type');
+                            if (!is_wp_error($new_term)) {
+                                $term_ids[] = $new_term['term_id'];
+                            }
+                        }
+                    }
+
+                    wp_set_post_terms($post_id, $term_ids, 'investment_type');
+                    // Display the radio buttons form
+                    echo cpm_display_radio_buttons_form($post_id);
+                    return; // Stop further execution to show the new form
                 }
             }
+        } elseif ($_POST['form_type'] == 'radio_buttons_form') {
+            if (isset($_POST['submit_radio']) && isset($_POST['radio_option']) && isset($_POST['investor_post_id'])) {
+                $radio_option = sanitize_text_field($_POST['radio_option']);
+                $post_id = intval($_POST['investor_post_id']);
 
-            wp_set_post_terms($post_id, $term_ids, 'investment_type');
+                // Save the radio option as post meta
+                if (!is_wp_error($post_id)) {
+                    update_post_meta($post_id, 'cpm_investor_radio_option', $radio_option);
 
-            // Redirect to the form with a success message
-            wp_redirect(add_query_arg('submission', 'success', wp_get_referer()));
-            exit;
+                    // Redirect to the form with a success message
+                    wp_redirect(add_query_arg('submission', 'success', wp_get_referer()));
+                    exit;
+                }
+            }
         }
     }
 }
 add_action('init', 'cpm_investor_handle_form_submission');
-?>

@@ -70,6 +70,8 @@ function cpm_investor_meta_box_callback($post)
     $publish_date = get_post_meta($post->ID, 'cpm_investor_publish_date', true);
     $valid_for = get_post_meta($post->ID, 'cpm_investor_valid_for', true);
     $capital_usd = get_post_meta($post->ID, 'cpm_capital_usd', true);
+    //radio button
+    $radio_option = get_post_meta($post->ID, 'cpm_investor_radio_option', true);
     if (!is_array($type_value)) {
         $type_value = array();
     }
@@ -128,6 +130,12 @@ function cpm_investor_meta_box_callback($post)
     <script type="text/javascript">
         var cpm_investor_country = "<?php echo esc_js($country_value); ?>";
     </script>
+
+    <!-- radio button -->
+    <p>
+        <strong><?php _e('Radio Option:', 'cpm_investor'); ?></strong>
+        <?php echo esc_html($radio_option); ?>
+    </p>
 <?php
 }
 
