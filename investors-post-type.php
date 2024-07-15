@@ -166,3 +166,18 @@ function cpm_investors_rewrite_flush()
     flush_rewrite_rules();
 }
 register_activation_hook(__FILE__, 'cpm_investors_rewrite_flush');
+
+//for paypal transaction
+function create_mock_transaction() {
+    $amount = sanitize_text_field($_POST['amount']);
+    $transaction_id = uniqid('txn_', true);
+    $result = [
+        'success' => true,
+        'transactionId' => $transaction_id,
+        'amount' => $amount
+    ];
+    echo json_encode($result);
+    wp_die();
+}
+add_action('wp_ajax_create_mock_transaction', 'create_mock_transaction');
+add_action('wp_ajax_nopriv_create_mock_transaction', 'create_mock_transaction');
