@@ -94,16 +94,16 @@ function cpm_display_radio_buttons_form($post_id)
         <input type="hidden" name="investor_post_id" value="<?php echo $post_id; ?>">
         <label for="radio_option"><?php _e('Choose an Option:', 'cpm_investor'); ?></label>
         <div>
-            <input type="radio" id="option1" name="radio_option" value="option1">
-            <label for="option1"><?php _e('Option 1', 'cpm_investor'); ?></label>
+            <input type="radio" id="option1" name="radio_option" value="$500">
+            <label for="option1"><?php _e('$500', 'cpm_investor'); ?></label>
         </div>
         <div>
-            <input type="radio" id="option2" name="radio_option" value="option2">
-            <label for="option2"><?php _e('Option 2', 'cpm_investor'); ?></label>
+            <input type="radio" id="option2" name="radio_option" value="$100">
+            <label for="option2"><?php _e('$100', 'cpm_investor'); ?></label>
         </div>
         <div>
-            <input type="radio" id="option3" name="radio_option" value="option3">
-            <label for="option3"><?php _e('Option 3', 'cpm_investor'); ?></label>
+            <input type="radio" id="option3" name="radio_option" value="$200">
+            <label for="option3"><?php _e('$200', 'cpm_investor'); ?></label>
         </div>
         <input type="submit" name="submit_radio" id ="submit-btn"value="<?php _e('Buy', 'cpm_investor'); ?>">
     </form>
