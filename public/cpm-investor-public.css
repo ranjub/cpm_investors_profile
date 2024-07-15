@@ -77,3 +77,45 @@
 .usd_capital_public input[type="number"] {
   flex: 1; /* Adjusts the input field to take the remaining space */
 }
+
+/* new form with radio button */
+#cpm_radio_buttons_form {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#cpm_radio_buttons_form label {
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: block;
+}
+
+#cpm_radio_buttons_form .radio-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#cpm_radio_buttons_form .radio-option input[type="radio"] {
+  margin-right: 10px;
+}
+
+#cpm_radio_buttons_form input[type="submit"] {
+  background-color: #0073aa;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+#cpm_radio_buttons_form input[type="submit"]:hover {
+  background-color: #005d8a;
+}
