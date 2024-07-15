@@ -133,7 +133,7 @@ function cpm_investor_meta_box_callback($post)
 
     <!-- radio button -->
     <p>
-        <strong><?php _e('Radio Option:', 'cpm_investor'); ?></strong>
+        <strong><?php _e('Price Choosen:', 'cpm_investor'); ?></strong>
         <?php echo esc_html($radio_option); ?>
     </p>
 <?php
