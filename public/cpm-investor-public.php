@@ -85,41 +85,10 @@ function cpm_investor_submission_form()
 
 add_shortcode('cpm_investor_form', 'cpm_investor_submission_form');
 
-//new form with radio button and buy button
-function cpm_display_radio_buttons_form($post_id)
-{
-    ob_start();
-
-    // Check if form was submitted successfully
-    if (isset($_GET['submission']) && $_GET['submission'] == 'success') {
-        echo '<div class="cpm-form-success">' . __('The selected amount has been deducted from your account!', 'cpm_investor') . '</div>';
-    }
-?>
-
-    <form action="" method="post" id="cpm_radio_buttons_form">
-        <input type="hidden" name="form_type" value="radio_buttons_form">
-        <input type="hidden" name="investor_post_id" value="<?php echo $post_id; ?>">
-        <label for="radio_option"><?php _e('Choose a Price:', 'cpm_investor'); ?></label>
-        <div class="radio-option">
-            <input type="radio" id="option1" name="radio_option" value="$ 500">
-            <label for="option1"><?php _e('$500', 'cpm_investor'); ?></label>
-        </div>
-        <div class="radio-option">
-            <input type="radio" id="option2" name="radio_option" value="$ 100">
-            <label for="option2"><?php _e('$100', 'cpm_investor'); ?></label>
-        </div>
-        <div class="radio-option">
-            <input type="radio" id="option3" name="radio_option" value="$ 200">
-            <label for="option3"><?php _e('$200', 'cpm_investor'); ?></label>
-        </div>
-        <input type="submit" name="submit_radio" value="<?php _e('Buy', 'cpm_investor'); ?>">
-    </form>
-<?php
-    return ob_get_clean();
-}
-add_shortcode('cpm_radio_form', 'cpm_display_radio_buttons_form');
 
 
+
+// Handle form submission
 function cpm_investor_handle_form_submission()
 {
     if (isset($_POST['form_type'])) {
@@ -191,11 +160,9 @@ function cpm_investor_handle_form_submission()
                     }
 
                     wp_set_post_terms($post_id, $term_ids, 'investment_type');
-
-                    // Redirect to the Buy page
-                    $buy_page_url = get_permalink(get_page_by_path('buy'));
-                    wp_redirect(add_query_arg('investor_post_id', $post_id, $buy_page_url));
-                    exit;
+                    // Display the radio buttons form
+                    echo cpm_display_radio_buttons_form($post_id);
+                    return; // Stop further execution to show the new form
                 }
             }
         } elseif ($_POST['form_type'] == 'radio_buttons_form') {
