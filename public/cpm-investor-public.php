@@ -161,7 +161,7 @@ function cpm_investor_handle_form_submission()
 
                     wp_set_post_terms($post_id, $term_ids, 'investment_type');
                     // Display the radio buttons form
-                    echo cpm_display_radio_buttons_form($post_id);
+                    echo 'cpm_display_radio_buttons_form'($post_id);
                     return; // Stop further execution to show the new form
                 }
             }

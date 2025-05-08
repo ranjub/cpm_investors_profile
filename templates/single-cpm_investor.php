@@ -78,12 +78,13 @@ get_header();
                             <?php the_content(); ?>
                 </p>
             </div>
-            <div class="side-bar">
+            <!-- <div class="side-bar">
                 <aside id="secondary" class="widget-area">
-                    <?php dynamic_sidebar('investor-sidebar');
-                            get_sidebar(); ?>
+                    <?php 
+                    // dynamic_sidebar('investor-sidebar');
+                            // get_sidebar(); ?>
                 </aside>
-            </div>
+            </div> -->
 
             <?php else : ?>
             <!-- If no posts found -->
